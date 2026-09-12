@@ -56,11 +56,12 @@
 			return;
 		}
 		running = true;
+		const target = epoch + 200;
 		timer = setInterval(() => {
 			const set = data.filter((p) => p.split === 'train');
 			for (let i = 0; i < 2; i++) network.train(set, 0.015);
 			epoch += 2;
-			if (epoch >= 200) pause();
+			if (epoch >= target) pause();
 		}, 45);
 	}
 	function reset() {
@@ -173,7 +174,7 @@
 					</section>{/each}
 			</div>
 			<div class="image-training-footer">
-				<span>Epoch <strong>{epoch}</strong> / 200</span><span
+				<span>Epoch <strong>{epoch}</strong></span><span
 					>{epoch === 0
 						? 'Random initial weights'
 						: running
@@ -221,15 +222,11 @@
 		<p class="control-help threshold-help">
 			Above this score, predict “boot.” Move the threshold to change decisions without retraining.
 		</p>
-		<button class="primary-button" disabled={loading || !!error || epoch >= 200} onclick={train}
+		<button class="primary-button" disabled={loading || !!error} onclick={train}
 			>{#if running}<PatternIcon name="pause" size={15} /> Pause training{:else}<PatternIcon
 					name="play"
 					size={15}
-				/>{epoch === 0
-					? 'Train the classifier'
-					: epoch >= 200
-						? 'Training complete'
-						: 'Continue training'}{/if}</button
+				/>{epoch === 0 ? 'Train the classifier' : 'Continue training'}{/if}</button
 		><button class="text-button" disabled={loading} onclick={reset}
 			><PatternIcon name="reset" size={13} /> Reset the weights</button
 		>
@@ -239,20 +236,20 @@
 			<svg
 				viewBox="0 0 140 140"
 				role="img"
-				aria-label="Actual learned pixel weights. Mint favors boots and peach favors sneakers."
+				aria-label="Actual learned pixel weights. Blue favors boots and amber favors sneakers."
 				>{#each weights as weight, i (i)}<rect
 						x={(i % 14) * 10}
 						y={Math.floor(i / 14) * 10}
 						width="9.5"
 						height="9.5"
 						rx=".8"
-						fill={weight >= 0 ? '#8fcdb4' : '#e3aa89'}
+						fill={weight >= 0 ? 'var(--chart-blue)' : 'var(--chart-amber)'}
 						opacity={0.12 + (Math.abs(weight) / maxWeight) * 0.88}
 					/>{/each}</svg
 			>
 			<p>
-				Each pixel has a learned weight.<br /><span class="weight-boot">Mint → boot</span><br
-				/><span class="weight-sneaker">Peach → sneaker</span>
+				Each pixel has a learned weight.<br /><span class="weight-boot">Blue → boot</span><br
+				/><span class="weight-sneaker">Amber → sneaker</span>
 			</p>
 		</div>
 		<p class="control-help">

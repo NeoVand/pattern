@@ -6,10 +6,12 @@
 <figure class="footwear-plate">
 	<div class="footwear-image">
 		<img
-			src="/images/shoe-studies.webp"
-			width="1536"
-			height="1024"
-			alt="A complete low-top sage sneaker and a complete brown ankle boot, including its tall shaft, standing on stone plinths."
+			src="/images/edition-3/shoe-studies.webp"
+			srcset="/images/edition-3/shoe-studies-800.webp 800w, /images/edition-3/shoe-studies.webp 1932w"
+			sizes="(max-width: 700px) 92vw, 900px"
+			width="1932"
+			height="814"
+			alt="A complete blue and ivory sneaker beside a slate ankle boot, with rear-view photographs revealing their low and high collars."
 		/>
 		<span class="feature-ring" class:boot={selected === 'boot'} aria-hidden="true"></span>
 	</div>
@@ -49,7 +51,7 @@
 		position: relative;
 		overflow: hidden;
 		border-radius: 22px;
-		background: #ded1b8;
+		background: transparent;
 	}
 	.footwear-image img {
 		display: block;
@@ -61,20 +63,20 @@
 		pointer-events: none;
 		width: 12%;
 		aspect-ratio: 1;
-		left: 17.5%;
-		top: 37%;
-		border: 2px solid #fffaf1;
+		left: 3%;
+		top: 24%;
+		border: 2px solid #708bb0;
 		border-radius: 50%;
 		box-shadow:
-			0 0 0 5px #24392a38,
-			0 0 24px #24392a20;
+			0 0 0 5px #a8c3df22,
+			0 0 24px #a8c3df18;
 		transition:
 			left 420ms ease,
 			top 420ms ease;
 	}
 	.feature-ring.boot {
-		left: 60%;
-		top: 20.5%;
+		left: 59%;
+		top: 3%;
 	}
 	.silhouettes {
 		display: grid;
@@ -131,6 +133,29 @@
 		font-size: 12px;
 		line-height: 1.7;
 	}
+	@media (min-width: 1100px) {
+		.footwear-plate {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) 270px;
+			gap: 28px;
+			align-items: center;
+		}
+		.silhouettes {
+			grid-template-columns: 1fr;
+			gap: 8px;
+			margin-top: 0;
+		}
+		.silhouettes button {
+			gap: 12px;
+			padding: 17px 15px;
+		}
+		strong {
+			font-size: 16px;
+		}
+		figcaption > p {
+			padding-inline: 15px;
+		}
+	}
 	@media (max-width: 680px) {
 		.footwear-plate {
 			margin-bottom: 28px;
@@ -161,7 +186,7 @@
 		}
 		.feature-ring {
 			border-width: 1.5px;
-			box-shadow: 0 0 0 3px #24392a38;
+			box-shadow: 0 0 0 3px color-mix(in srgb, var(--plot) 21.96%, transparent);
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {

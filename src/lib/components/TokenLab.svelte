@@ -1,9 +1,10 @@
 <script lang="ts">
+	import AudioFramesLab from './AudioFramesLab.svelte';
 	import { onMount } from 'svelte';
 	import PatternIcon from './PatternIcon.svelte';
 	import { imagePatches, tokenizeText, type Tokenization } from '$lib/ml/tokens';
 
-	let mode = $state<'text' | 'image'>('text');
+	let mode = $state<'text' | 'image' | 'audio'>('text');
 	let input = $state('A little curiosity changes everything.');
 	let tokenization = $state.raw<Tokenization | null>(null);
 	let tokenIndex = $state(0);
@@ -14,6 +15,7 @@
 	let grid = $state(4);
 	let separated = $state(false);
 	let patchIndex = $state(5);
+	let patchPage = $state(0);
 	let photo = $state('/images/vision-board.webp');
 	let dimensions = $state({ width: 1660, height: 948 });
 	let patches = $derived(imagePatches(dimensions.width, dimensions.height, grid));
@@ -26,7 +28,13 @@
 		{ label: 'Across languages', text: 'Hello. Bonjour. こんにちは。 नमस्ते।' },
 		{ label: 'An emoji', text: 'An astronaut: 🧑🏽‍🚀' }
 	];
-	const colors = ['#a9c8b3', '#b6a8ce', '#d7b789', '#92b6c7', '#c7aaad'];
+	const colors = [
+		'var(--chart-blue)',
+		'var(--chart-lavender)',
+		'var(--chart-amber)',
+		'var(--chart-cyan)',
+		'var(--chart-rose)'
+	];
 	async function updateText(text: string) {
 		input = text;
 		const current = ++request;
@@ -46,7 +54,11 @@
 	}
 	function chooseGrid(value: number) {
 		grid = value;
-		patchIndex = Math.min(patchIndex, value * value - 1);
+		void selectPatch(Math.min(patchIndex, value * value - 1));
+	}
+	function selectPatch(index: number) {
+		patchIndex = index;
+		patchPage = Math.floor(index / 24);
 	}
 	function imageLoaded(event: Event) {
 		const image = event.currentTarget as HTMLImageElement;
@@ -72,6 +84,11 @@
 			class:active={mode === 'image'}
 			aria-pressed={mode === 'image'}
 			onclick={() => (mode = 'image')}><PatternIcon name="grid" />Image into patches</button
+		>
+		<button
+			class:active={mode === 'audio'}
+			aria-pressed={mode === 'audio'}
+			onclick={() => (mode = 'audio')}><PatternIcon name="audio" />Audio into frames</button
 		>
 	</div>
 	{#if mode === 'text'}
@@ -197,7 +214,7 @@
 				>OpenAI’s tokenizer documentation <PatternIcon name="arrowUpRight" size={15} /></a
 			>
 		</details>
-	{:else}
+	{:else if mode === 'image'}
 		<div class="token-opening">
 			<h2>A picture, <em>as a sequence.</em></h2>
 			<p>
@@ -241,7 +258,7 @@
 								class="image-patch"
 								aria-label={`Select patch ${piece.index + 1}, row ${piece.row + 1}, column ${piece.column + 1}`}
 								aria-pressed={patchIndex === piece.index}
-								onclick={() => (patchIndex = piece.index)}
+								onclick={() => void selectPatch(piece.index)}
 							>
 								<svg
 									viewBox={`${piece.x} ${piece.y} ${piece.width} ${piece.height}`}
@@ -270,11 +287,13 @@
 						<button
 							aria-label="Previous patch"
 							disabled={patchIndex === 0}
-							onclick={() => patchIndex--}><PatternIcon name="arrowLeft" size={18} /></button
+							onclick={() => void selectPatch(patchIndex - 1)}
+							><PatternIcon name="arrowLeft" size={18} /></button
 						><button
 							aria-label="Next patch"
 							disabled={patchIndex === patches.length - 1}
-							onclick={() => patchIndex++}><PatternIcon name="arrowRight" size={18} /></button
+							onclick={() => void selectPatch(patchIndex + 1)}
+							><PatternIcon name="arrowRight" size={18} /></button
 						>
 					</div>
 				</div>
@@ -300,11 +319,12 @@
 			<span>Left to right, then the next row</span>
 		</div>
 		<div class="patch-sequence" role="group" aria-label="Image patch sequence">
-			{#each patches as piece (`sequence:${grid}:${piece.index}`)}<button
+			{#each patches.slice(patchPage * 24, (patchPage + 1) * 24) as piece (`sequence:${grid}:${piece.index}`)}<button
 					class:selected={piece.index === patchIndex}
+					data-patch-index={piece.index}
 					aria-label={`Sequence position ${piece.index + 1}`}
 					aria-pressed={piece.index === patchIndex}
-					onclick={() => (patchIndex = piece.index)}
+					onclick={() => void selectPatch(piece.index)}
 					><svg
 						viewBox={`${piece.x} ${piece.y} ${piece.width} ${piece.height}`}
 						preserveAspectRatio="none"
@@ -312,6 +332,21 @@
 						><image href={photo} width={dimensions.width} height={dimensions.height} /></svg
 					><span>{piece.index + 1}</span></button
 				>{/each}
+		</div>
+		<div class="patch-pages">
+			<button
+				class="icon-button"
+				aria-label="Previous patch positions"
+				disabled={patchPage === 0}
+				onclick={() => patchPage--}><PatternIcon name="arrowLeft" size={16} /></button
+			><span
+				>Positions {patchPage * 24 + 1}–{Math.min(patches.length, (patchPage + 1) * 24)} of {patches.length}</span
+			><button
+				class="icon-button"
+				aria-label="Next patch positions"
+				disabled={(patchPage + 1) * 24 >= patches.length}
+				onclick={() => patchPage++}><PatternIcon name="arrowRight" size={16} /></button
+			>
 		</div>
 		<div class="vision-pipeline">
 			<div><PatternIcon name="scan" size={26} /><span>Patch pixels</span></div>
@@ -342,6 +377,7 @@
 				>The original Vision Transformer paper <PatternIcon name="arrowUpRight" size={15} /></a
 			>
 		</details>
+	{:else}<AudioFramesLab />
 	{/if}
 </div>
 
@@ -687,7 +723,7 @@
 		border-radius: 3px;
 		padding: 2px 4px;
 		color: #fff;
-		background: #17221dbb;
+		background: #151c27bb;
 		font: 9px var(--mono);
 		opacity: 0;
 		transition: opacity 0.35s;
@@ -799,6 +835,7 @@
 		color: var(--quiet);
 	}
 	.patch-sequence {
+		position: relative;
 		display: flex;
 		gap: 8px;
 		overflow-x: auto;
@@ -1078,6 +1115,52 @@
 		.image-patch,
 		.image-patch span {
 			transition: none;
+		}
+	}
+
+	.patch-sequence {
+		display: grid;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		gap: 7px;
+		overflow: visible;
+		padding: 8px 3px;
+	}
+	.patch-sequence button {
+		width: 100%;
+		min-width: 0;
+	}
+	.patch-sequence svg {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 1.4;
+	}
+	.patch-sequence button.selected {
+		box-shadow: 0 0 0 1.5px var(--lavender);
+	}
+	.patch-pages {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 18px;
+		color: var(--muted);
+		font-size: 12px;
+		margin: 12px 0;
+	}
+	@media (max-width: 650px) {
+		.token-modes {
+			width: 100%;
+			gap: 3px;
+			padding: 4px;
+		}
+		.token-modes button {
+			flex: 1;
+			flex-direction: column;
+			gap: 6px;
+			font-size: 11px;
+			padding: 10px 5px;
+		}
+		.patch-sequence {
+			grid-template-columns: repeat(6, minmax(0, 1fr));
 		}
 	}
 </style>

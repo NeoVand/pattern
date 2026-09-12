@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, tick } from 'svelte';
 	import type { AiSession } from '$lib/ai/session.svelte';
 	import PatternIcon from './PatternIcon.svelte';
 	let { ai }: { ai: AiSession } = $props();
@@ -105,6 +105,18 @@
 	function choosePicture(picture: Picture) {
 		chosen[slot] = picture;
 		clearResult();
+	}
+	async function toggleDetail() {
+		detail = !detail;
+		if (!detail) return;
+		await tick();
+		const region = document.getElementById(`vision-image-${compare ? slot : 0}`);
+		if (!region) return;
+		region.focus({ preventScroll: true });
+		region.scrollTo({
+			left: (region.scrollWidth - region.clientWidth) / 2,
+			top: (region.scrollHeight - region.clientHeight) / 2
+		});
 	}
 	function asDataUrl(blob: Blob): Promise<string> {
 		return new Promise((resolve, reject) => {
@@ -228,6 +240,7 @@
 						<!-- svelte-ignore a11y_no_noninteractive_tabindex (The zoomed image region must receive keyboard focus so arrow keys can scroll it.) -->
 						<div
 							class="image-scroll"
+							id={`vision-image-${index}`}
 							class:detail
 							tabindex={detail ? 0 : undefined}
 							role="region"
@@ -251,7 +264,7 @@
 							>Image 2</button
 						>
 					</div>{:else}<span class="image-instruction">Choose an image</span>{/if}
-				<button class="detail-toggle" aria-pressed={detail} onclick={() => (detail = !detail)}
+				<button class="detail-toggle" aria-pressed={detail} onclick={toggleDetail}
 					>{detail ? 'Fit image' : 'See detail'} <PatternIcon name="vision" size={15} /></button
 				>
 			</div>
@@ -416,6 +429,13 @@
 		align-items: center;
 		gap: 13px;
 		color: var(--green);
+		min-width: 0;
+	}
+	.vision-model-label > div {
+		min-width: 0;
+	}
+	.vision-model-label :global(svg) {
+		flex-shrink: 0;
 	}
 	.vision-model-label strong,
 	.vision-model-label span {
@@ -425,6 +445,9 @@
 		font-size: 13px;
 		font-weight: 500;
 		color: var(--ink);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	.vision-model-label span {
 		font-size: 11px;
@@ -440,6 +463,8 @@
 		color: var(--muted);
 		padding: 8px 0;
 		font-size: 11px;
+		flex-shrink: 0;
+		white-space: nowrap;
 	}
 	.vision-modes {
 		display: flex;
@@ -658,7 +683,8 @@
 	}
 	.vision-conversation .primary-button {
 		margin: 0;
-		width: 100%;
+		width: fit-content;
+		min-width: 164px;
 	}
 	.vision-transfer {
 		color: var(--quiet);
@@ -696,6 +722,7 @@
 	.vision-answer {
 		padding: 24px 0 8px;
 		margin-top: 9px;
+		min-height: 192px;
 	}
 	.answer-label {
 		font-size: 10px;

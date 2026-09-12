@@ -1,0 +1,68 @@
+{
+	"rules-to-learning": {
+		"variant": "D",
+		"chosenBy": "user",
+		"reason": "Explicit Rules / Learning contrast; correct sorting result and varied complete boots."
+	},
+	"shoe-studies": {
+		"variant": "E",
+		"chosenBy": "user",
+		"reason": "Full footwear profiles with supporting rear views; consistent muted blue and lavender."
+	},
+	"neuron-anatomy": {
+		"variant": "A",
+		"chosenBy": "user",
+		"reason": "All three weighted inputs and the separate bias feed the sum before activation; complete readable labels."
+	},
+	"fit-triptych": {
+		"variant": "D",
+		"chosenBy": "user",
+		"reason": "Clear differences in flexibility, held-out points visible, compact readable comparison. Illustration of fit behavior, not a measured experiment."
+	},
+	"forecast-seasons": {
+		"variant": "A",
+		"chosenBy": "user",
+		"reason": "The observed blue rhythm continues into a dashed forecast and widening lavender uncertainty bands. Clear labels, consistent palette, and a compact composition. The bands are illustrative, not calculated intervals."
+	},
+	"reward-garden": {
+		"variant": "B",
+		"chosenBy": "user",
+		"reason": "The maze geometry stays consistent while wandering attempts give way to a successful route. Clear comparison without decorative machinery."
+	},
+	"retrieval-constellation": {
+		"variant": "A",
+		"chosenBy": "user",
+		"reason": "User-selected botanical source cards, regenerated with separate Fern-to-Fern and Moss-to-Moss connections. Only illustrative Source 1 and Source 2 tabs, with no invented reference citations."
+	},
+	"evaluation-balance": {
+		"variant": "B",
+		"chosenBy": "user",
+		"reason": "User-selected contrast between a convincing response and checking the evidence. The two summit elevations illustrate conflicting claims, not verified measurements of a named mountain."
+	},
+	"tokens-fieldguide": {
+		"variant": "A",
+		"chosenBy": "user",
+		"reason": "User-selected text pieces and butterfly image patches, each mapped into vector capsules. The bead colors are schematic placeholders, not measured embeddings."
+	},
+	"ai-atlas": {
+		"status": "interactive-only",
+		"chosenBy": "user",
+		"reason": "The interactive map already explains these relationships; a second static map repeats the idea."
+	},
+	"transformer-atelier": {
+		"variant": "C",
+		"chosenBy": "user",
+		"reason": "User-selected context, transformer block, and next-token alternatives. Regenerated with exactly five context positions and a matching five-by-five lower-triangular causal mask."
+	},
+	"agent-circuit": {
+		"variant": "A",
+		"chosenBy": "user",
+		"reason": "User-selected Goal, Model, Tool, Result, and Done cycle. Model requests a tool, receives its result, and decides how to continue."
+	},
+	"self-supervised": {
+		"variant": "H",
+		"chosenBy": "user",
+		"rejectedVariants": ["A", "B", "C", "D", "E"],
+		"reason": "The user selected the open book and highlighted continuation. Existing text supplies both context and the target, explaining self-supervised pretraining."
+	}
+}

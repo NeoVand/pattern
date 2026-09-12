@@ -6,6 +6,7 @@ import '../../routes/layout.css';
 import '../../routes/refinements.css';
 import '../../routes/image-led.css';
 import '../../routes/elegance.css';
+import '../../routes/theme.css';
 
 beforeEach(async () => {
 	await page.viewport(1100, 1000);

@@ -1,0 +1,25 @@
+{
+	"tool": "Built-in image generation",
+	"purpose": "The selected conceptual k-nearest-neighbor illustration accompanies the exact interactive distance calculation.",
+	"candidates": [
+		{
+			"letter": "A",
+			"asset": "/art-review/neighbor-studies/a.png",
+			"source": "/Users/neo/.codex/generated_images/01a08dbb-d3ec-7f50-b8e0-631cae5933e1/exec-f7a3c969-c6d5-4565-b95c-a9819af3e7b5.png",
+			"review": "Correct five-neighbor vote, but opaque background; unsuitable as a theme-neutral cutout.",
+			"prompt": "Create one exquisite educational infographic for an adult machine-learning museum website named Pattern. Landscape wide composition, real transparent alpha background, tightly framed with 5% safe margin. Topic: k-nearest neighbors classification, k = 5. A precise top-down XY plot made of finely textured ceramic elements, restrained ice-blue #88accd and lavender #b8a3dc, midnight ink #334052 and tiny ivory labels. Center: hollow charcoal crosshair, the NEW SAMPLE, leave its interior transparent. Exactly five nearby labeled beads lie within a delicate dashed circular radius centered on query: three blue beads, two lavender beads. Fine dotted spokes visibly connect the new sample to EACH of those five individual beads, never to the same bead twice. Outside this radius: just six smaller muted blue/lavender observations, all farther away. To right an elegant compact calculation assembly: five colored votes arranged blue blue blue lavender lavender, then a subtle arrow to blue winner. Set beautifully crisp text in DM Sans style, exact labels: 'Measure distance', 'Keep the 5 nearest', 'Count their labels', '3 blue · 2 lavender', 'Predict blue'. The three stages must be visually connected as a clear sequence. A small restrained ivory capsule contains the equation 'd = √(Δx² + Δy²)'. Only text listed, no giant title, no logos, no orange, no green, no floor or opaque background. Print-level typographic precision, thoughtful alignment, generous but not wasteful spacing, sophisticated scientific artifact, not a toy. This is an explanatory diagram, not decorative data art."
+		},
+		{
+			"letter": "B",
+			"asset": "/art-review/neighbor-studies/b.png",
+			"source": "/Users/neo/.codex/generated_images/01a08dbb-d3ec-7f50-b8e0-631cae5933e1/exec-a34765d8-d18a-4445-85df-355b6a3655fa.png",
+			"review": "Clear three-stage structure. Distances are schematic labels, not measured from rendered geometry; colors are more saturated than the live interface.",
+			"prompt": "Create a sophisticated clean scientific editorial infographic, real transparent alpha background, wide landscape 2.3:1, tight usable crop and complete objects within frame. Pattern app palette exclusively ice-blue #88accd, lavender #b8a3dc, slate #334052, pale porcelain ivory. An elegant left-to-right triptych explaining k-nearest-neighbor classification through THREE LINKED VIEWS of the same query. Minimal translucent blue-gray glass scatter field on left: a hollow crosshair query surrounded by 3 blue dots and 2 lavender dots inside a thin dashed circle, exactly five spokes from query to five distinct dots; four distant dots outside circle. Center: five aligned small ceramic distance bars, lengths increasing, colors BLUE, LAVENDER, BLUE, BLUE, LAVENDER, with beautiful DM Sans typography labels '1.0', '1.2', '1.4', '1.6', '1.8'; caption 'Five smallest distances'. Right: two tiny vote stacks with exactly three blue chips and two lavender chips; a refined blue result chip reading 'Blue wins, 3–2'. A clear thin curved arrow connects scatter view to sorted distances to voting. Above left small crisp label 'A new example'; below center small label 'k = 5'. No enormous panels, no heavy opaque background, no green, orange, robots or unnecessary decorations. Precise restrained composition with ivory label surfaces for legibility on light AND dark app backgrounds. Diagram should communicate distance -> nearest examples -> majority vote with impeccable accuracy, no crossed or ambiguous connectors. Museum-grade design and gorgeous physically rendered materials.",
+			"productionAsset": "/images/edition-4/nearest-neighbor-vote.webp",
+			"width": 1902,
+			"height": 827
+		}
+	],
+	"selected": "B",
+	"integratedAt": "Clustering → Predict a label (k-NN) → How nearest neighbors work"
+}

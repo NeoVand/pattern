@@ -1,0 +1,36 @@
+{
+  "model": "variational autoencoder",
+  "architecture": [
+    784,
+    128,
+    32,
+    2,
+    32,
+    128,
+    784
+  ],
+  "latentHead": "2 means + 2 log variances",
+  "activation": "GELU hidden, linear Gaussian mean/log-variance and readout",
+  "objective": "mean pixel MSE + (1/784) * mean Gaussian KL",
+  "optimizer": "Adam beta1=0.9 beta2=0.99 eps=1e-8",
+  "learningRate": 0.003,
+  "batchSize": 128,
+  "updates": 10000,
+  "trainingImages": 8000,
+  "heldOutImages": 2000,
+  "seed": 7,
+  "trainMSE": 0.03205558233311888,
+  "heldOutMSE": 0.042439275311167916,
+  "latentMin": [
+    -2.8149952170326986,
+    -3.1204213123299946
+  ],
+  "latentMax": [
+    3.5057765447394877,
+    3.2606736856771823
+  ],
+  "trainingSeconds": 20.88,
+  "weightsFormat": "little-endian float32; each layer output-major weights then biases; latent layer has four outputs",
+  "labelsUsed": false,
+  "sha256": "77db749deacf62cd5d1e6781d597b7f874f958e19d1924b92462af6efdd23531"
+}

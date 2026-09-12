@@ -1,0 +1,197 @@
+/* Shared surfaces and color roles. Labs inherit these instead of defining their own palettes. */
+:root {
+	color-scheme: dark;
+	--sans: 'DM Sans Variable', sans-serif;
+	--paper: #141619;
+	--surface: #1d232e;
+	--surface-raised: #2b3443;
+	--input: #171d27;
+	--ink: #e9edf5;
+	--muted: #a9b4c5;
+	--quiet: #8796ad;
+	--line: #a9bbdb1c;
+	--blue: #aac8ef;
+	--periwinkle: #a9b2e4;
+	--lavender: #c5b4ed;
+	--orange: #e5b18d;
+	--accent: var(--blue);
+	--accent-bg: #aac8ef14;
+	--green: var(--accent);
+	--sage: var(--accent);
+	--focus: var(--blue);
+	--control-fill: var(--blue);
+	--action-gradient: linear-gradient(115deg, #b5d2f5 0%, #b9bdeb 100%);
+	--selection-fill: #35445e;
+	--selection-ink: #e9f1ff;
+	--control-ink: #17243a;
+	--lab-card: var(--surface);
+	--lab-inset: #171d28;
+	--lab-raised: var(--surface-raised);
+	--locator: #e2eaff;
+	--training: var(--blue);
+	--validation: var(--lavender);
+	--test: var(--orange);
+	--chart-blue: #9dbfeb;
+	--chart-lavender: #c1afe9;
+	--chart-amber: #e5b18d;
+	--chart-rose: #dba5be;
+	--chart-cyan: #8ac5dc;
+	--plot: #191f2b;
+	--plot-raised: #2b3546;
+	--plot-soft: #222b3a;
+	--plot-line: #3b485e;
+	--plot-ink: #e3eaf6;
+	--plot-muted: #acb9ce;
+	--plot-quiet: #8c9db8;
+}
+
+:root[data-theme='light'] {
+	color-scheme: light;
+	--paper: #edf0f6;
+	--surface: #fbfcff;
+	--surface-raised: #e1e7f2;
+	--input: #e8edf5;
+	--ink: #29364b;
+	--muted: #5d6c83;
+	--quiet: #697a92;
+	--line: #49618424;
+	--blue: #426bad;
+	--periwinkle: #586eae;
+	--lavender: #775ba8;
+	--orange: #9d6536;
+	--accent-bg: #426bad0e;
+	--control-ink: #ffffff;
+	--action-gradient: linear-gradient(115deg, #365f9e 0%, #665698 100%);
+	--selection-fill: #d5e2f5;
+	--selection-ink: #243e6b;
+	--lab-inset: #eef2f8;
+	--locator: #294f8b;
+	--chart-blue: #426bad;
+	--chart-lavender: #775ba8;
+	--chart-amber: #9d6536;
+	--chart-rose: #a25278;
+	--chart-cyan: #317a96;
+	--plot: #f7f9fd;
+	--plot-raised: #dce4f0;
+	--plot-soft: #eaf0f8;
+	--plot-line: #c7d3e5;
+	--plot-ink: #29364b;
+	--plot-muted: #5d6c83;
+	--plot-quiet: #697a92;
+}
+
+.primary-button {
+	background: var(--action-gradient);
+	border-color: var(--control-fill);
+	color: var(--control-ink);
+}
+
+/* Data stages follow the same theme as their surrounding controls. */
+.plot-panel,
+.sort-stage,
+.preference-stage,
+.delivery-stage,
+.conv-workspace {
+	color-scheme: inherit;
+	--accent: var(--chart-blue);
+	--green: var(--chart-blue);
+	--control-fill: var(--chart-blue);
+	--focus: var(--chart-blue);
+}
+
+input[type='checkbox'],
+input[type='radio'],
+input[type='range'] {
+	accent-color: var(--accent);
+}
+
+/* Chapter typography has one consistent hierarchy in both themes. */
+.lesson-header h1 em,
+.intro-cover h1 em {
+	color: var(--lavender);
+}
+.lesson-header .lesson-description {
+	color: var(--muted);
+}
+
+@media (max-width: 600px) {
+	.site-header .header-model-button {
+		display: flex;
+		width: 34px;
+		min-width: 34px;
+		height: 34px;
+		justify-content: center;
+		padding: 8px;
+		font-size: 0;
+		gap: 0;
+	}
+	.site-header .header-model-button > i {
+		display: none;
+	}
+}
+
+/* Primary actions share one material across every laboratory. */
+:root body .app-shell .primary-button,
+:root body .app-shell .run-button,
+:root body .app-shell .train-base,
+:root body .app-shell .train-adapt,
+:root body .app-shell .train-control,
+:root body .app-shell .ssl-train,
+:root body .app-shell .conv-primary,
+:root body .app-shell .neural-start {
+	background: var(--action-gradient);
+	color: var(--control-ink);
+	border-color: transparent;
+	box-shadow:
+		inset 0 1px 0 #ffffff20,
+		0 3px 9px #14243f0a;
+	transition:
+		filter 180ms ease,
+		transform 180ms ease,
+		box-shadow 180ms ease;
+}
+:root
+	body
+	.app-shell
+	:is(
+		.primary-button,
+		.run-button,
+		.train-base,
+		.train-adapt,
+		.train-control,
+		.ssl-train,
+		.conv-primary,
+		.neural-start
+	):not(:disabled):hover {
+	filter: brightness(1.06);
+	box-shadow:
+		inset 0 1px 0 #ffffff25,
+		0 4px 12px #14243f16;
+}
+:root
+	body
+	.app-shell
+	:is(
+		.primary-button,
+		.run-button,
+		.train-base,
+		.train-adapt,
+		.train-control,
+		.ssl-train,
+		.conv-primary,
+		.neural-start
+	):not(:disabled):active {
+	transform: translateY(1px);
+}
+
+/* A selected option is visibly filled in either theme. */
+:root
+	body
+	.app-shell
+	:is(.choice-group, .group-picker, .street-picker, .strength-picker)
+	button[aria-pressed='true'],
+:root body .app-shell .lesson-tabs button[aria-pressed='true'] {
+	background: var(--selection-fill);
+	color: var(--selection-ink);
+	box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--blue) 55%, transparent);
+}

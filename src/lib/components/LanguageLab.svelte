@@ -4,9 +4,11 @@
 	import type { AiSession } from '$lib/ai/session.svelte';
 	import ModelConnection from './ModelConnection.svelte';
 	import ChoiceGroup from './ChoiceGroup.svelte';
+	import StoryLanguageLab from './StoryLanguageLab.svelte';
 	import TransformerView from './TransformerView.svelte';
 	let { ai }: { ai: AiSession } = $props();
-	let tab = $state<'generation' | 'transformer'>('generation');
+	let tab = $state<'generation' | 'transformer' | 'training'>('generation');
+	let storiesOpened = $state(false);
 	let prompt = $state('Explain why the Moon stays in orbit, in three clear sentences.');
 	let temperature = $state(0.7);
 	let output = $state('');
@@ -38,9 +40,10 @@
 		backend = ai.label;
 		localRun = ai.provider === 'local';
 		status = 'Reading context…';
-		document
-			.getElementById('language-output')
-			?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+		document.getElementById('language-output')?.scrollIntoView({
+			block: 'start',
+			behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+		});
 		controller = new AbortController();
 		try {
 			const result = await ai.generate({
@@ -94,9 +97,61 @@
 		onclick={() => (tab = 'transformer')}
 		><PatternIcon name="layers" size={16} /> Inside a transformer</button
 	>
+	<button
+		class:selected={tab === 'training'}
+		aria-pressed={tab === 'training'}
+		onclick={() => {
+			storiesOpened = true;
+			tab = 'training';
+		}}><PatternIcon name="training" size={16} />Train on TinyStories</button
+	>
 </div>
 {#if tab === 'generation'}
 	<div class="experiment language-experiment live-language">
+		<div class="experiment-controls">
+			<label class="field-label" for="live-prompt">Your prompt</label><textarea
+				id="live-prompt"
+				bind:value={prompt}
+				rows="4"
+				disabled={running}></textarea>
+			<div class="prompt-presets" role="group" aria-label="Example prompts">
+				{#each ['Explain', 'Imagine', 'Teach'] as name, i (name)}<button
+						disabled={running}
+						onclick={() => (prompt = suggestions[i])}
+						>{name}<PatternIcon name="arrowUpRight" size={12} /></button
+					>{/each}
+			</div>
+			<ChoiceGroup
+				label="Temperature"
+				value={temperature}
+				options={[
+					{ value: 0, label: 'Focused' },
+					{ value: 0.7, label: 'Balanced' },
+					{ value: 1.1, label: 'Varied' }
+				]}
+				onchange={(v) => (temperature = v)}
+				disabled={running}
+			/>
+			<p class="control-help">
+				Higher temperature allows less likely tokens more often. It changes variety, not factual
+				accuracy. Some OpenAI models use their own decoding settings.
+			</p>
+			{#if running}<button class="primary-button" onclick={() => controller?.abort()}
+					><PatternIcon name="stop" size={15} /> Stop generation</button
+				>{:else}<button
+					class="primary-button"
+					disabled={!prompt.trim() || ai.busy}
+					onclick={generate}
+					><PatternIcon name="play" size={15} />{ai.ready
+						? 'Generate answer'
+						: 'Choose a model'}</button
+				>{/if}
+			<div class="control-divider"></div>
+			<p class="control-help">
+				Generate the same prompt twice. Then change one detail. The weights stay fixed; the context
+				and sampling shape the answer.
+			</p>
+		</div>
 		<div class="plot-panel" id="language-output">
 			<div class="plot-heading">
 				<span><i class="live-dot"></i> THE LANGUAGE STUDIO</span>{#if running}<button
@@ -151,54 +206,11 @@
 					distribution.
 				</p>{/if}
 		</div>
-		<div class="experiment-controls">
-			<span class="eyebrow">GIVE THE MODEL CONTEXT</span>
-			<label class="field-label" for="live-prompt">Your prompt</label><textarea
-				id="live-prompt"
-				bind:value={prompt}
-				rows="6"
-				disabled={running}></textarea>
-			<div class="prompt-presets" role="group" aria-label="Example prompts">
-				{#each ['Explain', 'Imagine', 'Teach'] as name, i (name)}<button
-						disabled={running}
-						onclick={() => (prompt = suggestions[i])}
-						>{name}<PatternIcon name="arrowUpRight" size={12} /></button
-					>{/each}
-			</div>
-			<ChoiceGroup
-				label="Temperature"
-				value={temperature}
-				options={[
-					{ value: 0, label: 'Focused' },
-					{ value: 0.7, label: 'Balanced' },
-					{ value: 1.1, label: 'Varied' }
-				]}
-				onchange={(v) => (temperature = v)}
-				disabled={running}
-			/>
-			<p class="control-help">
-				Higher temperature allows less likely tokens more often. It changes variety, not factual
-				accuracy. Some OpenAI models use their own decoding settings.
-			</p>
-			{#if running}<button class="primary-button" onclick={() => controller?.abort()}
-					><PatternIcon name="stop" size={15} /> Stop generation</button
-				>{:else}<button
-					class="primary-button"
-					disabled={!prompt.trim() || ai.busy}
-					onclick={generate}
-					><PatternIcon name="play" size={15} />{ai.ready
-						? 'Generate answer'
-						: 'Choose a model'}</button
-				>{/if}
-			<div class="control-divider"></div>
-			<span class="eyebrow">TRY THIS</span>
-			<p class="control-help">
-				Generate the same prompt twice. Then change one detail. The weights stay fixed; the context
-				and sampling shape the answer.
-			</p>
-		</div>
 	</div>
-{:else}<TransformerView />{/if}
+{:else if tab === 'transformer'}<TransformerView />{/if}
+<div hidden={tab !== 'training'}>
+	{#if storiesOpened}<StoryLanguageLab />{/if}
+</div>
 <div class="lab-explanation">
 	<span class="eyebrow">TRAINING ≠ GENERATING</span>
 	<p>
@@ -208,3 +220,69 @@
 		be wrong.
 	</p>
 </div>
+
+<style>
+	.live-language {
+		grid-template-areas: 'output controls';
+		grid-template-columns: minmax(0, 1fr) minmax(300px, 35%);
+	}
+	.live-language .experiment-controls {
+		grid-area: controls;
+		min-width: 0;
+	}
+	.live-language .field-label {
+		margin-top: 0;
+	}
+	.live-language .plot-panel {
+		grid-area: output;
+		min-width: 0;
+	}
+	.plot-heading {
+		min-height: 30px;
+	}
+	.response-sheet {
+		padding-inline: 6px;
+	}
+	.response-sheet:has(.output-empty) {
+		display: grid;
+		align-content: center;
+	}
+	.output-empty {
+		min-height: 260px;
+	}
+	.model-output {
+		animation: answer-arrive 180ms ease-out;
+	}
+	@keyframes answer-arrive {
+		from {
+			opacity: 0;
+			transform: translateY(4px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	@media (max-width: 760px) {
+		.live-language {
+			grid-template-areas: 'controls' 'output';
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.live-language .experiment-controls {
+			padding: 24px;
+		}
+		.response-sheet {
+			min-height: 225px;
+			padding-block: 20px;
+		}
+		.output-empty {
+			min-height: 190px;
+			padding: 18px 8px;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.model-output {
+			animation: none;
+		}
+	}
+</style>

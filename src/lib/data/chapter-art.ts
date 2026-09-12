@@ -11,145 +11,158 @@ export type ChapterArt = {
 };
 
 export const chapterArt: Record<string, ChapterArt> = {
+	'self-supervised': {
+		asset: 'edition-3/self-supervised',
+		title: 'The next word is already in the book',
+		alt: 'An open book holds the context Once upon a on ivory tiles. A lavender continuation tile reveals time, the target supplied by the text itself.',
+		caption: 'The data contains the question and its answer.',
+		note: 'A next-token objective uses earlier text as context and the following token as its training target. Token boundaries depend on the tokenizer. The MNIST lab below explores another self-supervised objective: reconstructing an image through a two-dimensional code, with a regularizer on that code.',
+		action: 'Explore self-supervision',
+		tone: 'light',
+		width: 1942,
+		height: 809
+	},
 	clustering: {
-		asset: 'clustering-islands',
+		asset: 'edition-2/clustering-islands',
 		title: 'Structure without an answer key',
-		alt: 'Three groups of green, lavender, and amber stones on an oval dark tray, with a brass ring marking the center of each group.',
+		alt: 'Three groups of ice-blue, lavender, and apricot mineral pebbles, each with a ring marking its center.',
 		caption: 'Similarity brings examples together. You decide what the groups mean.',
 		note: 'The stones are a visual analogy for clustering by measured features. The café experiment below actually assigns examples to their nearest center and updates the centers from those assignments.',
 		action: 'Discover the groups',
 		tone: 'dark',
-		width: 1660
+		width: 1672,
+		height: 941
 	},
 	reinforcement: {
-		asset: 'reward-garden',
+		asset: 'edition-3/reward-garden',
 		title: 'A route learned through experience',
-		alt: 'A brass sphere follows a winding path through a tiled garden toward an arch labeled Reward; dotted branches explore dead ends.',
+		alt: 'Two matching ivory mazes: lavender paths wander through early attempts on the left, while a blue route reaches the apricot goal on the right.',
 		caption: 'A good action can lead to a reward several steps later.',
-		note: 'This garden is an illustration of exploration and delayed reward. The live delivery world below has its own layout, learned action values, and policy. A language-model agent does not necessarily learn a new policy while it runs.',
+		note: 'The two mazes illustrate exploration and an improved policy. They are not traces from the lab. The live delivery world below has its own layout, learned action values, and policy. A language-model agent does not necessarily learn a new policy while it runs.',
 		action: 'Train a policy',
-		tone: 'dark'
+		tone: 'dark',
+		width: 1841,
+		height: 700
 	},
 	adaptation: {
-		asset: 'adaptation-library',
+		asset: 'edition-2/adaptation-library',
 		title: 'Learn broadly, then specialize',
-		alt: 'A wide library of examples feeds a pretraining station, a smaller lavender stack feeds adaptation, and a locked model at inference produces a paper answer.',
+		alt: 'Pretrain: broad botanical examples feed a blue model stack. Adapt: specialized flower examples change its weights. Use: a locked model produces an iris card.',
 		caption: 'Training changes the model. Inference uses what was learned.',
 		note: 'The three stations show different uses of data. The tiny model below actually updates softmax weights during pretraining and adaptation. It is not a transformer or a full language model at modern scale.',
 		action: 'Adapt a small model',
-		tone: 'light'
+		tone: 'light',
+		width: 1942,
+		height: 725
 	},
 	retrieval: {
-		asset: 'retrieval-constellation',
+		asset: 'edition-3/retrieval-constellation',
 		title: 'A question finds its sources',
-		alt: 'A lavender question card connects to three botanical source cards and an answer card among a larger suspended library.',
+		alt: 'A botanical library answers a question about shade-loving plants. One blue line connects the Fern card to the Fern answer; a separate line connects Moss to Moss.',
 		caption: 'Bring the right evidence into the conversation.',
-		note: 'The illustrated library is a metaphor, not a record of a model request. Below, OpenAI computes real embeddings and a language model receives only the passages shown as selected sources.',
+		note: 'The two connections show which source supports each part of an answer. Source 1 and Source 2 are illustrative tabs. Below, real embeddings retrieve passages and the language model receives the selected sources as context.',
 		action: 'Search by meaning',
-		tone: 'dark'
+		tone: 'dark',
+		width: 1923,
+		height: 752
 	},
 	vision: {
-		asset: 'vision-lens',
+		asset: 'edition-2/vision-lens',
 		title: 'Different inputs, shared context',
-		alt: 'A photograph, a handwritten botanical notebook, and a chart feed through a glass lens into an answer sheet.',
+		alt: 'A flower image and the question “What color?” meet at a lens labeled “Image + words”, producing the answer “An orange flower.”',
 		caption: 'Pixels and words can become part of the same question.',
-		note: 'The optical lens is an analogy for combining modalities. The actual vision model uses learned numerical representations. The lab passes the selected image pixels along with your question.',
+		note: 'The glass bridge is an analogy for combining modalities. A vision-language model works with learned numerical representations. The lab sends the selected image pixels along with your question.',
 		action: 'Ask an image',
-		tone: 'dark'
+		tone: 'dark',
+		width: 1942,
+		height: 599
 	},
 	evaluation: {
-		asset: 'evaluation-balance',
-		title: 'Fluency on one side, evidence on the other',
-		alt: 'A brass balance weighs a smooth lavender orb labeled A convincing answer against evidence cards, with clear, distorted, and obscured glass panels in front.',
+		asset: 'edition-3/evaluation-balance',
+		title: 'A fluent answer still needs evidence',
+		alt: 'A lavender ribbon says Sounds convincing. A magnifying glass over reference cards reveals two conflicting summit elevation claims: 8,848 m and 8,844 m.',
 		caption: 'Judge what the answer supports, not just how it sounds.',
-		note: 'The scale illustrates the difference between confidence of presentation and evidence of correctness. The evaluation below runs real questions with visible grading rules; a small suite cannot establish reliability for every use.',
+		note: 'The two elevations are illustrative conflicting claims, not verified measurements of a named mountain. Checking an answer requires examining sources and resolving disagreements. The live evaluation runs real questions with visible grading rules; a small suite cannot establish reliability for every use.',
 		action: 'Evaluate a model',
 		tone: 'light',
-		width: 1660
+		width: 1882,
+		height: 820
 	},
 	training: {
-		asset: 'learning-landscape',
+		asset: 'edition-2/learning-landscape',
 		title: 'A landscape of error',
-		alt: 'A layered green landscape with brass spheres tracing a downhill path from higher error to lower error. Three cards read Predict, Measure error, and Adjust.',
+		alt: 'Seven brass spheres trace a downhill route over layered ice-blue and lavender glass terrain into a low basin.',
 		caption: 'Each correction is a step toward a better prediction.',
 		note: 'The landscape is an analogy: a position represents model settings, and height represents loss. Gradient descent follows the local slope. Its path need not reach the lowest point in every landscape.',
 		action: 'Train a line',
-		tone: 'dark'
-	},
-	generalization: {
-		asset: 'fit-triptych',
-		title: 'Three ways to fit the same examples',
-		alt: 'Three glass panels hold the same arch of data points. A straight line is too simple; a smooth curve captures a useful pattern; a twisting curve memorizes individual examples.',
-		caption: 'Fitting every example is not the same as learning a useful pattern.',
-		note: 'Underfitting misses the structure. Overfitting captures quirks of the training examples. Held-out data helps us tell the difference; the live comparison below shows the actual errors.',
-		action: 'Compare the fits',
-		tone: 'light'
+		tone: 'dark',
+		width: 1672,
+		height: 941
 	},
 	forecasting: {
-		asset: 'forecast-seasons',
+		asset: 'edition-3/forecast-seasons',
 		title: 'Patterns cross the boundary of time',
-		alt: 'Coffee cups follow a brass timeline. Repeating green waves represent the past; beyond a glass divider, an amber wave extends into the future inside a widening translucent fan of uncertainty.',
+		alt: 'A repeating blue wave labeled Observed crosses a time boundary into a dashed lavender Forecast, surrounded by widening translucent uncertainty bands.',
 		caption: 'Past patterns are clues. The future still carries uncertainty.',
-		note: 'Seasonality is a pattern that repeats over time. A forecast extends what was learned from the past. The widening fan is an illustration of uncertainty, not a calculated prediction interval for the model below.',
+		note: 'Seasonality is a pattern that repeats over time. A forecast extends what was learned from the past. The widening bands illustrate uncertainty, not calculated prediction intervals or outputs from the model below.',
 		action: 'Forecast demand',
-		tone: 'dark'
+		tone: 'dark',
+		width: 1938,
+		height: 536
 	},
 	'deep-learning': {
-		asset: 'neuron-anatomy',
+		asset: 'edition-3/neuron-anatomy',
 		title: 'Inside one neuron',
-		alt: 'A tanh neuron: 0.60 times 0.80 contributes 0.48; negative 0.40 times negative 0.50 contributes 0.20. Adding bias negative 0.10 gives 0.58. Applying tanh gives approximately 0.523.',
+		alt: 'A labeled neuron: three Inputs pass through adjustable Weights, meet in a Sum with a Bias, then pass through an Activation to one Output.',
 		caption: 'Multiply the inputs by weights. Add a bias. Apply an activation.',
-		note: 'This worked example depicts one hidden tanh neuron. Its inputs, weights, and bias are chosen for explanation. The live network below shows its own actual values for every neuron, with a sigmoid classifier output or a linear regression output.',
+		note: 'This is a visual analogy for one neuron: multiply inputs by weights, add a bias, then apply a nonlinear activation. The live network below exposes the actual values. Its hidden neurons use tanh, with a sigmoid classifier output or a linear regression output.',
 		action: 'Look inside the network',
 		tone: 'dark',
-		width: 1672,
-		height: 941
+		width: 1927,
+		height: 787
 	},
 	tokens: {
-		asset: 'tokens-fieldguide',
-		title: 'Different inputs, a sequence of vectors',
-		alt: 'Text is separated into four vocabulary pieces and mapped to embeddings. A fern image is divided into a four-by-four patch grid, sixteen regions, and sixteen visual vectors. Position identifies where each piece belongs.',
-		caption: 'Text pieces and image patches enter through different representations.',
-		note: 'The bead columns illustrate vectors; they are not measured embeddings. Text uses vocabulary tokens, while a vision encoder can project image patches into vectors. Position information is included in model-specific ways, and a system may add special tokens, resize images, or combine patches. The explorer below shows actual text IDs and exact image regions.',
+		asset: 'edition-3/tokens-fieldguide',
+		title: 'Pieces become numerical representations',
+		alt: 'The sentence The cat sleeps. is split into four illustrative text pieces. A butterfly image becomes four patches. Each piece points to a small capsule representing a numerical vector.',
+		caption: 'Words and image patches become pieces a model can work with.',
+		note: 'The bead capsules stand for vectors; their colors are not actual embedding values. Text boundaries depend on the tokenizer. Image encoders may resize, project, combine, or add tokens. The explorer below shows actual text IDs and exact image regions.',
 		action: 'Explore tokens and patches',
 		tone: 'dark',
-		width: 1672,
-		height: 941
+		width: 1738,
+		height: 801
 	},
 	representations: {
-		asset: 'seeing-in-layers',
+		asset: 'edition-2/seeing-in-layers',
 		title: 'Seeing in layers',
-		alt: 'Four specimen panels show one sneaker as a mosaic of pixels, a contour drawing of edges, a collection of colored parts, and a complete recognizable object.',
+		alt: 'Four labeled representations of a blue sneaker: Pixels, Edges, Parts, and Object.',
 		caption: 'A useful representation makes the next step easier.',
 		note: 'Pixels, edges, parts, and objects are a visual analogy for increasingly useful representations. Real learned layers can mix many features; they do not each have one fixed, human-readable job.',
-		action: 'Train a deeper model',
-		tone: 'light'
-	},
-	'modern-ai': {
-		asset: 'ai-atlas',
-		title: 'An atlas of related ideas',
-		alt: 'Nested architectural terraces place deep learning inside machine learning, and machine learning inside artificial intelligence. A neural lattice sits at the center, with cards suggesting text, images, and audio behind it.',
-		caption: 'AI is the broad field. Learning is one way into it.',
-		note: 'The nested terraces show a family relationship, not a timeline or a ranking of intelligence. Generative describes what a model does—producing content—and can apply across model families.',
-		action: 'Explore the map',
-		tone: 'dark'
+		action: 'Inspect a vision network',
+		tone: 'light',
+		width: 1942,
+		height: 624
 	},
 	language: {
-		asset: 'transformer-atelier',
+		asset: 'edition-3/transformer-atelier',
 		title: 'From context to the next token',
-		alt: 'Word tiles reading The cat sat on the feed a woven attention panel and stacked neural layers. Three output bars suggest mat, chair, and floor as possible next tokens.',
+		alt: 'Five context tokens, The key is on the, enter a transformer block. A five-by-five grid permits attention only to current and earlier positions. Next-token alternatives table, shelf, and desk have different illustrative bar lengths.',
 		caption: 'Read the context. Predict a token. Add it, and repeat.',
-		note: 'This is an illustrated token choice, not a trace from the live model. Attention and neural transformations are repeated across transformer blocks. Tokens can be words, pieces of words, or punctuation.',
+		note: 'The grid shows allowed attention positions, not measured attention weights: each row can use itself and earlier columns. Attention and neural transformations repeat across blocks. The bar lengths are illustrative, not live probabilities. Generation selects one token, appends it to the context, and repeats.',
 		action: 'Run a language model',
-		tone: 'light'
+		tone: 'light',
+		width: 1935,
+		height: 598
 	},
 	agents: {
-		asset: 'agent-circuit',
-		title: 'The loop between thought and action',
-		alt: 'A circular brass track links a model, a tool, its result, and a next-step decision around a central goal. A branch exits the loop at Done.',
+		asset: 'edition-3/agent-circuit',
+		title: 'A model that can use tools',
+		alt: 'A goal reaches a model. The model calls a tool, the tool returns a result to the model, and the model can either continue the loop or finish at Done.',
 		caption: 'An action produces a result. That result informs the next step.',
 		note: 'The model requests a tool; the application runs it and returns the result as context. The loop continues until the task is done or a stopping rule is reached. The lab below records real tool calls and their results.',
 		action: 'Run an agent',
-		tone: 'light'
+		tone: 'light',
+		width: 1948,
+		height: 799
 	}
 };

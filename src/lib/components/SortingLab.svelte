@@ -1,6 +1,8 @@
 <script lang="ts">
 	import PatternIcon from '$lib/components/PatternIcon.svelte';
 	import { flip } from 'svelte/animate';
+	import { cubicInOut } from 'svelte/easing';
+	import { prefersReducedMotion } from 'svelte/motion';
 	import { onDestroy } from 'svelte';
 	import { sortingFrames } from '$lib/ml/sorting';
 	let sequence = $state([4, 1, 6, 2, 5, 3]);
@@ -61,13 +63,17 @@
 		<div class="sort-bars" aria-label={`Numbers in current order: ${frame.values.join(', ')}`}>
 			{#each frame.values as value, index (value)}
 				<div
-					animate:flip={{ duration: 400 }}
+					animate:flip={{ duration: prefersReducedMotion.current ? 0 : 420, easing: cubicInOut }}
 					class="sort-bar-slot"
 					class:comparing={frame.pair.includes(index)}
 					class:swapping={frame.action === 'swap' && frame.pair.includes(index)}
 					class:sorted={done}
 				>
-					<div class="sort-bar" style:height={`${50 + value * 25}px`}>
+					<div
+						class="sort-bar"
+						style:--bar-shade={`color-mix(in srgb, var(--blue) ${42 + value * 8}%, var(--surface-raised))`}
+						style:height={`${50 + value * 25}px`}
+					>
 						<span>{value}</span><i></i>
 					</div>
 					<span class="sort-position">{done ? '✓' : String(index + 1).padStart(2, '0')}</span>
@@ -75,6 +81,22 @@
 			{/each}
 		</div>
 		<p class="sort-narration" role="status">{frame.message}</p>
+		<div class="sort-timeline">
+			<label for="sorting-step">Follow each step <span>{step} / {frames.length - 1}</span></label>
+			<input
+				id="sorting-step"
+				type="range"
+				min="0"
+				max={frames.length - 1}
+				step="1"
+				value={step}
+				oninput={(event) => {
+					stop();
+					step = +event.currentTarget.value;
+				}}
+				aria-label="Algorithm step"
+			/>
+		</div>
 		<div class="sort-controls">
 			<button class="primary-button" onclick={play}
 				>{#if running}<PatternIcon name="pause" size={16} /> Pause{:else if done}<PatternIcon
@@ -110,3 +132,13 @@
 		<span class="algorithm-name">This algorithm is called bubble sort.</span>
 	</div>
 </div>
+
+<style>
+	.sort-bar {
+		background: var(--bar-shade);
+		color: var(--ink);
+		transition:
+			background 250ms ease,
+			box-shadow 250ms ease;
+	}
+</style>

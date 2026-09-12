@@ -1,7 +1,7 @@
 import type { ChatMessage, Completion, GenerationOptions } from './types';
 
 export async function openAIRequest(
-	endpoint: 'responses' | 'embeddings',
+	endpoint: 'responses' | 'embeddings' | 'chat/completions' | 'audio/speech' | 'images/generations',
 	payload: Record<string, unknown>,
 	key: string,
 	signal?: AbortSignal,

@@ -30,13 +30,24 @@ export function developmentAI(): Plugin {
 		if (req.url === '/.pattern/ai/status' && req.method === 'GET')
 			return json(res, 200, { available: !!key, model: env.OPENAI_MODEL || 'gpt-4.1-mini' });
 		const endpoint = req.url.slice('/.pattern/ai/'.length);
-		if (req.method !== 'POST' || !['responses', 'embeddings'].includes(endpoint))
+		const listing = endpoint === 'models' && req.method === 'GET';
+		if (
+			!listing &&
+			(req.method !== 'POST' ||
+				![
+					'responses',
+					'embeddings',
+					'chat/completions',
+					'audio/speech',
+					'images/generations'
+				].includes(endpoint))
+		)
 			return json(res, 404, { error: { message: 'Unknown operation.' } });
 		if (!key)
 			return json(res, 503, {
 				error: { message: 'Add OPENAI_API_KEY to .env, or connect your own key.' }
 			});
-		if (!req.headers['content-type']?.startsWith('application/json'))
+		if (!listing && !req.headers['content-type']?.startsWith('application/json'))
 			return json(res, 415, { error: { message: 'Expected JSON.' } });
 		let body = '';
 		for await (const chunk of req) {
@@ -46,13 +57,48 @@ export function developmentAI(): Plugin {
 		}
 		let payload: Record<string, unknown>;
 		try {
-			payload = JSON.parse(body);
+			payload = listing ? {} : JSON.parse(body);
 		} catch {
 			return json(res, 400, { error: { message: 'Invalid JSON.' } });
 		}
-		if (!payload || Array.isArray(payload) || typeof payload.model !== 'string' || !payload.input)
+		if (
+			!listing &&
+			(!payload ||
+				Array.isArray(payload) ||
+				typeof payload.model !== 'string' ||
+				!(endpoint === 'chat/completions'
+					? payload.messages
+					: endpoint === 'images/generations'
+						? payload.prompt
+						: payload.input))
+		)
 			return json(res, 400, { error: { message: 'A model and input are required.' } });
-		if (endpoint === 'responses') {
+		if (endpoint === 'images/generations') {
+			if (
+				!/^gpt-image-(?:2\.5-(?:sunburst|flare)|2|1\.5|1-mini)(?:-\d{4}-\d{2}-\d{2})?$/.test(
+					String(payload.model)
+				) ||
+				typeof payload.prompt !== 'string' ||
+				payload.prompt.length > 4000 ||
+				!['1024x1024', '1536x1024', '1024x1536'].includes(String(payload.size)) ||
+				!['low', 'medium', 'high'].includes(String(payload.quality))
+			)
+				return json(res, 400, {
+					error: {
+						message:
+							'Choose a supported image model, size, quality, and a prompt up to 4,000 characters.'
+					}
+				});
+			payload = {
+				model: payload.model,
+				prompt: payload.prompt,
+				size: payload.size,
+				quality: payload.quality,
+				n: 1,
+				output_format: 'png',
+				background: 'opaque'
+			};
+		} else if (endpoint === 'responses') {
 			payload.store = false;
 			payload.max_output_tokens = Math.min(
 				4096,
@@ -65,6 +111,25 @@ export function developmentAI(): Plugin {
 				return json(res, 400, {
 					error: { message: 'This lab supports its own local functions only.' }
 				});
+		} else if (endpoint === 'chat/completions') {
+			payload.store = false;
+			payload.max_completion_tokens = Math.min(
+				2048,
+				Math.max(256, Number(payload.max_completion_tokens) || 2048)
+			);
+			if (
+				!/^gpt-audio/.test(String(payload.model)) ||
+				JSON.stringify(payload.messages).length > 4000 ||
+				payload.tools
+			)
+				return json(res, 400, {
+					error: { message: 'Use a short speech prompt and an audio model.' }
+				});
+		} else if (
+			endpoint === 'audio/speech' &&
+			(typeof payload.input !== 'string' || payload.input.length > 1200)
+		) {
+			return json(res, 400, { error: { message: 'Use up to 1,200 characters for speech.' } });
 		} else if (Array.isArray(payload.input) && payload.input.length > 64) {
 			return json(res, 400, { error: { message: 'Embed up to 64 passages at a time.' } });
 		}
@@ -74,10 +139,13 @@ export function developmentAI(): Plugin {
 		});
 		try {
 			const upstream = await fetch(`https://api.openai.com/v1/${endpoint}`, {
-				method: 'POST',
+				method: listing ? 'GET' : 'POST',
 				headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
-				body: JSON.stringify(payload),
-				signal: AbortSignal.any([abort.signal, AbortSignal.timeout(90_000)])
+				body: listing ? undefined : JSON.stringify(payload),
+				signal: AbortSignal.any([
+					abort.signal,
+					AbortSignal.timeout(endpoint === 'images/generations' ? 240_000 : 90_000)
+				])
 			});
 			res.writeHead(upstream.status, {
 				'Content-Type': upstream.headers.get('content-type') ?? 'application/json',

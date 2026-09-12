@@ -1,3 +1,6 @@
+import { compatibleModels, listOpenAIModels, type ModelOption } from './catalog';
+import { generateImage, type ImageOptions } from './images';
+import { generateSpeech, type SpeechOptions } from './speech';
 import { LocalModel } from './local';
 import { generateOpenAI, embedOpenAI } from './openai';
 import type { GenerationOptions, ModelProgress } from './types';
@@ -18,6 +21,7 @@ export class AiSession {
 				this.useDevKey = true;
 				this.provider = 'openai';
 				this.openaiModel = status.model;
+				void this.refreshModels();
 			}
 		} catch {
 			/* Static deployments have no development connection. */
@@ -39,6 +43,86 @@ export class AiSession {
 		}
 	}
 	openaiModel = $state('gpt-4.1-mini');
+	speechModel = $state('gpt-4o-mini-tts');
+	models = $state<ModelOption[]>([]);
+	speechModels = $state<ModelOption[]>([]);
+	imageModels = $state<ModelOption[]>([]);
+	imageModel = $state('gpt-image-2.5-flare');
+	modelsLoading = $state(false);
+	modelsError = $state('');
+	private modelsRevision = 0;
+	async refreshModels() {
+		const revision = ++this.modelsRevision;
+		this.models = [];
+		this.speechModels = [];
+		this.imageModels = [];
+		this.modelsError = '';
+		if (!(this.useDevKey && this.devKeyAvailable) && !this.apiKey.trim()) {
+			this.modelsLoading = false;
+			return;
+		}
+		this.modelsLoading = true;
+		try {
+			const ids = await listOpenAIModels(this.apiKey, this.useDevKey && this.devKeyAvailable);
+			if (revision !== this.modelsRevision) return;
+			this.models = compatibleModels(ids, 'language');
+			this.speechModels = compatibleModels(ids, 'speech');
+			this.imageModels = compatibleModels(ids, 'image');
+			if (!this.imageModels.some((m) => m.value === this.imageModel))
+				this.imageModel = this.imageModels[0]?.value ?? '';
+			if (!this.models.some((m) => m.value === this.openaiModel))
+				this.openaiModel = this.models[0]?.value ?? '';
+			if (!this.speechModels.some((m) => m.value === this.speechModel))
+				this.speechModel = this.speechModels[0]?.value ?? '';
+			if (!this.models.length)
+				this.modelsError = 'No models compatible with the language labs are available to this key.';
+		} catch (error) {
+			if (revision === this.modelsRevision)
+				this.modelsError = error instanceof Error ? error.message : 'Could not load models.';
+		} finally {
+			if (revision === this.modelsRevision) this.modelsLoading = false;
+		}
+	}
+	async createImage(options: ImageOptions) {
+		if (
+			this.provider !== 'openai' ||
+			!this.ready ||
+			!this.imageModels.some((m) => m.value === this.imageModel)
+		) {
+			this.settingsOpen = true;
+			throw new Error('Connect an OpenAI image model to create an image.');
+		}
+		if (this.busy) throw new Error('Wait for the current request to finish.');
+		this.busy = true;
+		try {
+			return await generateImage(
+				this.apiKey,
+				this.imageModel,
+				options,
+				this.useDevKey && this.devKeyAvailable
+			);
+		} finally {
+			this.busy = false;
+		}
+	}
+	async speak(options: SpeechOptions) {
+		if (this.provider !== 'openai' || !this.ready || !this.speechModel) {
+			this.settingsOpen = true;
+			throw new Error('Connect an OpenAI audio model to generate speech.');
+		}
+		if (this.busy) throw new Error('Wait for the current request to finish.');
+		this.busy = true;
+		try {
+			return await generateSpeech(
+				this.apiKey,
+				this.speechModel,
+				options,
+				this.useDevKey && this.devKeyAvailable
+			);
+		} finally {
+			this.busy = false;
+		}
+	}
 	localModel = $state('onnx-community/Qwen3-0.6B-ONNX');
 	loadedModel = $state('');
 	settingsOpen = $state(false);
@@ -107,12 +191,12 @@ export class AiSession {
 	get ready() {
 		return this.provider === 'openai'
 			? (!!this.apiKey.trim() || (this.useDevKey && this.devKeyAvailable)) &&
-					!!this.openaiModel.trim()
+					this.models.some((model) => model.value === this.openaiModel)
 			: this.loadedModel === this.localModel && this.local.ready;
 	}
 	get label() {
 		return this.provider === 'openai'
-			? this.openaiModel
+			? (this.models.find((m) => m.value === this.openaiModel)?.label ?? this.openaiModel)
 			: this.localModel.includes('0.6B')
 				? 'Qwen3 · 0.6B'
 				: 'Qwen3 · 1.7B';

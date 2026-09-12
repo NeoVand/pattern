@@ -1,0 +1,1072 @@
+[
+	{
+		"asset": "rules-to-learning",
+		"variant": "A",
+		"source": "exec-16df9def-2625-488f-88ee-4890edeb81bd.png",
+		"width": 1919,
+		"height": 681,
+		"crop": {
+			"left": 0,
+			"top": 58,
+			"width": 1919,
+			"height": 681
+		},
+		"transparentFraction": 0.5355462936913381,
+		"selected": false
+	},
+	{
+		"asset": "rules-to-learning",
+		"variant": "B",
+		"source": "exec-63be1f2e-6fbb-408e-9065-ebc774d047ba.png",
+		"width": 1942,
+		"height": 743,
+		"crop": {
+			"left": 0,
+			"top": 40,
+			"width": 1942,
+			"height": 743
+		},
+		"transparentFraction": 0.37484962554373497,
+		"selected": false
+	},
+	{
+		"asset": "rules-to-learning",
+		"variant": "C",
+		"source": "exec-37f8377d-b4b9-4693-9e35-e83866c223ac.png",
+		"width": 1942,
+		"height": 749,
+		"crop": {
+			"left": 0,
+			"top": 21,
+			"width": 1942,
+			"height": 749
+		},
+		"transparentFraction": 0.531022648143504,
+		"selected": false
+	},
+	{
+		"asset": "rules-to-learning",
+		"variant": "D",
+		"source": "exec-507187b8-4978-4230-b66b-ed0ee4298f3f.png",
+		"width": 1942,
+		"height": 620,
+		"crop": {
+			"left": 0,
+			"top": 93,
+			"width": 1942,
+			"height": 620
+		},
+		"transparentFraction": 0.6437357024921742,
+		"selected": true
+	},
+	{
+		"asset": "rules-to-learning",
+		"variant": "E",
+		"source": "exec-71254746-d5fa-4ed7-8be8-3d848db8f263.png",
+		"width": 1942,
+		"height": 754,
+		"crop": {
+			"left": 0,
+			"top": 4,
+			"width": 1942,
+			"height": 754
+		},
+		"transparentFraction": 0.30958233773243593,
+		"selected": false
+	},
+	{
+		"asset": "shoe-studies",
+		"variant": "A",
+		"source": "exec-3e74fc1a-6a49-4373-97e4-2d3be113e206.png",
+		"width": 1942,
+		"height": 809,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1942,
+			"height": 809
+		},
+		"transparentFraction": 0.5426630631960985,
+		"selected": false
+	},
+	{
+		"asset": "shoe-studies",
+		"variant": "B",
+		"source": "exec-58458656-eaed-4c52-9ba5-b50253416a59.png",
+		"width": 1934,
+		"height": 709,
+		"crop": {
+			"left": 8,
+			"top": 60,
+			"width": 1934,
+			"height": 709
+		},
+		"transparentFraction": 0.6131560622706193,
+		"selected": false
+	},
+	{
+		"asset": "shoe-studies",
+		"variant": "C",
+		"source": "exec-17419e41-6a9b-4242-8144-4943879936ac.png",
+		"width": 1942,
+		"height": 809,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1942,
+			"height": 809
+		},
+		"transparentFraction": 0.5771393909150278,
+		"selected": false
+	},
+	{
+		"asset": "shoe-studies",
+		"variant": "D",
+		"source": "exec-ca8b75b3-d9bd-4369-882e-7fa2d1b3ee74.png",
+		"width": 1836,
+		"height": 809,
+		"crop": {
+			"left": 53,
+			"top": 0,
+			"width": 1836,
+			"height": 809
+		},
+		"transparentFraction": 0.5770330944739854,
+		"selected": false
+	},
+	{
+		"asset": "shoe-studies",
+		"variant": "E",
+		"source": "exec-f8af6342-dc59-4ab9-8e93-c24a8035d8d9.png",
+		"width": 1932,
+		"height": 814,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1932,
+			"height": 814
+		},
+		"transparentFraction": 0.38523115153549936,
+		"selected": true
+	},
+	{
+		"asset": "fit-triptych",
+		"variant": "A",
+		"source": "exec-819512dc-07bd-4e09-b30c-9654caf83a53.png",
+		"width": 1942,
+		"height": 686,
+		"crop": {
+			"left": 0,
+			"top": 41,
+			"width": 1942,
+			"height": 686
+		},
+		"transparentFraction": 0.3749323712762829,
+		"selected": false
+	},
+	{
+		"asset": "fit-triptych",
+		"variant": "B",
+		"source": "exec-1bc29a0e-5186-4b06-a1fc-ad6681f28b84.png",
+		"width": 1469,
+		"height": 806,
+		"crop": {
+			"left": 237,
+			"top": 0,
+			"width": 1469,
+			"height": 806
+		},
+		"transparentFraction": 0.6101670318087326,
+		"selected": false
+	},
+	{
+		"asset": "fit-triptych",
+		"variant": "C",
+		"source": "exec-b9bd4166-d39f-4a6c-a167-748682ab823f.png",
+		"width": 1819,
+		"height": 650,
+		"crop": {
+			"left": 68,
+			"top": 67,
+			"width": 1819,
+			"height": 650
+		},
+		"transparentFraction": 0.3666813487299803,
+		"selected": false
+	},
+	{
+		"asset": "fit-triptych",
+		"variant": "D",
+		"source": "exec-f6e79a88-52cb-4a71-886d-178f588487be.png",
+		"width": 1897,
+		"height": 681,
+		"crop": {
+			"left": 11,
+			"top": 50,
+			"width": 1897,
+			"height": 681
+		},
+		"transparentFraction": 0.3157324735449735,
+		"selected": true
+	},
+	{
+		"asset": "fit-triptych",
+		"variant": "E",
+		"source": "exec-a9c215c7-016f-4a5e-af70-79f44b60e2a1.png",
+		"width": 1942,
+		"height": 659,
+		"crop": {
+			"left": 0,
+			"top": 45,
+			"width": 1942,
+			"height": 659
+		},
+		"transparentFraction": 0.497391599907834,
+		"selected": false
+	},
+	{
+		"asset": "forecast-seasons",
+		"variant": "A",
+		"source": "exec-1de36269-c1ec-4037-8d6e-a419329b3e1d.png",
+		"width": 1938,
+		"height": 536,
+		"crop": {
+			"left": 0,
+			"top": 97,
+			"width": 1938,
+			"height": 536
+		},
+		"transparentFraction": 0.71126308918012,
+		"selected": true
+	},
+	{
+		"asset": "forecast-seasons",
+		"variant": "B",
+		"source": "exec-961f09dd-697f-4956-9b42-7e5e25390715.png",
+		"width": 1937,
+		"height": 695,
+		"crop": {
+			"left": 5,
+			"top": 46,
+			"width": 1937,
+			"height": 695
+		},
+		"transparentFraction": 0.4983189886180062,
+		"selected": false
+	},
+	{
+		"asset": "forecast-seasons",
+		"variant": "C",
+		"source": "exec-8f2dcacc-0b78-47ef-8269-b7995cc44cce.png",
+		"width": 1942,
+		"height": 703,
+		"crop": {
+			"left": 0,
+			"top": 62,
+			"width": 1942,
+			"height": 703
+		},
+		"transparentFraction": 0.8257419427934195,
+		"selected": false
+	},
+	{
+		"asset": "forecast-seasons",
+		"variant": "D",
+		"source": "exec-33f3d592-d44e-4acd-9a4a-859f33f9a204.png",
+		"width": 1942,
+		"height": 680,
+		"crop": {
+			"left": 0,
+			"top": 71,
+			"width": 1942,
+			"height": 680
+		},
+		"transparentFraction": 0.5375621070373336,
+		"selected": false
+	},
+	{
+		"asset": "forecast-seasons",
+		"variant": "E",
+		"source": "exec-4e6df81f-ba53-4de7-a2a9-69e1c7dc4f34.png",
+		"width": 1942,
+		"height": 800,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1942,
+			"height": 800
+		},
+		"transparentFraction": 0.49491368347083975,
+		"selected": false
+	},
+	{
+		"asset": "reward-garden",
+		"variant": "A",
+		"source": "exec-7b103529-8434-4767-ad34-bc6cf2aa7a16.png",
+		"width": 1159,
+		"height": 802,
+		"crop": {
+			"left": 399,
+			"top": 0,
+			"width": 1159,
+			"height": 802
+		},
+		"transparentFraction": 0.5637524044000362,
+		"selected": false
+	},
+	{
+		"asset": "reward-garden",
+		"variant": "B",
+		"source": "exec-ed4ba4af-2a7c-4a87-ac3e-486a3b06cb3c.png",
+		"width": 1841,
+		"height": 700,
+		"crop": {
+			"left": 54,
+			"top": 58,
+			"width": 1841,
+			"height": 700
+		},
+		"transparentFraction": 0.33652753077823,
+		"selected": true
+	},
+	{
+		"asset": "reward-garden",
+		"variant": "C",
+		"source": "exec-91e797f7-441e-40a0-a2ec-027ca87c2bff.png",
+		"width": 1926,
+		"height": 769,
+		"crop": {
+			"left": 13,
+			"top": 11,
+			"width": 1926,
+			"height": 769
+		},
+		"transparentFraction": 0.7710699277820706,
+		"selected": false
+	},
+	{
+		"asset": "reward-garden",
+		"variant": "D",
+		"source": "exec-989d18e2-405d-4a62-b474-323391edbbf1.png",
+		"width": 1942,
+		"height": 801,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1942,
+			"height": 801
+		},
+		"transparentFraction": 0.6088596492344747,
+		"selected": false
+	},
+	{
+		"asset": "reward-garden",
+		"variant": "E",
+		"source": "exec-63b435a8-2f8b-4547-b88e-9119e7bba859.png",
+		"width": 1908,
+		"height": 638,
+		"crop": {
+			"left": 17,
+			"top": 67,
+			"width": 1908,
+			"height": 638
+		},
+		"transparentFraction": 0.411047064499662,
+		"selected": false
+	},
+	{
+		"asset": "retrieval-constellation",
+		"variant": "A",
+		"source": "exec-ad9005ea-4ece-4bd0-b467-4cfb6261efe0.png",
+		"originalSource": "/Users/neo/.codex/generated_images/01a08dbb-d3ec-7f50-b8e0-631cae5933e1/exec-35692b25-41fa-4c29-b6b6-36aa3289045c.png",
+		"revisionNote": "Recreated with two separate source connections and no invented citations.",
+		"revisionPrompt": "Create a premium 3D editorial infographic, wide 2.4:1, genuine transparent PNG alpha background, not a checkerboard. No backdrop or rectangular background plane. Opaque warm ivory paper cards, powder-blue borders and slender connectors, a lavender query tab, graphite DM Sans-like typography. Tactile paper and beautiful botanical specimen photographs. Sophisticated calm science illustration, no neon, no oversaturated glow. LEFT 65%: a staggered catalog of eight ivory botanical photo cards in two rows. Top Oak, Iris, Fern, Moss; bottom Rose, Pine, Algae, Lily. Each has only its plant name below a small botanical photograph. Raised selected Fern and Moss cards outlined blue. Fern and Moss are adjacent but separate with a generous gap. A single blue connector starts on the TOP EDGE OF FERN, arches clearly above all the cards, and arrives at the UPPER answer row on the right. A second single blue connector starts on the RIGHT EDGE OF MOSS and arrives at the LOWER answer row. Each origin has exactly one small blue anchor connected to the actual line. NO additional blue anchors, no shared origin, no branches, no Search labels. Foreground lavender query tab reads Shade-loving plants. RIGHT 35%: ivory curled-corner answer page. Exact heading Answer with sources. Exactly two rows: upper row a fern thumbnail, exact text Fern, then three short decorative gray text rules and a tiny blue tab Source 1; lower row a moss thumbnail, exact text Moss, then three short gray text rules and tiny blue tab Source 2. Only the requested words may appear. Absolutely no other text, no real publishers, no invented citations, no dates, no claims, no reference titles, no prose. The two blue source connectors terminate respectively at the upper Fern row and lower Moss row. Clean spaced geometry, muted natural plant colors, restrained powder-blue/lavender/ivory overall palette. Every subject fully visible, tight horizontal composition and modest safety margins. True alpha around all objects and connecting lines.",
+		"width": 1923,
+		"height": 752,
+		"crop": {
+			"left": 19,
+			"top": 27,
+			"width": 1923,
+			"height": 752
+		},
+		"transparentFraction": 0.4170085762769258,
+		"selected": true
+	},
+	{
+		"asset": "retrieval-constellation",
+		"variant": "B",
+		"source": "exec-501293f7-b98b-4fe3-9ae5-c770d1e57d33.png",
+		"width": 1912,
+		"height": 644,
+		"crop": {
+			"left": 4,
+			"top": 84,
+			"width": 1912,
+			"height": 644
+		},
+		"transparentFraction": 0.5358968262646245,
+		"selected": false
+	},
+	{
+		"asset": "retrieval-constellation",
+		"variant": "C",
+		"source": "exec-6773b641-6851-4d0d-ac15-b485ce5be048.png",
+		"width": 1919,
+		"height": 729,
+		"crop": {
+			"left": 16,
+			"top": 50,
+			"width": 1919,
+			"height": 729
+		},
+		"transparentFraction": 0.56217196090837,
+		"selected": false
+	},
+	{
+		"asset": "retrieval-constellation",
+		"variant": "D",
+		"source": "exec-dbee2b18-cbc0-44a1-802e-fd9519dfd9f0.png",
+		"width": 1940,
+		"height": 732,
+		"crop": {
+			"left": 2,
+			"top": 48,
+			"width": 1940,
+			"height": 732
+		},
+		"transparentFraction": 0.6456515844534771,
+		"selected": false
+	},
+	{
+		"asset": "retrieval-constellation",
+		"variant": "E",
+		"source": "exec-a95af025-7c4d-4447-8e88-bb331cee0893.png",
+		"width": 1945,
+		"height": 809,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1945,
+			"height": 809
+		},
+		"transparentFraction": 0.33805548758980747,
+		"selected": false
+	},
+	{
+		"asset": "evaluation-balance",
+		"variant": "A",
+		"source": "exec-c9cf4f47-2da9-4679-934c-f22084ab9aca.png",
+		"width": 1942,
+		"height": 795,
+		"crop": {
+			"left": 0,
+			"top": 13,
+			"width": 1942,
+			"height": 795
+		},
+		"transparentFraction": 0.5275199576341849,
+		"selected": false
+	},
+	{
+		"asset": "evaluation-balance",
+		"variant": "B",
+		"source": "exec-1aa31f64-1fe5-4560-b05b-49259b9731ea.png",
+		"width": 1882,
+		"height": 820,
+		"crop": {
+			"left": 36,
+			"top": 0,
+			"width": 1882,
+			"height": 820
+		},
+		"transparentFraction": 0.4437492052188509,
+		"selected": true
+	},
+	{
+		"asset": "evaluation-balance",
+		"variant": "C",
+		"source": "exec-492483e8-4d80-40f3-bd04-28dad79e046b.png",
+		"width": 1942,
+		"height": 787,
+		"crop": {
+			"left": 0,
+			"top": 21,
+			"width": 1942,
+			"height": 787
+		},
+		"transparentFraction": 0.4547826396907092,
+		"selected": false
+	},
+	{
+		"asset": "evaluation-balance",
+		"variant": "D",
+		"source": "exec-3fb16f10-eeb1-433d-86c0-4851074a9553.png",
+		"width": 1942,
+		"height": 669,
+		"crop": {
+			"left": 0,
+			"top": 56,
+			"width": 1942,
+			"height": 669
+		},
+		"transparentFraction": 0.4779298036125514,
+		"selected": false
+	},
+	{
+		"asset": "evaluation-balance",
+		"variant": "E",
+		"source": "exec-dfc4aa0f-68e7-4c0d-99fb-c69943a6228b.png",
+		"width": 1896,
+		"height": 590,
+		"crop": {
+			"left": 43,
+			"top": 122,
+			"width": 1896,
+			"height": 590
+		},
+		"transparentFraction": 0.5132781440514093,
+		"selected": false
+	},
+	{
+		"asset": "neuron-anatomy",
+		"variant": "A",
+		"source": "exec-e9282152-7111-4878-b09a-cf838a72d9a1.png",
+		"width": 1927,
+		"height": 787,
+		"crop": {
+			"left": 8,
+			"top": 9,
+			"width": 1927,
+			"height": 787
+		},
+		"transparentFraction": 0.7018932223606975,
+		"selected": true
+	},
+	{
+		"asset": "neuron-anatomy",
+		"variant": "B",
+		"source": "exec-f1f40f6d-25ce-4d3b-bfd0-42a0338a1b01.png",
+		"width": 1772,
+		"height": 737,
+		"crop": {
+			"left": 76,
+			"top": 40,
+			"width": 1772,
+			"height": 737
+		},
+		"transparentFraction": 0.5652322800013748,
+		"selected": false
+	},
+	{
+		"asset": "neuron-anatomy",
+		"variant": "C",
+		"source": "exec-bf1ccbda-544d-46bc-8c27-c7fd172973b3.png",
+		"width": 1915,
+		"height": 651,
+		"crop": {
+			"left": 25,
+			"top": 62,
+			"width": 1915,
+			"height": 651
+		},
+		"transparentFraction": 0.5848061012884147,
+		"selected": false
+	},
+	{
+		"asset": "neuron-anatomy",
+		"variant": "D",
+		"source": "exec-93bc13a9-60d3-4b38-886e-625da4bb3d02.png",
+		"width": 1926,
+		"height": 678,
+		"crop": {
+			"left": 16,
+			"top": 46,
+			"width": 1926,
+			"height": 678
+		},
+		"transparentFraction": 0.6544003544063376,
+		"selected": false
+	},
+	{
+		"asset": "neuron-anatomy",
+		"variant": "E",
+		"source": "exec-785220f1-4f41-4168-bfa0-622cb74f59de.png",
+		"width": 1859,
+		"height": 809,
+		"crop": {
+			"left": 52,
+			"top": 0,
+			"width": 1859,
+			"height": 809
+		},
+		"transparentFraction": 0.6871211995839799,
+		"selected": false
+	},
+	{
+		"asset": "tokens-fieldguide",
+		"variant": "A",
+		"source": "exec-d8489109-fefb-4af3-9bcb-f64e13797863.png",
+		"width": 1738,
+		"height": 801,
+		"crop": {
+			"left": 36,
+			"top": 8,
+			"width": 1738,
+			"height": 801
+		},
+		"transparentFraction": 0.6191341231943926,
+		"selected": true
+	},
+	{
+		"asset": "tokens-fieldguide",
+		"variant": "B",
+		"source": "exec-9921530d-9a7b-41bb-bf14-bf50da42fc62.png",
+		"width": 1866,
+		"height": 794,
+		"crop": {
+			"left": 70,
+			"top": 12,
+			"width": 1866,
+			"height": 794
+		},
+		"transparentFraction": 0.5429004797979476,
+		"selected": false
+	},
+	{
+		"asset": "tokens-fieldguide",
+		"variant": "C",
+		"source": "exec-58ce0b4d-9aaf-49be-893e-76f1a2e062c4.png",
+		"width": 1875,
+		"height": 797,
+		"crop": {
+			"left": 34,
+			"top": 0,
+			"width": 1875,
+			"height": 797
+		},
+		"transparentFraction": 0.5493960198029633,
+		"selected": false
+	},
+	{
+		"asset": "tokens-fieldguide",
+		"variant": "D",
+		"source": "exec-72e61155-a6b0-494e-b140-6a6098219b45.png",
+		"width": 1944,
+		"height": 802,
+		"crop": {
+			"left": 0,
+			"top": 7,
+			"width": 1944,
+			"height": 802
+		},
+		"transparentFraction": 0.607605665684913,
+		"selected": false
+	},
+	{
+		"asset": "tokens-fieldguide",
+		"variant": "E",
+		"source": "exec-054572b5-abee-4fe1-b6c4-e32f8b3cfbf4.png",
+		"width": 1819,
+		"height": 698,
+		"crop": {
+			"left": 55,
+			"top": 57,
+			"width": 1819,
+			"height": 698
+		},
+		"transparentFraction": 0.7059984641165237,
+		"selected": false
+	},
+	{
+		"asset": "ai-atlas",
+		"variant": "A",
+		"source": "exec-f5b20644-c3ad-41fc-bc33-6f3e2c3504d8.png",
+		"width": 1857,
+		"height": 807,
+		"crop": {
+			"left": 55,
+			"top": 0,
+			"width": 1857,
+			"height": 807
+		},
+		"transparentFraction": 0.3087803406323556,
+		"selected": false
+	},
+	{
+		"asset": "ai-atlas",
+		"variant": "B",
+		"source": "exec-fe6056f6-d837-4dbc-8084-0916c443115d.png",
+		"width": 1942,
+		"height": 809,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1942,
+			"height": 809
+		},
+		"transparentFraction": 0.41984611839768615,
+		"selected": false
+	},
+	{
+		"asset": "ai-atlas",
+		"variant": "C",
+		"source": "exec-f09c9586-9e43-4ea8-8b04-b5936969f056.png",
+		"width": 1942,
+		"height": 802,
+		"crop": {
+			"left": 0,
+			"top": 2,
+			"width": 1942,
+			"height": 802
+		},
+		"transparentFraction": 0.31029840657179336,
+		"selected": false
+	},
+	{
+		"asset": "ai-atlas",
+		"variant": "D",
+		"source": "exec-9d9497ab-20fe-4e37-8df6-cb026b534836.png",
+		"width": 1934,
+		"height": 780,
+		"crop": {
+			"left": 8,
+			"top": 15,
+			"width": 1934,
+			"height": 780
+		},
+		"transparentFraction": 0.37905310875717185,
+		"selected": false
+	},
+	{
+		"asset": "ai-atlas",
+		"variant": "E",
+		"source": "exec-7d21d6ee-f0dd-437b-81de-5dd00f9caeca.png",
+		"width": 1431,
+		"height": 784,
+		"crop": {
+			"left": 256,
+			"top": 0,
+			"width": 1431,
+			"height": 784
+		},
+		"transparentFraction": 0.46892133936061736,
+		"selected": false
+	},
+	{
+		"asset": "transformer-atelier",
+		"variant": "A",
+		"source": "exec-ed353487-59cc-4313-90b8-da05546c673c.png",
+		"width": 1942,
+		"height": 587,
+		"crop": {
+			"left": 0,
+			"top": 100,
+			"width": 1942,
+			"height": 587
+		},
+		"transparentFraction": 0.5274804942848159,
+		"selected": false
+	},
+	{
+		"asset": "transformer-atelier",
+		"variant": "B",
+		"source": "exec-30108987-3c0c-4859-a7ee-47c741291099.png",
+		"width": 1910,
+		"height": 695,
+		"crop": {
+			"left": 18,
+			"top": 58,
+			"width": 1910,
+			"height": 695
+		},
+		"transparentFraction": 0.6451735687216039,
+		"selected": false
+	},
+	{
+		"asset": "transformer-atelier",
+		"variant": "C",
+		"source": "exec-717645a9-6099-4b82-a034-4712d42380a6.png",
+		"originalSource": "/Users/neo/.codex/generated_images/01a08dbb-d3ec-7f50-b8e0-631cae5933e1/exec-ed9f3e19-90b0-42c6-adce-216424796acd.png",
+		"revisionNote": "Recreated with a five-by-five lower-triangular causal-permissions matrix matching the five context tokens.",
+		"revisionPrompt": "Create a polished editorial 3D educational diagram for Pattern, a sophisticated learning app. Genuine transparent-background PNG cutout with alpha: no background plane, no backdrop, no checkerboard pattern, no surrounding gray or white rectangle. Wide 2.4:1 composition, small outer margin. Restrained powder blue #8cb2d4, lavender #c6b6ed, opaque warm ivory #f0ede5 paper, graphite #293441 typography. Tactile thick paper, soft studio light, crisp engineered shapes, refined quiet material texture. Professional legible DM Sans-like text. All text printed on opaque ivory or colored cards, never dark floating labels on transparency. No neon, glow, chromatic fringes, extraneous decoration. All foreground elements fully visible. A precise transformer language-model explainer in three groups from left to right. LEFT: long horizontal ivory strip divided into exactly FIVE blue-tinted token cells, clearly reading The | key | is | on | the. Thin graphite arrow from strip to central transformer card. CENTER: an ivory horizontal rectangular card resting in front of two offset powder-blue and lavender copies to suggest repeated blocks. Inside its left half a square exactly FIVE rows by FIVE columns causal-permissions matrix. Every diagonal cell and every cell BELOW the diagonal is filled powder blue; every cell ABOVE the diagonal is ivory. Row1 blue ivory ivory ivory ivory. Row2 blue blue ivory ivory ivory. Row3 blue blue blue ivory ivory. Row4 blue blue blue blue ivory. Row5 all five blue. Label under matrix, printed on the card: Causal attention. Right half of same card is a lavender inset with three simple upright neural feed-forward bars; a small arrow from matrix to inset. Below both halves on the SAME ivory card a bracket and label Transformer block. RIGHT: separate ivory card labeled Next token, with THREE distinct rows table, shelf, desk and powder-blue horizontal bars decreasing in length top to bottom. No numbers on probabilities. A thin graphite arrow from central block to Next token card. Do not add any additional context token, matrix row, matrix column, future-permission marks or floating text. Mathematically accurate causal masking, clean composition and true transparent surrounding canvas.",
+		"width": 1935,
+		"height": 598,
+		"crop": {
+			"left": 7,
+			"top": 101,
+			"width": 1935,
+			"height": 598
+		},
+		"transparentFraction": 0.6072747502033635,
+		"selected": true
+	},
+	{
+		"asset": "transformer-atelier",
+		"variant": "D",
+		"source": "exec-2a1f9a21-43ca-46ee-b42d-0067a001eb8a.png",
+		"width": 1875,
+		"height": 545,
+		"crop": {
+			"left": 26,
+			"top": 83,
+			"width": 1875,
+			"height": 545
+		},
+		"transparentFraction": 0.7777285453098339,
+		"selected": false
+	},
+	{
+		"asset": "transformer-atelier",
+		"variant": "E",
+		"source": "exec-1bbcaa0a-f4c0-4eb1-bc39-a0f18593b31a.png",
+		"width": 1526,
+		"height": 722,
+		"crop": {
+			"left": 110,
+			"top": 55,
+			"width": 1526,
+			"height": 722
+		},
+		"transparentFraction": 0.7113147787697365,
+		"selected": false
+	},
+	{
+		"asset": "agent-circuit",
+		"variant": "A",
+		"source": "exec-941e4a5c-683c-422d-b91d-4cc0c2a3a13d.png",
+		"width": 1948,
+		"height": 799,
+		"crop": {
+			"left": 1,
+			"top": 2,
+			"width": 1948,
+			"height": 799
+		},
+		"transparentFraction": 0.5704771550625205,
+		"selected": true
+	},
+	{
+		"asset": "agent-circuit",
+		"variant": "B",
+		"source": "exec-b718a68a-f6f5-415c-aa91-f42103e190ab.png",
+		"width": 1938,
+		"height": 744,
+		"crop": {
+			"left": 4,
+			"top": 23,
+			"width": 1938,
+			"height": 744
+		},
+		"transparentFraction": 0.6107761677014126,
+		"selected": false
+	},
+	{
+		"asset": "agent-circuit",
+		"variant": "C",
+		"source": "exec-c045eb60-a7d8-4eaf-92ad-d92809b5d4b6.png",
+		"width": 1938,
+		"height": 680,
+		"crop": {
+			"left": 4,
+			"top": 88,
+			"width": 1938,
+			"height": 680
+		},
+		"transparentFraction": 0.7144915783939435,
+		"selected": false
+	},
+	{
+		"asset": "agent-circuit",
+		"variant": "D",
+		"source": "exec-dbf06f0f-fbf9-4436-81bc-cb2440450b5e.png",
+		"width": 1849,
+		"height": 772,
+		"crop": {
+			"left": 55,
+			"top": 29,
+			"width": 1849,
+			"height": 772
+		},
+		"transparentFraction": 0.5313695437145705,
+		"selected": false
+	},
+	{
+		"asset": "agent-circuit",
+		"variant": "E",
+		"source": "exec-31679fe9-8fa4-47c8-be17-0752cafc5b5f.png",
+		"width": 1851,
+		"height": 734,
+		"crop": {
+			"left": 49,
+			"top": 33,
+			"width": 1851,
+			"height": 734
+		},
+		"transparentFraction": 0.6767009658336506,
+		"selected": false
+	},
+	{
+		"asset": "self-supervised",
+		"variant": "A",
+		"source": "exec-7ccd9c0c-c841-4a8c-853e-9ce48609a6bb.png",
+		"width": 1885,
+		"height": 730,
+		"crop": {
+			"left": 17,
+			"top": 48,
+			"width": 1885,
+			"height": 730
+		},
+		"transparentFraction": 0.6137671076802043,
+		"selected": false
+	},
+	{
+		"asset": "self-supervised",
+		"variant": "B",
+		"source": "exec-311ee477-ae82-401d-8296-aa6b42e645cc.png",
+		"width": 1881,
+		"height": 792,
+		"crop": {
+			"left": 36,
+			"top": 14,
+			"width": 1881,
+			"height": 792
+		},
+		"transparentFraction": 0.6851136608112391,
+		"selected": false
+	},
+	{
+		"asset": "self-supervised",
+		"variant": "C",
+		"source": "exec-115c3504-91a8-40da-b13c-69a80e0b465c.png",
+		"width": 1942,
+		"height": 738,
+		"crop": {
+			"left": 0,
+			"top": 38,
+			"width": 1942,
+			"height": 738
+		},
+		"transparentFraction": 0.6138492169071172,
+		"selected": false
+	},
+	{
+		"asset": "self-supervised",
+		"variant": "D",
+		"source": "exec-fc3eaa1b-aeef-4770-b4f5-f24a6d60d0b4.png",
+		"width": 1881,
+		"height": 765,
+		"crop": {
+			"left": 30,
+			"top": 14,
+			"width": 1881,
+			"height": 765
+		},
+		"transparentFraction": 0.45738849376033525,
+		"selected": false
+	},
+	{
+		"asset": "self-supervised",
+		"variant": "E",
+		"source": "exec-95bbdb85-f555-43aa-8e49-e9f98d55d346.png",
+		"width": 1939,
+		"height": 714,
+		"crop": {
+			"left": 3,
+			"top": 35,
+			"width": 1939,
+			"height": 714
+		},
+		"transparentFraction": 0.5179049035121108,
+		"selected": false
+	},
+	{
+		"asset": "self-supervised",
+		"variant": "F",
+		"source": "exec-77fbc1c6-c861-4358-b2f1-72adae264aeb.png",
+		"label": "Hide a detail",
+		"reviewRound": 2,
+		"width": 1666,
+		"height": 809,
+		"crop": {
+			"left": 20,
+			"top": 0,
+			"width": 1666,
+			"height": 809
+		},
+		"transparentFraction": 0.4400367136450259,
+		"selected": false
+	},
+	{
+		"asset": "self-supervised",
+		"variant": "G",
+		"source": "exec-2cf77827-3dc0-460a-8862-da6b483a0bdf.png",
+		"label": "Learn from what comes next",
+		"reviewRound": 2,
+		"width": 1937,
+		"height": 680,
+		"crop": {
+			"left": 5,
+			"top": 43,
+			"width": 1937,
+			"height": 680
+		},
+		"transparentFraction": 0.37918231940107366,
+		"selected": false
+	},
+	{
+		"asset": "self-supervised",
+		"variant": "H",
+		"source": "exec-73a824bb-91ef-4d0b-b1bc-27e7bd9dab44.png",
+		"label": "Language supplies its own targets",
+		"reviewRound": 2,
+		"originalSource": "/Users/neo/.codex/generated_images/01a08dbb-d3ec-7f50-b8e0-631cae5933e1/exec-459da1c7-1619-4310-b12c-52507914af1f.png",
+		"revisionNote": "Labels kept on opaque paper for readability in both themes.",
+		"width": 1942,
+		"height": 809,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1942,
+			"height": 809
+		},
+		"transparentFraction": 0.46867246565733844,
+		"selected": true
+	},
+	{
+		"asset": "self-supervised",
+		"variant": "I",
+		"source": "exec-492e93c7-dde8-4ca6-af49-64b4551291c6.png",
+		"label": "Two views, one source",
+		"reviewRound": 2,
+		"width": 1803,
+		"height": 753,
+		"crop": {
+			"left": 61,
+			"top": 13,
+			"width": 1803,
+			"height": 753
+		},
+		"transparentFraction": 0.39696883286507734,
+		"selected": false
+	},
+	{
+		"asset": "self-supervised",
+		"variant": "J",
+		"source": "exec-47653272-dc65-4df2-9a2a-e8644287329d.png",
+		"label": "Recover the original",
+		"reviewRound": 2,
+		"originalSource": "/Users/neo/.codex/generated_images/01a08dbb-d3ec-7f50-b8e0-631cae5933e1/exec-f3986bf9-6568-4960-b83d-3b81126c48ef.png",
+		"revisionNote": "Labels kept on opaque paper for readability in both themes.",
+		"width": 1910,
+		"height": 809,
+		"crop": {
+			"left": 18,
+			"top": 0,
+			"width": 1910,
+			"height": 809
+		},
+		"transparentFraction": 0.30075209505829753,
+		"selected": false
+	}
+]

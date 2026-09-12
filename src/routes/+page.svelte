@@ -1,13 +1,18 @@
 <script lang="ts">
+	import { fly, fade } from 'svelte/transition';
+	import { prefersReducedMotion } from 'svelte/motion';
 	import PatternIcon from '$lib/components/PatternIcon.svelte';
 	import { lessons } from '$lib/data/lessons';
 	import { chapterArt } from '$lib/data/chapter-art';
 	import ConceptPlate from '$lib/components/ConceptPlate.svelte';
 	import FootwearPlate from '$lib/components/FootwearPlate.svelte';
+	import GenerativeLab from '$lib/components/GenerativeLab.svelte';
 	import TokenLab from '$lib/components/TokenLab.svelte';
 	import PatternLab from '$lib/components/PatternLab.svelte';
 	import DataSplitStory from '$lib/components/DataSplitStory.svelte';
+	import ForecastLab from '$lib/components/ForecastLab.svelte';
 	import TrainingLab from '$lib/components/TrainingLab.svelte';
+	import ConvnetLab from '$lib/components/ConvnetLab.svelte';
 	import ValidationLab from '$lib/components/ValidationLab.svelte';
 	import AiMap from '$lib/components/AiMap.svelte';
 	import LanguageLab from '$lib/components/LanguageLab.svelte';
@@ -19,6 +24,8 @@
 	import ClusteringLab from '$lib/components/ClusteringLab.svelte';
 	import ReinforcementLab from '$lib/components/ReinforcementLab.svelte';
 	import AdaptationLab from '$lib/components/AdaptationLab.svelte';
+	import SelfSupervisedLab from '$lib/components/SelfSupervisedLab.svelte';
+	import PretrainingStory from '$lib/components/PretrainingStory.svelte';
 	import RetrievalLab from '$lib/components/RetrievalLab.svelte';
 	import VisionLab from '$lib/components/VisionLab.svelte';
 	import EvaluationLab from '$lib/components/EvaluationLab.svelte';
@@ -42,7 +49,6 @@
 	let chapter = $state(0);
 	let menuOpen = $state(false);
 	let presenting = $state(false);
-	let visited = $state<number[]>([]);
 	let lesson = $derived(lessons[chapter]);
 	function fromHash() {
 		const index = lessons.findIndex((item) => `#${item.id}` === window.location.hash);
@@ -54,7 +60,6 @@
 	onMount(fromHash);
 	function go(index: number) {
 		if (index < 0 || index >= lessons.length) return;
-		visited = [...new Set([...visited, chapter])];
 		chapter = index;
 		window.history.pushState(null, '', `#${lessons[index].id}`);
 		menuOpen = false;
@@ -62,6 +67,11 @@
 		requestAnimationFrame(() => document.querySelector('h1')?.focus({ preventScroll: true }));
 	}
 	function keyboard(event: KeyboardEvent) {
+		if (event.key === 'Escape') {
+			presenting = false;
+			menuOpen = false;
+			return;
+		}
 		if (
 			(event.target as HTMLElement)?.closest(
 				'input,select,textarea,button,a,summary,dialog,[role="button"],[role="region"][tabindex="0"]'
@@ -78,10 +88,6 @@
 		if (event.key === 'ArrowLeft') {
 			event.preventDefault();
 			go(chapter - 1);
-		}
-		if (event.key === 'Escape') {
-			presenting = false;
-			menuOpen = false;
 		}
 	}
 </script>
@@ -118,18 +124,19 @@
 						size={19}
 					/>{/if}</button
 			>
-			<button class="header-model-button" onclick={() => (ai.settingsOpen = true)}
+			<button
+				class="header-model-button"
+				aria-label={`Model settings: ${ai.ready ? ai.label : 'Connect a model'}`}
+				onclick={() => (ai.settingsOpen = true)}
 				><PatternIcon name="cpu" size={17} /><i class:ready={ai.ready}></i>{ai.ready
 					? ai.label
 					: 'Connect a model'}</button
 			><button
 				class="icon-button presentation-button"
 				aria-label={presenting ? 'Exit presentation mode' : 'Enter presentation mode'}
+				aria-pressed={presenting}
 				onclick={() => (presenting = !presenting)}
-				>{#if presenting}<PatternIcon name="minimize" size={18} />{:else}<PatternIcon
-						name="expand"
-						size={18}
-					/>{/if}</button
+				><PatternIcon name="presentation" size={18} strokeWidth={1.6} /></button
 			><button
 				class="icon-button mobile-menu"
 				aria-label="Toggle chapters"
@@ -142,10 +149,13 @@
 			>
 		</div>
 	</header>
+	{#if menuOpen}<button
+			class="sidebar-scrim"
+			aria-label="Close chapter menu"
+			onclick={() => (menuOpen = false)}
+			transition:fade={{ duration: prefersReducedMotion.current ? 0 : 180 }}
+		></button>{/if}
 	<aside class:open={menuOpen} class="sidebar">
-		<div class="sidebar-heading">
-			<PatternIcon name="book" size={16} /><span>THE LEARNING PATH</span>
-		</div>
 		<nav aria-label="Chapters">
 			{#each lessons as item, i (item.id)}{#if i === 0 || item.group !== lessons[i - 1].group}<div
 						class="nav-group"
@@ -155,97 +165,98 @@
 					class:active={chapter === i}
 					aria-current={chapter === i ? 'step' : undefined}
 					onclick={() => go(i)}
-					><span class="chapter-number"
-						>{#if visited.includes(i) && chapter !== i}<PatternIcon
-								name="check"
-								size={13}
-							/>{:else}{String(i + 1).padStart(2, '0')}{/if}</span
-					><PatternIcon name={item.icon} size={18} class="nav-icon" /><span>{item.title}</span
-					>{#if chapter === i}<span class="current-dot"></span>{/if}</button
+					><PatternIcon name={item.icon} size={18} strokeWidth={1.6} class="nav-icon" /><span
+						>{item.title}</span
+					></button
 				>{/each}
 		</nav>
-		<div class="sidebar-bottom">
-			<div class="progress-label">
-				<span>Your exploration</span><span
-					>{Math.round((visited.length / lessons.length) * 100)}%</span
-				>
-			</div>
-			<div class="journey-progress">
-				<i style:width={`${(visited.length / lessons.length) * 100}%`}></i>
-			</div>
-			<p>No code. Just curiosity.</p>
-		</div>
 	</aside>
 	<main id="main-content">
-		<div class="chapter-context">
-			<span>{lesson.title}</span><span
-				>{String(chapter + 1).padStart(2, '0')} / {String(lessons.length).padStart(2, '0')}</span
+		{#key lesson.id}<div
+				class="chapter-page"
+				data-family={lesson.group}
+				in:fly={{
+					y: prefersReducedMotion.current ? 0 : 8,
+					duration: prefersReducedMotion.current ? 0 : 240
+				}}
 			>
-		</div>
-		{#if chapter === 0}
-			<section class="intro-cover" id={lesson.id}>
-				<div class="intro-cover-copy">
-					<span class="small-overline">A FIELD GUIDE TO MACHINE LEARNING</span>
-					<h1 tabindex="-1">Some rules<br />we write.<br /><em>Others we learn.</em></h1>
-					<p>
-						From sorting numbers to seeing the world.<br />Three problems. Two ways to solve them.
-					</p>
+				<div class="chapter-context">
+					<span>{lesson.title}</span><span
+						>{String(chapter + 1).padStart(2, '0')} / {String(lessons.length).padStart(
+							2,
+							'0'
+						)}</span
+					>
 				</div>
-				<img
-					src="/images/rules-to-learning.webp"
-					alt="Ordered ceramic columns give way to a fan of photographs of shoes, a dog, a leaf, and a sailboat"
-					width="1536"
-					height="1024"
-					fetchpriority="high"
-				/>
-			</section>
-		{:else}
-			<section class="lesson-header" class:illustrated={!!chapterArt[lesson.id]} id={lesson.id}>
-				<div>
-					<PatternIcon name={lesson.icon} size={38} class="chapter-icon" />
-					<h1 tabindex="-1">{lesson.headline}<br /><em>{lesson.accent}</em></h1>
-				</div>
-				<p class="lesson-description">{lesson.description}</p>
-			</section>
-		{/if}
-		{#key chapter}
-			{#if chapterArt[lesson.id]}
-				<ConceptPlate art={chapterArt[lesson.id]} target={`lab-${lesson.id}`} />
-			{/if}
-			<section id={`lab-${lesson.id}`} class="chapter-lab" tabindex="-1" aria-label={lesson.prompt}>
-				{#if lesson.id === 'patterns'}<PatternLab {ai} />
-				{:else if lesson.id === 'training'}<TrainingLab kind="regression" /><DataSplitStory />
-				{:else if lesson.id === 'generalization'}<ValidationLab />
-				{:else if lesson.id === 'classification'}<FootwearPlate /><ImageClassifier />
-				{:else if lesson.id === 'forecasting'}<TrainingLab kind="forecast" />
-				{:else if lesson.id === 'clustering'}<ClusteringLab />
-				{:else if lesson.id === 'reinforcement'}<ReinforcementLab />
-				{:else if lesson.id === 'deep-learning'}<TrainingLab kind="neural-classifier" />
-				{:else if lesson.id === 'representations'}<TrainingLab kind="neural-regression" />
-				{:else if lesson.id === 'adaptation'}<AdaptationLab />
-				{:else if lesson.id === 'modern-ai'}<AiMap />
-				{:else if lesson.id === 'tokens'}<TokenLab />
-				{:else if lesson.id === 'language'}<LanguageLab {ai} />
-				{:else if lesson.id === 'vision'}<VisionLab {ai} />
-				{:else if lesson.id === 'retrieval'}<RetrievalLab {ai} />
-				{:else if lesson.id === 'agents'}<AgentLab {ai} />
-				{:else}<EvaluationLab {ai} />{/if}
-			</section>
-		{/key}
-		{#if chapter > 0}<p class="lesson-caption">{lesson.idea}</p>{/if}
-		<LessonNotes chapter={lesson.noteIndex} />
-		<footer class="lesson-footer">
-			<button class="text-button" disabled={chapter === 0} onclick={() => go(chapter - 1)}
-				><PatternIcon name="arrowLeft" size={16} /> Previous</button
-			><span class="keyboard-hint"><kbd>←</kbd><kbd>→</kbd> to explore</span><button
-				class="next-button"
-				onclick={() => go(chapter === lessons.length - 1 ? 0 : chapter + 1)}
-				><span
-					><small>{chapter === lessons.length - 1 ? 'BACK TO THE BEGINNING' : 'UP NEXT'}</small
-					>{lessons[(chapter + 1) % lessons.length].title}</span
-				><PatternIcon name="arrowRight" size={20} /></button
-			>
-		</footer>
+				{#if chapter === 0}
+					<section class="intro-cover" id={lesson.id}>
+						<div class="intro-cover-copy">
+							<h1 tabindex="-1">Some rules<br />we write.<br /><em>Others we learn.</em></h1>
+							<p>
+								From sorting numbers to seeing the world.<br />Four problems. Two ways to solve
+								them.
+							</p>
+						</div>
+						<img
+							src="/images/edition-3/rules-to-learning.webp"
+							alt="Rules: sort 7, 3, 5 into 3, 5, 7. Learning: varied boot images feed a network that recognizes a boot."
+							width="1942"
+							height="620"
+							fetchpriority="high"
+						/>
+					</section>
+				{:else}
+					<section class="lesson-header" class:illustrated={!!chapterArt[lesson.id]} id={lesson.id}>
+						<div>
+							<h1 tabindex="-1">{lesson.headline}<br /><em>{lesson.accent}</em></h1>
+						</div>
+						<p class="lesson-description">{lesson.description}</p>
+					</section>
+				{/if}
+				{#if chapterArt[lesson.id]}
+					<ConceptPlate art={chapterArt[lesson.id]} target={`lab-${lesson.id}`} />
+				{/if}
+				<section
+					id={`lab-${lesson.id}`}
+					class="chapter-lab"
+					tabindex="-1"
+					aria-label={lesson.prompt}
+				>
+					{#if lesson.id === 'patterns'}<PatternLab {ai} />
+					{:else if lesson.id === 'training'}<TrainingLab kind="regression" /><DataSplitStory />
+					{:else if lesson.id === 'generalization'}<ValidationLab />
+					{:else if lesson.id === 'classification'}<FootwearPlate /><ImageClassifier />
+					{:else if lesson.id === 'forecasting'}<ForecastLab />
+					{:else if lesson.id === 'clustering'}<ClusteringLab />
+					{:else if lesson.id === 'reinforcement'}<ReinforcementLab />
+					{:else if lesson.id === 'deep-learning'}<TrainingLab kind="neural-classifier" />
+					{:else if lesson.id === 'representations'}<ConvnetLab />
+					{:else if lesson.id === 'self-supervised'}<SelfSupervisedLab /><PretrainingStory />
+					{:else if lesson.id === 'adaptation'}<AdaptationLab />
+					{:else if lesson.id === 'modern-ai'}<AiMap />
+					{:else if lesson.id === 'tokens'}<TokenLab />
+					{:else if lesson.id === 'language'}<LanguageLab {ai} />
+					{:else if lesson.id === 'generative'}<GenerativeLab {ai} />
+					{:else if lesson.id === 'vision'}<VisionLab {ai} />
+					{:else if lesson.id === 'retrieval'}<RetrievalLab {ai} />
+					{:else if lesson.id === 'agents'}<AgentLab {ai} />
+					{:else}<EvaluationLab {ai} />{/if}
+				</section>
+				{#if chapter > 0}<p class="lesson-caption">{lesson.idea}</p>{/if}
+				<LessonNotes chapter={lesson.noteIndex} />
+				<footer class="lesson-footer">
+					<button class="text-button" disabled={chapter === 0} onclick={() => go(chapter - 1)}
+						><PatternIcon name="arrowLeft" size={16} /> Previous</button
+					><span class="keyboard-hint"><kbd>←</kbd><kbd>→</kbd></span><button
+						class="next-button"
+						onclick={() => go(chapter === lessons.length - 1 ? 0 : chapter + 1)}
+						><span
+							><small>{chapter === lessons.length - 1 ? 'BACK TO THE BEGINNING' : 'UP NEXT'}</small
+							>{lessons[(chapter + 1) % lessons.length].title}</span
+						><PatternIcon name="arrowRight" size={20} /></button
+					>
+				</footer>
+			</div>{/key}
 	</main>
 </div>
 
@@ -257,7 +268,7 @@
 		margin-bottom: 24px;
 	}
 	.chapter-lab {
-		scroll-margin-top: 96px;
+		scroll-margin-top: calc(var(--header-height) + 20px);
 	}
 	.chapter-lab:focus {
 		outline: none;

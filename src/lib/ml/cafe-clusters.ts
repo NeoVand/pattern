@@ -135,3 +135,28 @@ export function clusterRegions(centers: CafeCenter[]): [number, number][][] {
 		return polygon;
 	});
 }
+
+/** Interior Voronoi edges, each drawn once; boundary means equal distance. */
+export function clusterBoundaries(centers: CafeCenter[]): [number, number][][] {
+	const seen = new Set<string>();
+	return clusterRegions(centers).flatMap((polygon) =>
+		polygon.flatMap((a, i) => {
+			const b = polygon[(i + 1) % polygon.length];
+			if (
+				[0, 10].some(
+					(v) =>
+						(Math.abs(a[0] - v) < 1e-7 && Math.abs(b[0] - v) < 1e-7) ||
+						(Math.abs(a[1] - v) < 1e-7 && Math.abs(b[1] - v) < 1e-7)
+				)
+			)
+				return [];
+			const key = [a, b]
+				.map((p) => p.map((v) => v.toFixed(6)).join(','))
+				.sort()
+				.join('|');
+			if (seen.has(key)) return [];
+			seen.add(key);
+			return [[a, b]];
+		})
+	);
+}

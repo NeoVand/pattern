@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import { flip } from 'svelte/animate';
 	import PatternIcon from '$lib/components/PatternIcon.svelte';
 	import { TinyWordModel, everydayCorpus, adaptationCorpora } from '$lib/ml/word-adaptation';
 	const untrained = new TinyWordModel();
@@ -11,6 +12,8 @@
 	let adaptationEpochs = $state(0);
 	let strength = $state(80);
 	let training = $state<'base' | 'adapt' | null>(null);
+	let interrupted = $state<'base' | 'adapt' | null>(null);
+	const reorderDuration = () => (matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 180);
 	let timer: ReturnType<typeof setInterval> | undefined;
 	const corpus = $derived(adaptationCorpora[domain]);
 	const comparingAdaptation = $derived(training === 'adapt' || adaptationEpochs > 0);
@@ -65,49 +68,59 @@
 		if (training === 'base') adaptedModel = baseModel.clone();
 		training = null;
 	}
+	function stopTraining() {
+		interrupted = training;
+		stop();
+	}
 	function pretrain() {
 		stop();
-		baseModel = new TinyWordModel();
-		adaptedModel = new TinyWordModel();
-		baseEpochs = 0;
+		interrupted = null;
 		adaptationEpochs = 0;
+		adaptedModel = baseModel.clone();
+		const target = baseEpochs + 120;
 		training = 'base';
 		timer = setInterval(() => {
 			const next = baseModel.clone();
 			next.train(everydayCorpus, 3);
 			baseModel = next;
 			baseEpochs += 3;
-			if (baseEpochs >= 120) stop();
+			if (baseEpochs >= target) stop();
 		}, 60);
 	}
 	function adapt() {
 		stop();
-		adaptedModel = baseModel.clone();
-		adaptationEpochs = 0;
+		interrupted = null;
+		if (!adaptationEpochs) adaptedModel = baseModel.clone();
+		const target = adaptationEpochs + strength;
 		training = 'adapt';
 		timer = setInterval(() => {
-			const count = Math.min(3, strength - adaptationEpochs);
+			const count = Math.min(3, target - adaptationEpochs);
 			const next = adaptedModel.clone();
 			next.train(corpus, count);
 			adaptedModel = next;
 			adaptationEpochs += count;
-			if (adaptationEpochs >= strength) stop();
+			if (adaptationEpochs >= target) stop();
 		}, 65);
 	}
 	function changeDomain(next: 'cafe' | 'space') {
+		if (next === domain) return;
 		stop();
+		interrupted = null;
 		domain = next;
 		adaptationEpochs = 0;
 		adaptedModel = baseModel.clone();
 	}
 	function changeStrength(value: number) {
+		if (value === strength) return;
 		stop();
+		interrupted = null;
 		strength = value;
 		adaptationEpochs = 0;
 		adaptedModel = baseModel.clone();
 	}
 	function reset() {
 		stop();
+		interrupted = null;
 		baseEpochs = 0;
 		adaptationEpochs = 0;
 		baseModel = new TinyWordModel();
@@ -143,7 +156,7 @@
 					</div>
 				</details>
 				<button class="train-base" disabled={training !== null} onclick={pretrain}
-					>{baseEpochs ? 'Pretrain again' : 'Pretrain the model'}<span
+					>{baseEpochs ? 'Continue pretraining' : 'Pretrain the model'}<span
 						>{baseEpochs ? `${baseEpochs} passes` : '120 passes'}</span
 					></button
 				>
@@ -159,10 +172,21 @@
 				</div>
 				<fieldset class="domain-picker">
 					<legend class="visually-hidden">Adaptation corpus</legend><button
+						disabled={training !== null}
 						aria-pressed={domain === 'cafe'}
-						onclick={() => changeDomain('cafe')}>Café</button
-					><button aria-pressed={domain === 'space'} onclick={() => changeDomain('space')}
-						>Astronomy</button
+						onclick={() => changeDomain('cafe')}
+						><PatternIcon
+							name={domain === 'cafe' ? 'checkCircle' : 'coffee'}
+							size={16}
+						/>Café</button
+					><button
+						disabled={training !== null}
+						aria-pressed={domain === 'space'}
+						onclick={() => changeDomain('space')}
+						><PatternIcon
+							name={domain === 'space' ? 'checkCircle' : 'ai'}
+							size={16}
+						/>Astronomy</button
 					>
 				</fieldset>
 				<details>
@@ -175,13 +199,14 @@
 					<legend>Amount of adaptation</legend>
 					<div>
 						{#each [{ value: 20, label: 'Light' }, { value: 80, label: 'Focused' }, { value: 240, label: 'Strong' }] as option (option.value)}<button
+								disabled={training !== null}
 								aria-pressed={strength === option.value}
 								onclick={() => changeStrength(option.value)}>{option.label}</button
 							>{/each}
 					</div>
 				</fieldset>
 				<button class="train-adapt" disabled={baseEpochs === 0 || training !== null} onclick={adapt}
-					>Adapt the model<span
+					>{adaptationEpochs ? 'Continue adapting' : 'Adapt the model'}<span
 						>{adaptationEpochs ? `${adaptationEpochs} passes` : `${strength} passes`}</span
 					></button
 				>
@@ -189,14 +214,16 @@
 			<div class="training-status" role="status">
 				{#if training}<span class="status-dot"></span><span
 						>{training === 'base'
-							? `Pretraining · ${baseEpochs} / 120 passes`
-							: `Adapting · ${adaptationEpochs} / ${strength} passes`}</span
-					><button onclick={stop}>Stop</button>{:else}<span
-						>{adaptationEpochs
-							? 'Adaptation complete. Change the context to compare predictions.'
-							: baseEpochs
-								? 'The base model is ready. Now adapt it to a domain.'
-								: 'Start with pretraining, then watch the predictions shift.'}</span
+							? `Pretraining · ${baseEpochs} total passes`
+							: `Adapting · ${adaptationEpochs} total passes`}</span
+					><button onclick={stopTraining}>Stop</button>{:else}<span
+						>{interrupted
+							? `Stopped after ${interrupted === 'base' ? baseEpochs : adaptationEpochs} ${interrupted === 'base' ? 'pretraining' : 'adaptation'} passes. These weights are kept.`
+							: adaptationEpochs
+								? 'Adaptation complete. Change the context to compare predictions.'
+								: baseEpochs
+									? 'The base model is ready. Now adapt it to a domain.'
+									: 'Start with pretraining, then watch the predictions shift.'}</span
 					>{/if}
 			</div>
 		</div>
@@ -237,7 +264,10 @@
 				>
 			</div>
 			<div class="word-predictions">
-				{#each comparison.rows as row (row.word)}<div class="word-row">
+				{#each comparison.rows as row (row.word)}<div
+						class="word-row"
+						animate:flip={{ duration: reorderDuration }}
+					>
 						<span>{row.word}</span>
 						<div class="paired-bars">
 							<div>
@@ -284,7 +314,7 @@
 									after.weight(from, word) - before.weight(from, word)}
 								<div
 									title={`${from} → ${word}: ${delta >= 0 ? '+' : ''}${delta.toFixed(3)}`}
-									style:--weight-color={delta >= 0 ? '#a9cf9f' : '#c4ade7'}
+									style:--weight-color={delta >= 0 ? 'var(--chart-blue)' : 'var(--chart-lavender)'}
 									style:--weight-opacity={Math.min(0.9, Math.abs(delta) / 5)}
 								></div>{/each}
 						</div>{/each}
@@ -438,10 +468,10 @@
 		gap: 8px;
 		width: 100%;
 		padding: 11px 13px;
-		min-height: 41px;
+		min-height: 46px;
 		border-radius: 10px;
 		border: 0;
-		font-size: 11px;
+		font-size: 13px;
 		cursor: pointer;
 		font-weight: 500;
 	}
@@ -455,7 +485,7 @@
 	}
 	.train-base span,
 	.train-adapt span {
-		font-size: 9px;
+		font-size: 10px;
 		opacity: 0.75;
 		font-weight: 400;
 	}
@@ -471,6 +501,12 @@
 		gap: 7px;
 	}
 	.domain-picker button {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		flex: 1;
+		justify-content: center;
+		min-height: 40px;
 		background: var(--surface-raised);
 		color: var(--muted);
 		padding: 8px 12px;
@@ -480,8 +516,9 @@
 		cursor: pointer;
 	}
 	.domain-picker button[aria-pressed='true'] {
-		background: var(--accent-bg);
-		color: var(--green);
+		background: var(--selection-fill);
+		color: var(--selection-ink);
+		box-shadow: inset 0 0 0 1px var(--blue);
 	}
 	.strength-picker {
 		border: 0;
@@ -498,6 +535,7 @@
 		gap: 5px;
 	}
 	.strength-picker button {
+		min-height: 40px;
 		flex: 1;
 		background: none;
 		border: 0;
@@ -512,7 +550,7 @@
 		color: var(--ink);
 	}
 	.training-status {
-		font-size: 10px;
+		font-size: 12px;
 		color: var(--muted);
 		line-height: 1.7;
 		display: flex;
@@ -520,6 +558,9 @@
 		gap: 8px;
 		min-height: 36px;
 		margin: 16px 5px 0;
+	}
+	.training-status > span {
+		color: var(--muted);
 	}
 	.status-dot {
 		display: block;
@@ -530,6 +571,8 @@
 		margin-top: 5px;
 	}
 	.training-status > button {
+		min-width: 44px;
+		min-height: 36px;
 		margin-left: auto;
 		padding: 0;
 		background: none;
@@ -541,8 +584,8 @@
 	.prediction-studio {
 		min-width: 0;
 		border-radius: 22px;
-		background: #101b17;
-		color: #dae6dc;
+		background: var(--plot);
+		color: var(--plot-ink);
 		padding: 25px 28px;
 	}
 	.prediction-top {
@@ -550,7 +593,7 @@
 		justify-content: space-between;
 		gap: 14px;
 		font-size: 9px;
-		color: #94a798;
+		color: var(--plot-muted);
 		letter-spacing: 0.09em;
 	}
 	.prediction-top span:last-child {
@@ -563,15 +606,15 @@
 	}
 	.context-input > span {
 		display: block;
-		color: #9cad9e;
+		color: var(--plot-muted);
 		font-size: 11px;
 		margin-bottom: 12px;
 	}
 	.context-input input {
 		box-sizing: border-box;
 		width: 100%;
-		background: #1b2a21;
-		color: #e8ede2;
+		background: var(--plot-soft);
+		color: var(--plot-ink);
 		font-family: 'Instrument Serif', serif;
 		font-size: 38px;
 		border: 0;
@@ -580,7 +623,7 @@
 		line-height: 1;
 	}
 	.context-input input:focus-visible {
-		outline: 2px solid #a9cf9f;
+		outline: 2px solid var(--chart-blue);
 		outline-offset: 3px;
 	}
 	.context-presets {
@@ -591,32 +634,33 @@
 		margin-top: 13px;
 	}
 	.context-presets button {
+		min-height: 36px;
 		border: 0;
 		border-radius: 6px;
-		background: #1c2a21;
-		color: #9fb4a3;
+		background: var(--plot-raised);
+		color: var(--plot-muted);
 		font-size: 10px;
 		padding: 6px 9px;
 		cursor: pointer;
 	}
 	.context-presets button[aria-pressed='true'] {
-		color: #d6e7ce;
-		background: #31412d;
+		color: var(--plot-ink);
+		background: color-mix(in srgb, var(--chart-blue) 14%, var(--plot-raised));
 	}
 	.context-presets > span {
-		color: #879f8e;
+		color: var(--plot-muted);
 		font-size: 9px;
 		margin-left: auto;
 		overflow-wrap: anywhere;
 	}
 	.context-presets strong {
-		color: #c9d9cb;
+		color: var(--chart-blue);
 		font-weight: 500;
 	}
 	.unknown-context {
 		font-size: 10px;
 		line-height: 1.7;
-		color: #e0be92;
+		color: var(--chart-amber);
 		margin: 15px 0;
 	}
 	.comparison-legend {
@@ -624,7 +668,7 @@
 		gap: 21px;
 		margin: 30px 0 20px;
 		font-size: 10px;
-		color: #a6b9aa;
+		color: var(--plot-muted);
 	}
 	.comparison-legend > span {
 		display: flex;
@@ -640,11 +684,11 @@
 	}
 	.before-key,
 	.before-bar {
-		background: #9c8bba;
+		background: var(--chart-lavender);
 	}
 	.after-key,
 	.after-bar {
-		background: #b4d7a3;
+		background: var(--chart-blue);
 	}
 	.word-predictions {
 		display: grid;
@@ -658,7 +702,7 @@
 	}
 	.word-row > span {
 		font-size: 14px;
-		color: #d7e4d8;
+		color: var(--plot-ink);
 	}
 	.paired-bars,
 	.paired-values {
@@ -679,14 +723,14 @@
 	.paired-values {
 		gap: 3px;
 		text-align: right;
-		font-size: 8px;
+		font-size: 11px;
 		font-variant-numeric: tabular-nums;
 	}
 	.paired-values span {
-		color: #b0a3c4;
+		color: var(--chart-lavender);
 	}
 	.paired-values strong {
-		color: #c2deb2;
+		color: var(--chart-blue);
 		font-weight: 500;
 	}
 	.other-words {
@@ -694,13 +738,13 @@
 		justify-content: space-between;
 		gap: 16px;
 		font-size: 10px;
-		color: #98aa9c;
+		color: var(--plot-muted);
 		margin-top: 23px;
 	}
 	.scale-note {
-		font-size: 8px;
+		font-size: 11px;
 		line-height: 1.7;
-		color: #819889;
+		color: var(--plot-muted);
 		margin: 13px 0 0;
 	}
 	.parameter-view {
@@ -718,7 +762,7 @@
 		margin: 0;
 	}
 	.parameter-view > div:first-child > span {
-		color: #94a898;
+		color: var(--plot-muted);
 		font-size: 9px;
 		font-variant-numeric: tabular-nums;
 	}
@@ -734,20 +778,20 @@
 		gap: 5px;
 	}
 	.matrix-header span {
-		font-size: 6px;
-		color: #96aa9c;
+		font-size: 9px;
+		color: var(--plot-muted);
 		text-align: center;
 		padding-bottom: 4px;
 	}
 	.matrix-row > span {
 		font-size: 9px;
-		color: #a7baac;
+		color: var(--plot-muted);
 		align-self: center;
 	}
 	.matrix-row > div {
 		height: 14px;
 		border-radius: 3px;
-		background: #25352a;
+		background: var(--plot-raised);
 		position: relative;
 	}
 	.matrix-row > div::after {
@@ -764,19 +808,19 @@
 		flex-wrap: wrap;
 		gap: 5px;
 		font-size: 8px;
-		color: #8fa596;
+		color: var(--plot-muted);
 		margin: 0;
 	}
 	.positive-key {
-		background: #a9cf9f;
+		background: var(--chart-blue);
 	}
 	.negative-key {
-		background: #c4ade7;
+		background: var(--chart-lavender);
 		margin-left: 8px;
 	}
 	.parameter-view > p > span {
 		margin-left: auto;
-		font-size: 7px;
+		font-size: 10px;
 	}
 	.adaptation-outcomes {
 		display: grid;

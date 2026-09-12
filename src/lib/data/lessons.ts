@@ -74,9 +74,10 @@ const courseLessons = [
 		headline: 'Simple pieces.',
 		accent: 'Extraordinary patterns.',
 		description:
-			'A straight boundary can’t separate a circle from its surroundings. A neural network combines small, adjustable transformations to learn a more useful shape.',
+			'From two simple clouds to intertwined spirals, different patterns demand different boundaries. A neural network combines small, adjustable transformations to learn them.',
 		idea: 'Each neuron combines inputs and applies a nonlinear function. Hidden layers compose these functions; backpropagation tells their weights how to change.',
-		prompt: 'Inspect every neuron, trace a prediction, and train the network to bend its boundary.',
+		prompt:
+			'Choose a pattern, train a network, and inspect how its neurons combine to separate the classes.',
 		minutes: 6
 	},
 	{
@@ -87,10 +88,11 @@ const courseLessons = [
 		headline: 'From little signals to',
 		accent: 'larger meaning.',
 		description:
-			'For images, sound, and language, hand-written features only take us so far. Deep learning lets networks learn intermediate representations along with the task.',
-		idea: 'Layers can build on one another: edges → shapes → objects is one useful image analogy, not a fixed job description for every neuron.',
-		prompt: 'Train a second neural network to learn a curved relationship.',
-		minutes: 5
+			'A few pixels can belong to a sleeve, a sole, or a shoulder. A convolutional network combines local signals across layers to recognize the whole item.',
+		idea: 'Each learned filter scans an image. Later layers combine earlier responses over larger regions. These features are learned together from the classification task; no one assigns each filter a fixed job.',
+		prompt:
+			'Follow a real Fashion-MNIST image through three convolutional layers. Inspect a feature, mute it, and see what changes.',
+		minutes: 7
 	},
 	{
 		id: 'modern-ai',
@@ -157,7 +159,7 @@ courseLessons.push(
 		description:
 			'Some problems are sequences of choices. A learner explores an environment, receives rewards, and improves a policy for what to do next.',
 		idea: 'A reward describes what the system should pursue. Exploration gathers experience; exploitation uses what has been learned. A poorly chosen reward can teach the wrong behavior.',
-		prompt: 'Train a delivery policy, then watch it navigate the garden.',
+		prompt: 'Compare exploration rates across toll bridges, competing deliveries, and dead ends.',
 		minutes: 6
 	},
 	{
@@ -228,6 +230,35 @@ courseLessons.push({
 	minutes: 6
 });
 
+courseLessons.push({
+	id: 'self-supervised',
+	title: 'Learning without labels',
+	group: 'GOING DEEPER',
+	kicker: 'Self-supervised learning',
+	headline: 'Let the data',
+	accent: 'be the teacher.',
+	description:
+		'A model can learn useful patterns before anyone gives it a category. Give it a puzzle: compress an image, then rebuild it.',
+	idea: 'Self-supervision creates a learning target from the data itself. Reconstruction, missing patches, and next-token prediction can teach representations that are reused for other tasks.',
+	prompt:
+		'Train an autoencoder, explore its hidden map, and reconstruct an image from two numbers.',
+	minutes: 7
+});
+
+courseLessons.push({
+	id: 'generative',
+	title: 'Creating something new',
+	group: 'THE NEW FRONTIER',
+	kicker: 'Generative AI',
+	headline: 'Learn the possibilities.',
+	accent: 'Create another one.',
+	description:
+		'A classifier chooses a label. A generative model creates a new image, passage, or sound. A prompt steers which possibilities it explores.',
+	idea: 'Generation samples from learned patterns. The same prompt can produce different results without changing the model’s weights.',
+	prompt: 'Create images, compare variations, and see exactly what stays fixed and what changes.',
+	minutes: 6
+});
+
 const order = [
 	'patterns',
 	'training',
@@ -238,11 +269,13 @@ const order = [
 	'reinforcement',
 	'deep-learning',
 	'representations',
+	'self-supervised',
 	'adaptation',
 	'modern-ai',
 	'tokens',
 	'language',
 	'vision',
+	'generative',
 	'retrieval',
 	'agents',
 	'evaluation'
@@ -257,11 +290,13 @@ const chapterIcons: Record<string, PatternIconName> = {
 	reinforcement: 'reinforcement',
 	'deep-learning': 'neural',
 	representations: 'representations',
+	'self-supervised': 'selfSupervised',
 	adaptation: 'adaptation',
 	'modern-ai': 'ai',
 	tokens: 'embeddings',
 	language: 'language',
 	vision: 'vision',
+	generative: 'sparkles',
 	retrieval: 'retrieval',
 	agents: 'agent',
 	evaluation: 'evaluation'

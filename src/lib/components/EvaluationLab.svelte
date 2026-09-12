@@ -148,7 +148,6 @@
 	<ModelConnection {ai} />
 	<div class="evaluation-workbench">
 		<div class="evaluation-intro">
-			<PatternIcon name="evaluation" size={30} />
 			<h2>A beautiful answer<br /><em>is only the beginning.</em></h2>
 			<p>Give the same six tasks to two prompts. Check what actually came back.</p>
 		</div>
@@ -297,13 +296,9 @@
 	.evaluation-workbench {
 		display: grid;
 		grid-template-columns: 1fr 1.1fr;
-		gap: 64px;
-		align-items: center;
-		padding: 46px 8px;
-	}
-	.evaluation-intro :global(svg) {
-		color: var(--green);
-		margin-bottom: 18px;
+		gap: 40px;
+		align-items: start;
+		padding: 28px 0;
 	}
 	h2 {
 		font-size: clamp(25px, 2.8vw, 39px);

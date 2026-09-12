@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, tick } from 'svelte';
 	import type { AiSession } from '$lib/ai/session.svelte';
 	import {
 		fieldNotes,
@@ -35,7 +35,11 @@
 	let coordinates = $derived(
 		vectors.length ? projectVectors(queryVector.length ? [...vectors, queryVector] : vectors) : []
 	);
-	const accents: Record<string, string> = { Visit: '#accc9b', Plants: '#aaa0d7', Food: '#ddb783' };
+	const accents: Record<string, string> = {
+		Visit: 'var(--blue)',
+		Plants: 'var(--lavender)',
+		Food: 'var(--orange)'
+	};
 	function clearResults() {
 		results = [];
 		usedQuery = '';
@@ -51,6 +55,24 @@
 	function selectPreset(text: string) {
 		query = text;
 		clearResults();
+	}
+	async function reveal(id: string) {
+		await tick();
+		const node = document.getElementById(id);
+		if (!node) return;
+		node.focus({ preventScroll: true });
+		const bounds = node.getBoundingClientRect();
+		if (bounds.top < 96 || bounds.bottom > window.innerHeight - 24) {
+			node.scrollIntoView({
+				block: 'start',
+				behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+			});
+		}
+	}
+	function revealSource(id: string) {
+		selected = id;
+		edit = false;
+		void reveal('retrieval-source');
 	}
 	async function search() {
 		if (!query.trim() || running || ai.busy) return;
@@ -80,6 +102,7 @@
 			}
 			usedQuery = q;
 			if (results[0]) selected = results[0].id;
+			void reveal('retrieval-results');
 		} catch (e) {
 			if (!controller.signal.aborted) error = e instanceof Error ? e.message : String(e);
 		} finally {
@@ -159,15 +182,19 @@
 		</div>
 		<label for="retrieval-question">Ask the field notes</label>
 		<div class="question-row">
-			<input
+			<textarea
 				id="retrieval-question"
+				rows="2"
+				maxlength="1000"
 				bind:value={query}
 				oninput={clearResults}
 				disabled={running}
 				onkeydown={(e) => {
-					if (e.key === 'Enter') void search();
-				}}
-			/><button
+					if (e.key === 'Enter' && !e.shiftKey) {
+						e.preventDefault();
+						void search();
+					}
+				}}></textarea><button
 				class="primary-button"
 				onclick={search}
 				disabled={running || ai.busy || !query.trim()}
@@ -179,14 +206,17 @@
 		<div class="question-presets">
 			<button
 				disabled={running}
+				aria-pressed={query === 'Can I bring my nine-year-old, and what will it cost?'}
 				onclick={() => selectPreset('Can I bring my nine-year-old, and what will it cost?')}
 				>A family visit</button
 			><button
 				disabled={running}
+				aria-pressed={query === 'Can a visitor who uses a wheelchair reach both floors?'}
 				onclick={() => selectPreset('Can a visitor who uses a wheelchair reach both floors?')}
 				>Getting around</button
 			><button
 				disabled={running}
+				aria-pressed={query === 'How many parking spaces are available?'}
 				onclick={() => selectPreset('How many parking spaces are available?')}
 				>Something missing</button
 			>
@@ -253,7 +283,12 @@
 							><PatternIcon name="arrowUpRight" size={16} /></button
 						>{/each}
 				</div>{/if}
-			<article class="passage-reader">
+			<article
+				class="passage-reader"
+				id="retrieval-source"
+				tabindex="-1"
+				aria-labelledby="source-title"
+			>
 				<div>
 					<span class="source-id">SOURCE {chosen.id}</span><button
 						disabled={running}
@@ -263,14 +298,20 @@
 						}}>{edit ? 'Cancel' : 'Edit this source'}</button
 					>
 				</div>
-				<h3>{chosen.title}</h3>
+				<h3 id="source-title">{chosen.title}</h3>
 				{#if edit}<textarea aria-label="Source passage" bind:value={draft} rows="5" maxlength="2000"
 					></textarea><button class="primary-button" onclick={save} disabled={!draft.trim()}
 						>Save & rebuild on next search</button
 					>{:else}<p>{chosen.body}</p>{/if}
 			</article>
 		</div>
-		<div class="ranking-area">
+		<div
+			class="ranking-area"
+			id="retrieval-results"
+			tabindex="-1"
+			role="region"
+			aria-label="Retrieved passages"
+		>
 			<div class="section-heading">
 				<h3>{usedQuery ? 'Closest passages' : 'What will be retrieved?'}</h3>
 				<PatternIcon name="layers" size={24} />
@@ -293,10 +334,8 @@
 							(p) => p.id === result.id
 						)!}<button
 							class:included={i < topK}
-							onclick={() => {
-								selected = result.id;
-								edit = false;
-							}}
+							aria-label={`Read source ${result.id}: ${passage.title}, similarity ${result.score.toFixed(2)}`}
+							onclick={() => revealSource(result.id)}
 							><span class="rank-id">{result.id}</span><span class="rank-title"
 								>{passage.title}<i style:width={`${Math.max(0, result.score) * 100}%`}></i></span
 							><span class="rank-score">{result.score.toFixed(2)}</span></button
@@ -332,11 +371,8 @@
 			</div>
 			<div class="answer-text" aria-live="polite">{answer || 'Reading…'}</div>
 			<div class="answer-sources">
-				{#each usedSources as p (p.id)}<button
-						onclick={() => {
-							selected = p.id;
-							edit = false;
-						}}>[{p.id}] {p.title}</button
+				{#each usedSources as p (p.id)}<button onclick={() => revealSource(p.id)}
+						>[{p.id}] {p.title}</button
 					>{/each}
 			</div>
 			<p>
@@ -425,7 +461,7 @@
 		display: flex;
 		gap: 12px;
 	}
-	.question-row input {
+	.question-row textarea {
 		flex: 1;
 		min-width: 0;
 		background: var(--paper);
@@ -435,10 +471,17 @@
 		color: var(--ink);
 		font: inherit;
 		font-size: 14px;
+		line-height: 1.6;
+		height: 56px;
+		min-height: 56px;
+		resize: vertical;
 	}
 	.question-row button {
 		margin: 0;
 		white-space: nowrap;
+		align-self: flex-start;
+		min-height: 56px;
+		min-width: 164px;
 	}
 	.question-presets {
 		display: flex;
@@ -455,6 +498,9 @@
 	}
 	.question-presets button + button {
 		margin-left: 6px;
+	}
+	.question-presets button[aria-pressed='true'] {
+		color: var(--ink);
 	}
 	.search-footnote,
 	.projection-note {
@@ -524,6 +570,16 @@
 		padding: 25px;
 		border-radius: 18px;
 		margin-top: 17px;
+		min-height: 250px;
+		scroll-margin-top: 96px;
+	}
+	.passage-reader:focus,
+	.ranking-area:focus {
+		outline: none;
+	}
+	.ranking-area {
+		scroll-margin-top: 96px;
+		min-width: 0;
 	}
 	.passage-reader > div {
 		display: flex;
@@ -560,7 +616,9 @@
 		border: 0;
 		border-radius: 10px;
 		padding: 14px;
-		font: 13px/1.8 inherit;
+		font-family: inherit;
+		font-size: 13px;
+		line-height: 1.8;
 		resize: vertical;
 	}
 	.passage-reader .primary-button {
@@ -569,11 +627,14 @@
 		margin-top: 12px;
 	}
 	.semantic-map {
+		--blue: var(--chart-blue);
+		--lavender: var(--chart-lavender);
+		--orange: var(--chart-amber);
 		height: 330px;
 		position: relative;
 		overflow: hidden;
 		border-radius: 20px;
-		background: radial-gradient(ellipse at 50% 50%, #2b3b3055, transparent 65%), var(--plot);
+		background: radial-gradient(ellipse at 50% 50%, #30435f55, transparent 65%), var(--plot);
 	}
 	.semantic-map svg {
 		position: absolute;
@@ -582,7 +643,7 @@
 		height: 100%;
 	}
 	.semantic-map line {
-		stroke: #cad8bb;
+		stroke: var(--chart-blue);
 		stroke-width: 0.2;
 		stroke-dasharray: 1.2 1.2;
 		opacity: 0.4;
@@ -596,14 +657,14 @@
 		border-radius: 50%;
 		border: 0;
 		background: var(--point);
-		color: #172119;
+		color: var(--plot);
 		display: grid;
 		place-items: center;
 		font: 12px var(--mono);
-		box-shadow: 0 0 0 6px #bcd7bc0b;
+		box-shadow: 0 0 0 6px color-mix(in srgb, var(--chart-blue) 4.31%, transparent);
 	}
 	.map-point.selected {
-		box-shadow: 0 0 0 7px #bcd7bc23;
+		box-shadow: 0 0 0 7px color-mix(in srgb, var(--chart-blue) 13.73%, transparent);
 	}
 	.query-point {
 		background: #f6f0d8;
@@ -677,6 +738,7 @@
 		margin-top: 9px;
 		border-radius: 3px;
 		opacity: 0.45;
+		transition: width 180ms ease;
 	}
 	.rank-score {
 		font: 11px var(--mono);
@@ -806,8 +868,14 @@
 		.question-row {
 			flex-direction: column;
 		}
-		.question-row input {
+		.question-row textarea {
 			font-size: 16px;
+			height: 88px;
+			min-height: 88px;
+		}
+		.question-row button {
+			width: 100%;
+			min-height: 48px;
 		}
 		.retrieval-workspace {
 			grid-template-columns: 1fr;
@@ -845,6 +913,11 @@
 		}
 		.retrieval-takeaway :global(svg) {
 			flex-shrink: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.rank-title i {
+			transition: none;
 		}
 	}
 </style>

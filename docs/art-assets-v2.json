@@ -1,0 +1,306 @@
+[
+	{
+		"asset": "rules-to-learning",
+		"width": 1672,
+		"height": 633,
+		"transparentFraction": 0.5905736713606506,
+		"sourceWidth": 1672,
+		"sourceHeight": 941,
+		"crop": {
+			"left": 0,
+			"top": 139,
+			"width": 1672,
+			"height": 633
+		},
+		"integratedLabels": false,
+		"source": "exec-c9afd6f8-dcc4-42c9-ba76-da61cfb799d1.png"
+	},
+	{
+		"asset": "shoe-studies",
+		"width": 1672,
+		"height": 941,
+		"transparentFraction": 0.6305327733399774,
+		"sourceWidth": 1672,
+		"sourceHeight": 941,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1672,
+			"height": 941
+		},
+		"integratedLabels": false,
+		"source": "exec-8100837d-9a65-41ef-829a-d1285f276212.png"
+	},
+	{
+		"asset": "data-split",
+		"width": 1672,
+		"height": 735,
+		"transparentFraction": 0.31562184682485434,
+		"sourceWidth": 1672,
+		"sourceHeight": 941,
+		"crop": {
+			"left": 0,
+			"top": 98,
+			"width": 1672,
+			"height": 735
+		},
+		"integratedLabels": false,
+		"source": "exec-9e7ef1ac-de1c-4bae-9498-79b96249a19b.png"
+	},
+	{
+		"asset": "learning-landscape",
+		"width": 1672,
+		"height": 941,
+		"transparentFraction": 0.5955749253822412,
+		"sourceWidth": 1672,
+		"sourceHeight": 941,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1672,
+			"height": 941
+		},
+		"integratedLabels": false,
+		"source": "exec-2a95e34b-b716-4626-b58c-be54b7078820.png"
+	},
+	{
+		"asset": "fit-triptych",
+		"width": 1942,
+		"height": 602,
+		"transparentFraction": 0.35220394770606733,
+		"sourceWidth": 1942,
+		"sourceHeight": 809,
+		"crop": {
+			"left": 0,
+			"top": 80,
+			"width": 1942,
+			"height": 602
+		},
+		"integratedLabels": true,
+		"source": "exec-29302668-da7b-4b9a-bd7c-9de985eed037.png"
+	},
+	{
+		"asset": "forecast-seasons",
+		"width": 1672,
+		"height": 495,
+		"transparentFraction": 0.7216543424677396,
+		"sourceWidth": 1672,
+		"sourceHeight": 941,
+		"crop": {
+			"left": 0,
+			"top": 201,
+			"width": 1672,
+			"height": 495
+		},
+		"integratedLabels": false,
+		"source": "exec-aee72106-bfe5-4d69-9dda-589df8ad0561.png"
+	},
+	{
+		"asset": "clustering-islands",
+		"width": 1672,
+		"height": 941,
+		"transparentFraction": 0.7321451270917124,
+		"sourceWidth": 1672,
+		"sourceHeight": 941,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1672,
+			"height": 941
+		},
+		"integratedLabels": false,
+		"source": "exec-f59ae779-5eb8-43b0-9d1c-90611db2cdd6.png"
+	},
+	{
+		"asset": "reward-garden",
+		"width": 1672,
+		"height": 941,
+		"transparentFraction": 0.7441513405773151,
+		"sourceWidth": 1672,
+		"sourceHeight": 941,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1672,
+			"height": 941
+		},
+		"integratedLabels": false,
+		"source": "exec-333e01a9-8220-4770-a164-5483ec502691.png"
+	},
+	{
+		"asset": "adaptation-library",
+		"width": 1942,
+		"height": 725,
+		"transparentFraction": 0.5074477076600732,
+		"sourceWidth": 1942,
+		"sourceHeight": 809,
+		"crop": {
+			"left": 0,
+			"top": 32,
+			"width": 1942,
+			"height": 725
+		},
+		"integratedLabels": true,
+		"source": "exec-7e95a8d9-f363-4035-a9f1-7fd9a00c83ed.png"
+	},
+	{
+		"asset": "retrieval-constellation",
+		"width": 1672,
+		"height": 941,
+		"transparentFraction": 0.6231466321586016,
+		"sourceWidth": 1672,
+		"sourceHeight": 941,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1672,
+			"height": 941
+		},
+		"integratedLabels": false,
+		"source": "exec-fa83ed63-c98a-4c1f-b80e-59876ebfdf08.png"
+	},
+	{
+		"asset": "vision-lens",
+		"width": 1942,
+		"height": 599,
+		"transparentFraction": 0.5272192411313741,
+		"sourceWidth": 1942,
+		"sourceHeight": 809,
+		"crop": {
+			"left": 0,
+			"top": 82,
+			"width": 1942,
+			"height": 599
+		},
+		"integratedLabels": true,
+		"source": "exec-736c7dbc-7793-4ee5-ad0c-2404084d7526.png"
+	},
+	{
+		"asset": "evaluation-balance",
+		"width": 1672,
+		"height": 941,
+		"transparentFraction": 0.7721253730887938,
+		"sourceWidth": 1672,
+		"sourceHeight": 941,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1672,
+			"height": 941
+		},
+		"integratedLabels": false,
+		"source": "exec-89d9dd99-aff2-4a65-82d9-caf02f42e0b2.png"
+	},
+	{
+		"asset": "neuron-anatomy",
+		"width": 1942,
+		"height": 716,
+		"transparentFraction": 0.6664513920452911,
+		"sourceWidth": 1942,
+		"sourceHeight": 809,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1942,
+			"height": 716
+		},
+		"integratedLabels": true,
+		"source": "exec-fbcc119f-4c8d-4e83-a21e-f4f1f1c53a33.png"
+	},
+	{
+		"asset": "tokens-fieldguide",
+		"width": 1942,
+		"height": 717,
+		"transparentFraction": 0.5161654507926522,
+		"sourceWidth": 1942,
+		"sourceHeight": 809,
+		"crop": {
+			"left": 0,
+			"top": 55,
+			"width": 1942,
+			"height": 717
+		},
+		"integratedLabels": true,
+		"source": "exec-756291f5-4e14-4646-8c17-e1b38d55363a.png"
+	},
+	{
+		"asset": "seeing-in-layers",
+		"width": 1942,
+		"height": 624,
+		"transparentFraction": 0.5453826018643217,
+		"sourceWidth": 1942,
+		"sourceHeight": 809,
+		"crop": {
+			"left": 0,
+			"top": 82,
+			"width": 1942,
+			"height": 624
+		},
+		"integratedLabels": true,
+		"source": "exec-6ca44993-7279-4646-af0d-2993758ead57.png"
+	},
+	{
+		"asset": "ai-atlas",
+		"width": 1672,
+		"height": 941,
+		"transparentFraction": 0.5052340480706161,
+		"sourceWidth": 1672,
+		"sourceHeight": 941,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1672,
+			"height": 941
+		},
+		"integratedLabels": false,
+		"source": "exec-17aef5e9-65cd-4e2d-98fe-2653efd47713.png"
+	},
+	{
+		"asset": "transformer-atelier",
+		"width": 1942,
+		"height": 809,
+		"transparentFraction": 0.6410165504195209,
+		"sourceWidth": 1942,
+		"sourceHeight": 809,
+		"crop": {
+			"left": 0,
+			"top": 0,
+			"width": 1942,
+			"height": 809
+		},
+		"integratedLabels": true,
+		"source": "exec-2e2d3890-b782-44fb-b008-329c415efb97.png"
+	},
+	{
+		"asset": "agent-circuit",
+		"width": 1672,
+		"height": 821,
+		"transparentFraction": 0.7057940777089441,
+		"sourceWidth": 1672,
+		"sourceHeight": 941,
+		"crop": {
+			"left": 0,
+			"top": 36,
+			"width": 1672,
+			"height": 821
+		},
+		"integratedLabels": false,
+		"source": "exec-3ab18d2e-a28c-4491-90ea-70a930744eed.png"
+	},
+	{
+		"asset": "self-supervised",
+		"width": 1942,
+		"height": 617,
+		"transparentFraction": 0.4433782279292347,
+		"sourceWidth": 1942,
+		"sourceHeight": 809,
+		"crop": {
+			"left": 0,
+			"top": 89,
+			"width": 1942,
+			"height": 617
+		},
+		"integratedLabels": true,
+		"source": "exec-78345018-b9a1-4237-aad2-126dee4e35f2.png"
+	}
+]

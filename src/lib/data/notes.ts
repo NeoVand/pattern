@@ -126,7 +126,14 @@ export const notes = [
 				'Representation',
 				'An internal numerical description that makes useful information accessible to later processing.'
 			],
-			['Deep learning', 'Learning with neural networks containing multiple processing layers.'],
+			[
+				'Convolution',
+				'A learned filter is reused across an image, producing a map of responses at different locations.'
+			],
+			[
+				'Receptive field',
+				'The region of the original image that can affect a particular activation. It grows as layers combine local responses.'
+			],
 			[
 				'Capacity',
 				'The variety of relationships a model can represent. More capacity also creates more ways to overfit.'
@@ -433,5 +440,89 @@ sources.push(
 		title: 'gpt-tokenizer · browser implementation used here',
 		url: 'https://github.com/niieani/gpt-tokenizer',
 		chapters: [16]
+	}
+);
+
+notes.push({
+	terms: [
+		[
+			'Self-supervision',
+			'Creating a training target from the data itself, rather than requiring a person to label each example.'
+		],
+		[
+			'Autoencoder',
+			'An encoder compresses an input; a decoder tries to reconstruct it. Their weights learn from reconstruction error.'
+		],
+		[
+			'Latent representation',
+			'The intermediate numbers produced by an encoder. Nearby codes need not have meanings we can name.'
+		],
+		[
+			'Variational autoencoder',
+			'The encoder learns a distribution of codes. Training balances reconstruction with a penalty that keeps these distributions near a shared Gaussian prior, encouraging a more continuous latent space.'
+		],
+		[
+			'Pretraining',
+			'Learning reusable model parameters before adapting or applying them to a later task.'
+		]
+	],
+	question: 'Where does this autoencoder get the answer it learns to predict?',
+	answers: ['From the original image pixels.', 'From a person assigning a category to each image.'],
+	correct: 0,
+	explanation:
+		'The original MNIST image supplies the reconstruction target. Digit labels color the map, but never enter training. Other self-supervised puzzles predict hidden patches or the next token.'
+});
+sources.push(
+	{
+		title: 'Fashion-MNIST · Zalando Research',
+		url: 'https://github.com/zalandoresearch/fashion-mnist',
+		chapters: [3, 6]
+	},
+	{
+		title: 'Auto-Encoding Variational Bayes · Kingma and Welling',
+		url: 'https://arxiv.org/abs/1312.6114',
+		chapters: [17]
+	},
+	{
+		title: 'MNIST handwritten digits · CVDF dataset mirror',
+		url: 'https://github.com/cvdfoundation/mnist',
+		chapters: [17]
+	},
+	{
+		title: 'Masked Autoencoders Are Scalable Vision Learners · He et al.',
+		url: 'https://arxiv.org/abs/2111.06377',
+		chapters: [17, 13]
+	}
+);
+
+notes.push({
+	terms: [
+		['Generative model', 'A model that learns patterns in data and can create new examples.'],
+		['Conditioning', 'Information, such as a prompt, that steers what the model generates.'],
+		[
+			'Sampling',
+			'Choosing an output from learned possibilities. The same prompt can yield different outputs.'
+		],
+		['Inference', 'Using a trained model. Generating these images does not update its weights.']
+	],
+	question: 'Two images differ even though the prompt and model are the same. What changed?',
+	answers: [
+		'The generated sample; the learned weights stayed fixed.',
+		'The model retrained itself on your prompt.'
+	],
+	correct: 0,
+	explanation:
+		'A prompt conditions generation. It does not by itself retrain the model; variation is possible during inference.'
+});
+sources.push(
+	{
+		title: 'Image generation · OpenAI',
+		url: 'https://developers.openai.com/api/docs/guides/image-generation',
+		chapters: [18]
+	},
+	{
+		title: 'TinyStories · Eldan and Li',
+		url: 'https://huggingface.co/datasets/roneneldan/TinyStories',
+		chapters: [8]
 	}
 );

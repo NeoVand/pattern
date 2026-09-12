@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { disclosure } from '$lib/ui/disclosure';
+	import { slide } from 'svelte/transition';
+	import { prefersReducedMotion } from 'svelte/motion';
 	import PatternIcon from '$lib/components/PatternIcon.svelte';
 	import { notes, sources } from '$lib/data/notes';
 	let { chapter }: { chapter: number } = $props();
@@ -8,7 +11,7 @@
 </script>
 
 <div class="lesson-notes">
-	<details>
+	<details {@attach disclosure}>
 		<summary
 			><span>Reflection & vocabulary</span><PatternIcon name="chevronDown" size={15} /></summary
 		>
@@ -28,7 +31,11 @@
 								/>{:else}<span>{i === 0 ? 'A' : 'B'}</span>{/if}{option}</button
 						>{/each}
 				</div>
-				{#if selectedAnswer !== null}<p class="answer-feedback" role="status">
+				{#if selectedAnswer !== null}<p
+						class="answer-feedback"
+						role="status"
+						transition:slide={{ duration: prefersReducedMotion.current ? 0 : 220 }}
+					>
 						<PatternIcon name="idea" size={15} /><span
 							><strong
 								>{selectedAnswer === note.correct
@@ -46,7 +53,7 @@
 			</dl>
 		</div>
 	</details>
-	<details class="source-notes">
+	<details class="source-notes" {@attach disclosure}>
 		<summary><span>Further reading</span><PatternIcon name="chevronDown" size={13} /></summary>
 		<div class="source-links">
 			{#each sources.filter((source) => source.chapters.includes(chapter)) as source (source.url)}

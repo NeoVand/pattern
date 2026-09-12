@@ -51,6 +51,8 @@
 		"@hugeicons/core-free-icons": "^4.3.2",
 		"@hugeicons/svelte": "^1.1.5",
 		"@huggingface/transformers": "^4.2.0",
+		"@jax-js/jax": "^0.1.24",
+		"@jax-js/optax": "^0.1.2",
 		"gpt-tokenizer": "^4.0.0"
 	}
 }

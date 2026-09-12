@@ -130,7 +130,10 @@
 		}
 		running = true;
 		error = '';
-		document.getElementById('agent-output')?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+		document.getElementById('agent-output')?.scrollIntoView({
+			block: 'start',
+			behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+		});
 		controller = new AbortController();
 		try {
 			if (!started) initialize();
@@ -155,18 +158,66 @@
 
 <ModelConnection {ai} />
 <div class="agent-flow" aria-label="An agent's loop">
-	<span><PatternIcon name="agent" size={18} /> Model decides</span><PatternIcon
-		name="arrowRight"
-		size={15}
-	/><span><PatternIcon name="tool" size={18} /> Tool executes</span><PatternIcon
-		name="arrowRight"
-		size={15}
-	/><span><PatternIcon name="database" size={18} /> Result returns</span><PatternIcon
-		name="arrowRight"
-		size={15}
-	/><span>Decide again</span>
+	<span><PatternIcon name="agent" size={18} /><span class="flow-label">Model decides</span></span
+	><PatternIcon name="arrowRight" size={15} /><span
+		><PatternIcon name="tool" size={18} /><span class="flow-label">Tool executes</span></span
+	><PatternIcon name="arrowRight" size={15} /><span
+		><PatternIcon name="database" size={18} /><span class="flow-label">Result returns</span></span
+	><PatternIcon name="arrowRight" size={15} />
+	<span><PatternIcon name="reset" size={18} /><span class="flow-label">Decide again</span></span>
 </div>
 <div class="experiment live-agent">
+	<div class="experiment-controls">
+		<label class="field-label" for="agent-task">Ask your analyst</label><textarea
+			id="agent-task"
+			rows="5"
+			bind:value={task}
+			disabled={started}></textarea>
+		<div class="agent-run-actions">
+			{#if running}<button class="primary-button" onclick={() => controller?.abort()}
+					><PatternIcon name="stop" size={15} /> Stop agent</button
+				>{:else if done}<button class="primary-button" onclick={reset}
+					><PatternIcon name="reset" size={15} /> Start over</button
+				>{:else}<button
+					class="primary-button"
+					disabled={!task.trim() || !valid || ai.busy}
+					onclick={() => run(true)}
+					><PatternIcon name="play" size={15} />{ai.ready ? 'Run agent' : 'Choose a model'}</button
+				><button
+					class="secondary-button"
+					disabled={!task.trim() || !valid || ai.busy}
+					onclick={() => run(false)}
+					>Take one step <PatternIcon name="arrowRight" size={14} /></button
+				>{/if}
+		</div>
+		{#if started && !running && !done}<button class="text-button" onclick={reset}>Reset run</button
+			>{/if}
+		<div class="control-divider"></div>
+		<span class="eyebrow">THE DATA · EDIT BEFORE RUNNING</span>
+		<p class="control-help">
+			A small fictional shop’s real input to these tools. Change a number and rerun to see the
+			answer change.
+		</p>
+		<div class="sales-table">
+			{#each rows as row, i (row.day)}<label class:weekend={row.weekend}
+					><span>{row.day}<small>{row.weekend ? 'weekend' : 'weekday'}</small></span><input
+						type="number"
+						min="0"
+						max="1000000"
+						step="1"
+						aria-label={`${row.day} items sold`}
+						bind:value={rows[i].sales}
+						disabled={started}
+					/></label
+				>{/each}
+			<div><span>Weekly total</span><strong>{total.toLocaleString()} items</strong></div>
+		</div>
+		<details class="tool-list">
+			<summary>Three available tools</summary>{#each agentTools as tool (tool.name)}<p>
+					<code>{tool.name}</code><span>{tool.description}</span>
+				</p>{/each}
+		</details>
+	</div>
 	<div class="plot-panel" id="agent-output">
 		<div class="plot-heading">
 			<span><i class="live-dot"></i> THE AGENT WORKBENCH</span>{#if running}<button
@@ -263,55 +314,6 @@
 			><span>{trace.filter((t) => t.kind === 'tool').length} TOOL CALLS</span>
 		</div>
 	</div>
-	<div class="experiment-controls">
-		<span class="eyebrow">THE GOAL</span><label class="field-label" for="agent-task"
-			>Ask your analyst</label
-		><textarea id="agent-task" rows="5" bind:value={task} disabled={started}></textarea>
-		<div class="agent-run-actions">
-			{#if running}<button class="primary-button" onclick={() => controller?.abort()}
-					><PatternIcon name="stop" size={15} /> Stop agent</button
-				>{:else if done}<button class="primary-button" onclick={reset}
-					><PatternIcon name="reset" size={15} /> Start over</button
-				>{:else}<button
-					class="primary-button"
-					disabled={!task.trim() || !valid || ai.busy}
-					onclick={() => run(true)}
-					><PatternIcon name="play" size={15} />{ai.ready ? 'Run agent' : 'Choose a model'}</button
-				><button
-					class="secondary-button"
-					disabled={!task.trim() || !valid || ai.busy}
-					onclick={() => run(false)}
-					>Take one step <PatternIcon name="arrowRight" size={14} /></button
-				>{/if}
-		</div>
-		{#if started && !running && !done}<button class="text-button" onclick={reset}>Reset run</button
-			>{/if}
-		<div class="control-divider"></div>
-		<span class="eyebrow">THE DATA · EDIT BEFORE RUNNING</span>
-		<p class="control-help">
-			A small fictional shop’s real input to these tools. Change a number and rerun to see the
-			answer change.
-		</p>
-		<div class="sales-table">
-			{#each rows as row, i (row.day)}<label class:weekend={row.weekend}
-					><span>{row.day}<small>{row.weekend ? 'weekend' : 'weekday'}</small></span><input
-						type="number"
-						min="0"
-						max="1000000"
-						step="1"
-						aria-label={`${row.day} items sold`}
-						bind:value={rows[i].sales}
-						disabled={started}
-					/></label
-				>{/each}
-			<div><span>Weekly total</span><strong>{total.toLocaleString()} items</strong></div>
-		</div>
-		<details class="tool-list">
-			<summary>Three available tools</summary>{#each agentTools as tool (tool.name)}<p>
-					<code>{tool.name}</code><span>{tool.description}</span>
-				</p>{/each}
-		</details>
-	</div>
 </div>
 <div class="lab-explanation">
 	<span class="eyebrow">WHAT MAKES IT AN AGENT?</span>
@@ -322,3 +324,134 @@
 		the evidence instead of assuming the final answer is correct.
 	</p>
 </div>
+
+<style>
+	.live-agent {
+		grid-template-areas: 'output controls';
+		grid-template-columns: minmax(0, 1fr) minmax(300px, 35%);
+	}
+	.live-agent .experiment-controls {
+		grid-area: controls;
+		min-width: 0;
+		container-type: inline-size;
+	}
+	.live-agent .field-label {
+		margin-top: 0;
+	}
+	.live-agent .plot-panel {
+		grid-area: output;
+		min-width: 0;
+	}
+	.plot-heading {
+		min-height: 30px;
+	}
+	.agent-trace:has(> .output-empty) {
+		align-content: center;
+	}
+	.trace-card {
+		animation: trace-arrive 180ms ease-out;
+	}
+	.trace-title > span {
+		min-width: 0;
+		line-height: 1.5;
+	}
+	.trace-title :global(svg) {
+		flex-shrink: 0;
+	}
+	.agent-run-actions {
+		min-height: 44px;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		justify-content: flex-start;
+	}
+	.agent-run-actions > button {
+		width: auto;
+		flex: 0 0 auto;
+	}
+	.agent-run-actions > .primary-button:only-child {
+		min-height: 44px;
+	}
+	.sales-table input,
+	.training-status {
+		font-variant-numeric: tabular-nums;
+	}
+	@container (min-width: 320px) {
+		.sales-table {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			gap: 8px 18px;
+		}
+		.sales-table label {
+			gap: 8px;
+			padding: 4px 0;
+		}
+		.sales-table input {
+			width: 58px;
+			padding: 8px;
+		}
+		.sales-table > div {
+			grid-column: 1 / -1;
+			margin-top: 5px;
+		}
+	}
+	@keyframes trace-arrive {
+		from {
+			opacity: 0;
+			transform: translateY(4px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	@media (max-width: 760px) {
+		.agent-flow {
+			display: grid;
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 12px;
+			padding: 20px 16px;
+		}
+		.agent-flow > :global(svg) {
+			display: none;
+		}
+		.agent-flow > span,
+		.agent-flow > span:last-child {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: flex-start;
+			gap: 9px;
+			min-height: 58px;
+			font-size: 11px;
+			line-height: 1.4;
+			text-align: center;
+		}
+		.agent-flow > span :global(svg) {
+			width: 18px;
+			height: 18px;
+		}
+		.flow-label {
+			width: min-content;
+		}
+		.live-agent {
+			grid-template-areas: 'controls' 'output';
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.live-agent .experiment-controls {
+			padding: 24px;
+		}
+		.agent-trace {
+			min-height: 280px;
+		}
+		.output-empty {
+			min-height: 240px;
+			padding: 18px 8px;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.trace-card {
+			animation: none;
+		}
+	}
+</style>
