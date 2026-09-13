@@ -50,7 +50,8 @@
 		{ duration: () => (prefersReducedMotion.current ? 0 : 480), easing: cubicInOut }
 	);
 	const chartWidth = $derived(Math.max(240, plotWidth));
-	const chartHeight = $derived(chartWidth < 520 ? 250 : 300);
+	// Keep the plotted area near 2:1 on desktop so vertical errors stay legible.
+	const chartHeight = $derived(Math.max(280, Math.min(520, chartWidth * 0.56)));
 	const left = 32,
 		right = 16,
 		top = 16;
@@ -268,6 +269,9 @@
 
 <style>
 	.generalization-lab {
+		width: 100%;
+		max-width: 1040px;
+		margin-inline: auto;
 		background: var(--surface);
 		border-radius: 24px;
 		padding: clamp(20px, 3vw, 36px);
