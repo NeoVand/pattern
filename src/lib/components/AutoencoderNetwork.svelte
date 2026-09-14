@@ -30,12 +30,12 @@
 		'Reconstruction'
 	];
 	const descriptions = [
-		'The encoder receives all 784 brightness values. No digit labels enter this network.',
+		'The encoder receives all 784 brightness values. No category labels enter this network.',
 		'128 densely connected neurons combine the image pixels. A smooth GELU activation makes their responses nonlinear.',
 		'32 neurons compress those responses. Two linear heads then predict a mean and a log variance for each latent coordinate.',
 		'Training samples two coordinates from the predicted Gaussian. The map displays its mean; exploring the map supplies your own coordinates to the decoder.',
-		'32 decoder neurons expand the two coordinates. Nearby points can produce similar strokes because training regularizes the latent distribution.',
-		'128 neurons combine those responses into the structure needed to rebuild the digit. Every square here is one actual neuron.',
+		'32 decoder neurons expand the two coordinates. Nearby points can produce similar shapes because training regularizes the latent distribution.',
+		'128 neurons combine those responses into the structure needed to rebuild the image. Every square here is one actual neuron.',
 		'784 linear outputs reconstruct the pixels. The training objective combines reconstruction error with a KL penalty. Displayed pixels alone are clipped to 0–1.'
 	];
 	const layers = $derived([
@@ -57,7 +57,7 @@
 	<div class="architecture-heading">
 		<span><PatternIcon name="neural" size={19} />The network behind the map</span><small
 			>{mode === 'image'
-				? 'Encode this digit → reconstruct its mean'
+				? 'Encode this image → reconstruct its mean'
 				: 'Explore mode → decode your chosen point'}</small
 		>
 	</div>
@@ -74,7 +74,7 @@
 					{#if index === 0 || index === 6}<div class="architecture-digit">
 							<MnistDigit
 								pixels={values}
-								label={index === 0 ? 'Input digit' : 'Reconstructed digit'}
+								label={index === 0 ? 'Input image' : 'Reconstructed image'}
 							/>
 						</div>
 					{:else if index === 3}<div class="latent-nodes"><i></i><i></i></div>
@@ -109,7 +109,7 @@
 	<small class="architecture-note"
 		>All hidden-layer neurons are shown. Connections between dense layers are bundled; brightness
 		shows the magnitude of the current activation, scaled per layer.{mode !== 'image'
-			? ' Dimmed encoder values belong to the last inspected digit; only the decoder follows your map point.'
+			? ' Dimmed encoder values belong to the last inspected image; only the decoder follows your map point.'
 			: ''}</small
 	>
 </section>

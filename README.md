@@ -35,7 +35,7 @@ The twenty chapters move from explicit algorithms and supervised learning to mod
 7. Learning from rewards — train a Q-learning delivery policy, change the map, and replay its route.
 8. A network of small ideas — train two nonlinear neural networks.
 9. Why go deeper? — representations and learned features.
-10. Learning without labels — train a real MNIST variational autoencoder and explore its two-dimensional learned map.
+10. Learning without labels — choose MNIST digits or Fashion-MNIST clothing, train a real variational autoencoder, and explore its two-dimensional learned map.
 11. From pretraining to purpose — pretrain and adapt a small next-word model; observe forgetting and the difference between training and context.
 12. The bigger picture — machine learning, deep learning, and generative AI.
 13. The pieces a model sees — genuine text token IDs, Unicode bytes, image patches, and audio windows.
@@ -48,6 +48,8 @@ The twenty chapters move from explicit algorithms and supervised learning to mod
 20. Good answers need evidence — run six explicit checks, compare prompts, inspect failures and export results.
 
 The adaptation model has 10,609 trainable parameters and learns a word-level softmax distribution; it is deliberately small and is not a transformer. Reinforcement learning uses a seeded Q-learning environment, not an LLM deciding moves. Both work without an API key.
+
+The autoencoder offers MNIST (8,000 training digits) and Fashion-MNIST (12,000 training clothing images across all ten categories), with 2,000 official test images per dataset. Both use the same variational architecture and start from random weights. Switching datasets stops the current worker and resets the model, optimizer, history, and explorer. Each dataset also has its own optional saved example, trained for 10,000 updates without labels. Clothing names and digit labels are used only for inspection and map colors. Reconstruction, coordinate probing, morphing, and continued training work with either dataset.
 
 Retrieval uses real `text-embedding-3-small` vectors with 256 dimensions, cosine ranking, and a two-dimensional PCA projection. The map is approximate; ranking uses the full vectors. The optional keyword baseline needs no API. Editing a source invalidates its embeddings and the previous answer. Grounded generation sends only the selected passages and asks for citations and abstention when evidence is missing. Citations still need human inspection.
 

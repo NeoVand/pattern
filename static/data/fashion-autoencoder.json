@@ -1,0 +1,42 @@
+{
+  "model": "variational autoencoder",
+  "architecture": [
+    784,
+    128,
+    32,
+    2,
+    32,
+    128,
+    784
+  ],
+  "latentHead": "2 means + 2 log variances",
+  "activation": "GELU hidden, linear Gaussian mean/log-variance and readout",
+  "objective": "mean pixel MSE + (1/784) * mean Gaussian KL",
+  "optimizer": "Adam beta1=0.9 beta2=0.99 eps=1e-8",
+  "learningRate": 0.003,
+  "batchSize": 128,
+  "updates": 10000,
+  "trainingImages": 12000,
+  "heldOutImages": 2000,
+  "seed": 7,
+  "trainMSE": 0.031817354143760974,
+  "heldOutMSE": 0.03191075175793174,
+  "latentMin": [
+    -3.3386855443071597,
+    -2.0136578544143404
+  ],
+  "latentMax": [
+    3.733233155136215,
+    2.798101100836453
+  ],
+  "trainingSeconds": 26.84,
+  "weightsFormat": "little-endian float32; each layer output-major weights then biases; latent layer has four outputs",
+  "labelsUsed": false,
+  "sha256": "5d41f29ef6c53aae30654121ff038fe9edf5b6b8636f23cae9f54a8668988af6",
+  "dataset": "Fashion-MNIST",
+  "sources": {
+    "fashion-train.png": "48272e7aca39c55343352b59806c455a2ab82dfffe99a220fbcd37357c60cbf0",
+    "fashion-test.png": "fdf89ed3479bc324d397dfc3632577b09c0be5e74c239d5214ef2a6d8e35af69",
+    "fashion-meta.json": "87a286ca3c0688e3cf3d4c4b6303ba33296ac39a329ac6e3d15a29e8c42d8de5"
+  }
+}

@@ -470,13 +470,13 @@ notes.push({
 	answers: ['From the original image pixels.', 'From a person assigning a category to each image.'],
 	correct: 0,
 	explanation:
-		'The original MNIST image supplies the reconstruction target. Digit labels color the map, but never enter training. Other self-supervised puzzles predict hidden patches or the next token.'
+		'The original MNIST or Fashion-MNIST image supplies the reconstruction target. Digit or clothing labels color the map, but never enter training. Other self-supervised puzzles predict hidden patches or the next token.'
 });
 sources.push(
 	{
 		title: 'Fashion-MNIST · Zalando Research',
 		url: 'https://github.com/zalandoresearch/fashion-mnist',
-		chapters: [3, 6]
+		chapters: [3, 6, 17]
 	},
 	{
 		title: 'Auto-Encoding Variational Bayes · Kingma and Welling',

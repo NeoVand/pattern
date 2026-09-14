@@ -241,7 +241,7 @@ courseLessons.push({
 		'A model can learn useful patterns before anyone gives it a category. Give it a puzzle: compress an image, then rebuild it.',
 	idea: 'Self-supervision creates a learning target from the data itself. Reconstruction, missing patches, and next-token prediction can teach representations that are reused for other tasks.',
 	prompt:
-		'Train an autoencoder, explore its hidden map, and reconstruct an image from two numbers.',
+		'Choose MNIST digits or Fashion-MNIST clothing, train an autoencoder, and reconstruct images from two numbers.',
 	minutes: 7
 });
 

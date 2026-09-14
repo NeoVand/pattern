@@ -16,7 +16,7 @@ export const chapterArt: Record<string, ChapterArt> = {
 		title: 'The next word is already in the book',
 		alt: 'An open book holds the context Once upon a on ivory tiles. A lavender continuation tile reveals time, the target supplied by the text itself.',
 		caption: 'The data contains the question and its answer.',
-		note: 'A next-token objective uses earlier text as context and the following token as its training target. Token boundaries depend on the tokenizer. The MNIST lab below explores another self-supervised objective: reconstructing an image through a two-dimensional code, with a regularizer on that code.',
+		note: 'A next-token objective uses earlier text as context and the following token as its training target. Token boundaries depend on the tokenizer. The MNIST and Fashion-MNIST lab below explores another self-supervised objective: reconstructing an image through a two-dimensional code, with a regularizer on that code.',
 		action: 'Explore self-supervision',
 		tone: 'light',
 		width: 1942,

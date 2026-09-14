@@ -19,6 +19,8 @@
 		mode = 'digits',
 		probeMode = false,
 		filter = -1,
+		datasetName = 'MNIST',
+		imageName = 'digits',
 		onselect,
 		onprobe
 	}: {
@@ -31,6 +33,8 @@
 		mode?: 'digits' | 'points';
 		probeMode?: boolean;
 		filter?: number;
+		datasetName?: string;
+		imageName?: string;
 		onselect: (index: number) => void;
 		onprobe: (code: LatentPoint) => void;
 	} = $props();
@@ -351,7 +355,7 @@
 
 <button
 	class="latent-map"
-	aria-label={`Explore 2,000 held-out MNIST digits in the actual two-dimensional encoding. ${probeMode ? 'Drag the probe to decode any coordinate; arrow keys move it.' : 'Click to inspect a digit, drag to explore between digits; arrow keys browse examples.'}`}
+	aria-label={`Explore ${labels.length.toLocaleString('en-US')} held-out ${datasetName} ${imageName} in the actual two-dimensional encoding. ${probeMode ? 'Drag the probe to decode any coordinate; arrow keys move it.' : 'Click to inspect an image, drag to explore between images; arrow keys browse examples.'}`}
 	onpointerdown={choose}
 	onpointermove={drag}
 	onpointerup={release}
@@ -366,7 +370,7 @@
 	<canvas
 		{@attach mount}
 		{@attach synchronize}
-		aria-label="Colorized handwritten digits at their learned encoder coordinates"
+		aria-label={`Colorized ${datasetName} images at their learned encoder coordinates`}
 	></canvas>
 </button>
 
