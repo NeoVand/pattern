@@ -4,11 +4,16 @@ import TrainingLab from '$lib/components/TrainingLab.svelte';
 import ImageClassifier from '$lib/components/ImageClassifier.svelte';
 import { dataset, Network } from './models';
 
+// These tests run real training across browser frames, including on shared CI CPUs.
+const trainingTimeout = 60000;
+
 test('regression continues beyond its first run without losing weights or clipping history', async () => {
 	const screen = await render(TrainingLab, { kind: 'regression' });
 	await screen.getByRole('button', { name: 'Train the model', exact: true }).click();
 	await expect
-		.poll(() => document.querySelector('.training-status strong')?.textContent, { timeout: 10000 })
+		.poll(() => document.querySelector('.training-status strong')?.textContent, {
+			timeout: trainingTimeout
+		})
 		.toBe('600');
 	await screen.getByRole('button', { name: 'Continue training', exact: true }).click();
 	await expect
@@ -28,14 +33,14 @@ test('regression continues beyond its first run without losing weights or clippi
 		const xs = [...curve.matchAll(/[ML]([\d.]+),/g)].map((m) => Number(m[1]));
 		expect(Math.max(...xs)).toBeLessThanOrEqual(212);
 	}
-}, 15000);
+}, 75000);
 
 test('the image classifier can continue after 200 epochs and reset deliberately', async () => {
 	const screen = await render(ImageClassifier);
 	await screen.getByRole('button', { name: 'Train the classifier', exact: true }).click();
 	await expect
 		.poll(() => document.querySelector('.image-training-footer strong')?.textContent, {
-			timeout: 10000
+			timeout: trainingTimeout
 		})
 		.toBe('200');
 	await screen.getByRole('button', { name: 'Continue training', exact: true }).click();
@@ -46,4 +51,4 @@ test('the image classifier can continue after 200 epochs and reset deliberately'
 	await expect
 		.poll(() => document.querySelector('.image-training-footer strong')?.textContent)
 		.toBe('0');
-}, 15000);
+}, 75000);

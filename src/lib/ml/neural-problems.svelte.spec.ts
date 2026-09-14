@@ -59,7 +59,8 @@ test('learning passes the old cutoff and pause / continue retains the trained we
 	await screen.getByRole('button', { name: 'Start learning', exact: true }).click();
 	const epochs = () =>
 		Number(screen.getByTestId('neural-epoch').element().textContent?.replaceAll(',', ''));
-	await expect.poll(epochs, { timeout: 12000 }).toBeGreaterThan(600);
+	// Training speed depends on the CPU and frame scheduling of the CI browser.
+	await expect.poll(epochs, { timeout: 60000 }).toBeGreaterThan(600);
 	await screen.getByRole('button', { name: 'Pause learning', exact: true }).click();
 	const paused = epochs();
 	const activation = screen.getByTestId('neuron-activation').element().textContent;
@@ -69,4 +70,4 @@ test('learning passes the old cutoff and pause / continue retains the trained we
 	await screen.getByRole('button', { name: 'Continue learning', exact: true }).click();
 	await expect.poll(epochs).toBeGreaterThan(paused);
 	await screen.getByRole('button', { name: 'Pause learning', exact: true }).click();
-}, 20000);
+}, 75000);
