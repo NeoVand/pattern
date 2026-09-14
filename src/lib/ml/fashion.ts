@@ -1,3 +1,4 @@
+import { asset } from '$app/paths';
 import type { Sample } from './models';
 export type FashionSample = Sample & { id: string; image: string; label: 'Sneaker' | 'Ankle boot' };
 const image = (url: string) =>
@@ -11,9 +12,9 @@ const image = (url: string) =>
 /** Jaxverse's Fashion-MNIST sprite packing: 100 columns, 28px tiles. Official test examples stay separate. */
 export async function loadFashion(): Promise<FashionSample[]> {
 	const [train, test, labelResponse] = await Promise.all([
-		image('/data/fashion-train.png'),
-		image('/data/fashion-test.png'),
-		fetch('/data/fashion-labels.bin')
+		image(asset('/data/fashion-train.png')),
+		image(asset('/data/fashion-test.png')),
+		fetch(asset('/data/fashion-labels.bin'))
 	]);
 	if (!labelResponse.ok) throw new Error('The Fashion-MNIST labels could not load.');
 	const labels = new Uint8Array(await labelResponse.arrayBuffer());

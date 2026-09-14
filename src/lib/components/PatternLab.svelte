@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { asset } from '$app/paths';
 	import { fade } from 'svelte/transition';
 	import { prefersReducedMotion } from 'svelte/motion';
 	import PatternIcon from '$lib/components/PatternIcon.svelte';
@@ -60,7 +61,7 @@
 			{:else if stage === 1}
 				<div class="classification-story">
 					<img
-						src="/images/edition-3/shoe-studies.webp"
+						src={asset('/images/edition-3/shoe-studies.webp')}
 						alt="A blue and ivory sneaker and a slate ankle boot, with rear-view photographs showing their different collar heights"
 						width="1932"
 						height="814"

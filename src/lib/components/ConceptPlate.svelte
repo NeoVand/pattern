@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { fade } from 'svelte/transition';
 	import { prefersReducedMotion } from 'svelte/motion';
 	import PatternIcon from '$lib/components/PatternIcon.svelte';
@@ -34,8 +35,8 @@
 <figure class="concept-plate" style:--art-ratio={imageWidth / imageHeight}>
 	<div class="art-frame" data-tone={art.tone}>
 		<img
-			src={`/images/${art.asset}.webp?v=3`}
-			srcset={`/images/${art.asset}-800.webp?v=3 800w, /images/${art.asset}.webp?v=3 ${imageWidth}w`}
+			src={`${base}/images/${art.asset}.webp?v=3`}
+			srcset={`${base}/images/${art.asset}-800.webp?v=3 800w, ${base}/images/${art.asset}.webp?v=3 ${imageWidth}w`}
 			sizes="(max-width: 680px) calc(100vw - 36px), (max-width: 980px) calc(100vw - 72px), (max-width: 1250px) calc(100vw - 295px), 820px"
 			width={imageWidth}
 			height={imageHeight}
@@ -88,7 +89,8 @@
 				>
 			</div>
 		</header>
-		<!-- svelte-ignore a11y_no_noninteractive_tabindex (Keyboard users need to pan the enlarged illustration.) -->
+		<!-- Keyboard users need to pan the enlarged illustration. -->
+		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 		<div
 			class="image-viewport"
 			class:zoomed
@@ -97,7 +99,7 @@
 			tabindex="0"
 		>
 			<img
-				src={`/images/${art.asset}.webp?v=3`}
+				src={`${base}/images/${art.asset}.webp?v=3`}
 				width={imageWidth}
 				height={imageHeight}
 				alt={art.alt}

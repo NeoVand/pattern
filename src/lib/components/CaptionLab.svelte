@@ -1,16 +1,17 @@
 <script lang="ts">
+	import { asset } from '$app/paths';
 	import PatternIcon from '$lib/components/PatternIcon.svelte';
 	import { onDestroy } from 'svelte';
 	import type { AiSession } from '$lib/ai/session.svelte';
 	let { ai }: { ai: AiSession } = $props();
 	const examples = [
 		{
-			src: '/images/caption-garden.webp',
+			src: asset('/images/caption-garden.webp'),
 			name: 'Garden',
 			alt: 'A golden retriever, a red ball, and a garden bench'
 		},
 		{
-			src: '/images/caption-coast.webp',
+			src: asset('/images/caption-coast.webp'),
 			name: 'Coast',
 			alt: 'A white sailboat near a red lighthouse on a rocky coast'
 		}

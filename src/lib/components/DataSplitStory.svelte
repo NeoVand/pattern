@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { asset } from '$app/paths';
 	import { fade } from 'svelte/transition';
 	import { prefersReducedMotion } from 'svelte/motion';
 	import PatternIcon from '$lib/components/PatternIcon.svelte';
@@ -42,7 +43,7 @@
 	<div class="partition-composition">
 		<figure class="partition-figure">
 			<img
-				src="/images/edition-2/data-split.webp?v=3"
+				src={`${asset('/images/edition-2/data-split.webp')}?v=3`}
 				alt="Blue training tray, lavender validation tray, and apricot test tray with a glass lid, each holding its own examples."
 				width="1672"
 				height="735"

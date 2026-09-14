@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { asset } from '$app/paths';
 	import { fly, fade } from 'svelte/transition';
 	import { prefersReducedMotion } from 'svelte/motion';
 	import PatternIcon from '$lib/components/PatternIcon.svelte';
@@ -17,6 +18,7 @@
 	import AiMap from '$lib/components/AiMap.svelte';
 	import LanguageLab from '$lib/components/LanguageLab.svelte';
 	import AgentLab from '$lib/components/AgentLab.svelte';
+	import ToolCallingLab from '$lib/components/ToolCallingLab.svelte';
 	import LessonNotes from '$lib/components/LessonNotes.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import ImageClassifier from '$lib/components/ImageClassifier.svelte';
@@ -198,7 +200,7 @@
 							</p>
 						</div>
 						<img
-							src="/images/edition-3/rules-to-learning.webp"
+							src={asset('/images/edition-3/rules-to-learning.webp')}
 							alt="Rules: sort 7, 3, 5 into 3, 5, 7. Learning: varied boot images feed a network that recognizes a boot."
 							width="1942"
 							height="620"
@@ -239,6 +241,7 @@
 					{:else if lesson.id === 'generative'}<GenerativeLab {ai} />
 					{:else if lesson.id === 'vision'}<VisionLab {ai} />
 					{:else if lesson.id === 'retrieval'}<RetrievalLab {ai} />
+					{:else if lesson.id === 'tool-calling'}<ToolCallingLab {ai} />
 					{:else if lesson.id === 'agents'}<AgentLab {ai} />
 					{:else}<EvaluationLab {ai} />{/if}
 				</section>

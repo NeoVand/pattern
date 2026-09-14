@@ -209,3 +209,28 @@ OpenAI outputs vary by model and sampling. Vision, retrieval citations, and agen
 - Numerical checks at the default seed show the intended capacity differences: clouds reach 100% held-out accuracy with no hidden layer; XOR reaches 48% with a line and 100% with four hidden neurons. At 600 epochs, four-neuron networks reach 81% on checkerboard and 75% on spirals, while two layers of twelve reach 100% on both. These are observed results on the synthetic held-out sets, not promises for other seeds or architectures.
 - Ran all six experiments through the actual browser UI beyond the former 600-epoch cutoff. Each reached 100% test accuracy with the default two-layer architecture. Inspected trained boundaries and final layouts at 390, 900, 1440, and 2560 pixels in both themes; no document overflow or browser exceptions. Captures and measurements are in ignored `test-results/neural-datasets/`.
 - **38 targeted tests passed across five files**, including dataset generation, capacity differences, exact neuron arithmetic, dataset switching during learning, resampling, mobile controls, training past the old cutoff, and pause/continue. Both changed components pass the Svelte autofixer without suggestions. Svelte check reports zero errors/warnings; lint and production build pass.
+
+## Tool-calling chapter — September 13, 2026
+
+- Added chapter 18, **Give the model a calculator**, at `#tool-calling`, before the agents lesson. Pattern now has twenty chapters.
+- `npm run check`, `npm run lint`, and `npm run build` pass. The complete unit/browser suite passes 136 tests across 31 files, including thirteen new calculator tests.
+- With the local OpenAI connection and `gpt-4.1-mini`, compared the identical question `73829461509382746159 × 49281736058472916387` in fresh contexts with and without `multiply_integers`.
+- The unaided model returned `3636839279279279279279279279279279273` (incorrect). The assisted model requested the exact operands as strings, the app returned `3638444035444585948898224156135652407533`, and the model returned that exact product. This is an observed run, not a guaranteed outcome or a canned answer.
+- Unit tests verify known 8×9, 20×20, 40×40, and 80×80-digit products, signed inputs and zero, rejection of floating-point JSON arguments and malformed requests, strict answer verification, actual tool-result handoff with call IDs and native reasoning items, missing/mistaken tool calls, bounded loops, and cancellation before execution.
+- Browser tests cover clearing stale results after editing, calculator-only use without a model, honest handling of missing tool calls and incorrect final answers, cancellation and retry, and mobile width in both themes.
+- Inspected the complete chapter on desktop and 390-pixel mobile in dark and light themes. The live run had no page errors and no mobile horizontal overflow. The calculator uses the shared provider/session; a live local WebGPU model was not loaded for this chapter’s verification.
+
+### Transparency and parallel comparison
+
+- Both initial OpenAI requests were observed starting at the same millisecond, before either response began. The tool-assisted follow-up waited for the calculator result while the independent baseline ran concurrently. GPT-4.1 mini again returned an incorrect unaided product and the exact tool-assisted product.
+- The UI shows the shared system/user prompts and provider-specific function schema, then preserves every model turn, raw function-call output, call ID, and exact tool-return content. Expandable inspectors contain the real request body and native response output. Local runs preserve the raw generated text alongside parsed tool calls.
+- The full suite passes 141 tests across 32 files. New checks exercise concurrent request dispatch, fixed model configuration, cancellation of both requests, session locking until both settle, independent local-worker instances, local preparation failure, preservation of intermediate text, visible tool definitions, and mobile transcript overflow.
+- Type checking, lint, Svelte autofixer, and the static production build pass. The live production-preview comparison had no page errors; desktop and 390-pixel mobile layouts were inspected in dark and light themes. Live local GPU inference was not repeated; the independent-worker path was tested with controlled model stubs.
+
+## GitHub Pages deployment — September 13, 2026
+
+- Added an Actions workflow for pushes to `main` and manual runs. It uses Node.js 24, `npm ci`, Chromium browser tests, type checks, lint, the complete unit/browser suite, and a static build before deployment to GitHub Pages.
+- The build reads `BASE_PATH` from the Pages configuration. Fixed bundled image, image-srcset, audio, Fashion-MNIST, and TinyStories URLs to respect that path; normal local development remains at `/`.
+- All **141 tests across 32 files** pass. Svelte checking reports zero errors/warnings, lint passes, and the changed Svelte components pass the autofixer without issues or suggestions.
+- Built with `BASE_PATH=/pattern` and served only the resulting static files. Browser verification visited all twenty chapters, loaded the real datasets and audio under `/pattern/`, exercised image/caption tabs and TinyStories loading, and verified the calculator's exact result. No browser exceptions, failed asset responses, or requests for assets outside the base path. The calculator chapter had no horizontal overflow at 390 pixels in either theme.
+- Scanned publishable source and the static build for the actual local OpenAI key; no copies were found. The Pages workflow requires no OpenAI secret.

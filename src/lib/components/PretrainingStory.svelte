@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { asset } from '$app/paths';
 	import PatternIcon from '$lib/components/PatternIcon.svelte';
 	import type { PatternIconName } from '$lib/data/icons';
 
 	const id = $props.id();
-	const photo = '/images/caption-garden.webp';
+	const photo = asset('/images/caption-garden.webp');
 	const puzzles = [
 		{
 			key: 'compress',

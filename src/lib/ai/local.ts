@@ -32,6 +32,7 @@ export class LocalModel {
 			resolve: (value: Completion) => void;
 			reject: (error: Error) => void;
 			onText?: (text: string) => void;
+			onRequest?: GenerationOptions['onRequest'];
 			onToken?: (id: number, text: string) => void;
 			onProgress?: (progress: ModelProgress) => void;
 			cleanup?: () => void;
@@ -50,6 +51,7 @@ export class LocalModel {
 			const job = this.jobs.get(m.id);
 			if (!job) return;
 			if (m.type === 'progress') job.onProgress?.(m.progress);
+			else if (m.type === 'request') job.onRequest?.(m.request);
 			else if (m.type === 'text') job.onText?.(m.text);
 			else if (m.type === 'token') job.onToken?.(m.tokenId, m.text);
 			else if (m.type === 'ready' || m.type === 'done') {
@@ -60,6 +62,7 @@ export class LocalModel {
 							? { text: '', calls: [] }
 							: {
 									...parseLocalResult(m.text),
+									rawText: m.text,
 									inputTokens: m.inputTokens,
 									outputTokens: m.outputTokens
 								}
@@ -102,6 +105,7 @@ export class LocalModel {
 				resolve,
 				reject,
 				onText: options.onText,
+				onRequest: options.onRequest,
 				onToken: options.onToken,
 				cleanup: () => options.signal?.removeEventListener('abort', abort)
 			});

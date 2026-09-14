@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { asset } from '$app/paths';
 	import PatternIcon from './PatternIcon.svelte';
 	let selected = $state<'sneaker' | 'boot'>('boot');
 </script>
@@ -6,8 +7,8 @@
 <figure class="footwear-plate">
 	<div class="footwear-image">
 		<img
-			src="/images/edition-3/shoe-studies.webp"
-			srcset="/images/edition-3/shoe-studies-800.webp 800w, /images/edition-3/shoe-studies.webp 1932w"
+			src={asset('/images/edition-3/shoe-studies.webp')}
+			srcset={`${asset('/images/edition-3/shoe-studies-800.webp')} 800w, ${asset('/images/edition-3/shoe-studies.webp')} 1932w`}
 			sizes="(max-width: 700px) 92vw, 900px"
 			width="1932"
 			height="814"

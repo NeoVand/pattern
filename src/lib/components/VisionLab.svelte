@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { asset } from '$app/paths';
 	import { onDestroy, tick } from 'svelte';
 	import type { AiSession } from '$lib/ai/session.svelte';
 	import PatternIcon from './PatternIcon.svelte';
@@ -7,22 +8,22 @@
 	type Picture = { src: string; name: string; alt: string; uploaded?: boolean };
 	const pictures: Picture[] = [
 		{
-			src: '/images/vision-board.webp',
+			src: asset('/images/vision-board.webp'),
 			name: 'Invitation',
 			alt: 'An illustrated natural-history exhibition invitation with printed details and objects'
 		},
 		{
-			src: '/images/caption-garden.webp',
+			src: asset('/images/caption-garden.webp'),
 			name: 'Garden',
 			alt: 'A dog in a garden with a bench and a red ball'
 		},
 		{
-			src: '/images/caption-coast.webp',
+			src: asset('/images/caption-coast.webp'),
 			name: 'Coast',
 			alt: 'A sailboat on the sea near a lighthouse'
 		},
 		{
-			src: '/images/shoe-studies.webp',
+			src: asset('/images/shoe-studies.webp'),
 			name: 'Objects',
 			alt: 'A photographic study of different shoes'
 		}
@@ -237,7 +238,8 @@
 			<div class="vision-images" class:two-images={compare}>
 				{#each visiblePictures as picture, index (index)}
 					<div class="vision-picture">
-						<!-- svelte-ignore a11y_no_noninteractive_tabindex (The zoomed image region must receive keyboard focus so arrow keys can scroll it.) -->
+						<!-- The zoomed image region must receive keyboard focus so arrow keys can scroll it. -->
+						<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 						<div
 							class="image-scroll"
 							id={`vision-image-${index}`}

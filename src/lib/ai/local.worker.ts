@@ -7,6 +7,7 @@ import {
 	type TextGenerationPipeline
 } from '@huggingface/transformers';
 import type { ChatMessage, ToolSpec } from './types';
+import { functionTools } from './tool-definitions';
 env.allowLocalModels = false;
 env.useBrowserCache = true;
 let generator: TextGenerationPipeline | null = null;
@@ -59,11 +60,21 @@ async function run(message: Message) {
 				tokenize: false,
 				add_generation_prompt: true,
 				enable_thinking: false,
-				...(message.tools?.length
-					? { tools: message.tools.map((t) => ({ type: 'function', function: t })) }
-					: {})
+				...(message.tools?.length ? { tools: functionTools(message.tools, 'local') } : {})
 			} as never
 		) as unknown as string;
+		postMessage({
+			type: 'request',
+			id: message.id,
+			request: {
+				model: modelId,
+				prompt,
+				tools: functionTools(message.tools ?? [], 'local'),
+				max_new_tokens: message.maxTokens ?? 384,
+				temperature: Math.max(0.01, message.temperature ?? 0.7),
+				do_sample: (message.temperature ?? 0.7) > 0
+			}
+		});
 		const inputTokens = generator.tokenizer.encode(prompt).length;
 		let outputTokens = 0;
 		const streamer = new TextStreamer(generator.tokenizer, {

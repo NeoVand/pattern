@@ -1,4 +1,5 @@
 import type { ChatMessage, Completion, GenerationOptions } from './types';
+import { functionTools } from './tool-definitions';
 
 export async function openAIRequest(
 	endpoint: 'responses' | 'embeddings' | 'chat/completions' | 'audio/speech' | 'images/generations',
@@ -157,9 +158,10 @@ export async function generateOpenAI(
 	};
 	if (!reasoning) request.temperature = options.temperature ?? 0.7;
 	if (options.tools?.length) {
-		request.tools = options.tools.map((tool) => ({ type: 'function', ...tool, strict: true }));
+		request.tools = functionTools(options.tools, 'openai');
 		request.parallel_tool_calls = false;
 	}
+	options.onRequest?.(structuredClone(request));
 	const response = await openAIRequest('responses', request, key, options.signal, local);
 	if (!response.ok) {
 		const data = await response.json().catch(() => ({}));

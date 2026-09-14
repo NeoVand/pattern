@@ -526,3 +526,45 @@ sources.push(
 		chapters: [8]
 	}
 );
+
+notes.push({
+	terms: [
+		[
+			'Tool calling',
+			'A model requests a named function with structured arguments; the app executes it and returns its result.'
+		],
+		[
+			'Tool schema',
+			'A description of a tool and the inputs it accepts. It tells the model how to ask for a calculation.'
+		],
+		[
+			'Tool result',
+			'The actual output of the function, added to the model’s context before it answers.'
+		],
+		[
+			'Exact integer arithmetic',
+			'Arithmetic that preserves every integer digit. This calculator uses BigInt and transports numbers as strings.'
+		]
+	],
+	question:
+		'The same model gets a large multiplication right after calling a calculator. What changed?',
+	answers: [
+		'The app computed the product and returned it as context.',
+		'The model retrained its weights to become better at arithmetic.'
+	],
+	correct: 0,
+	explanation:
+		'The model requested a function. The app executed exact integer multiplication and sent the result back. That is tool use during inference. The model can still supply wrong arguments or copy the result incorrectly, so we verify the final answer.'
+});
+sources.push(
+	{
+		title: 'Function calling · OpenAI',
+		url: 'https://developers.openai.com/api/docs/guides/function-calling',
+		chapters: [19]
+	},
+	{
+		title: 'BigInt and exact integers · MDN',
+		url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt',
+		chapters: [19]
+	}
+);

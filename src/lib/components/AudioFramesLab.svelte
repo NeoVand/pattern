@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { asset } from '$app/paths';
 	import AudioSignal from './AudioSignal.svelte';
 	import PatternIcon from './PatternIcon.svelte';
 </script>
@@ -11,7 +12,7 @@
 			raw material for audio representations.
 		</p>
 	</header>
-	<AudioSignal src="/audio/curiosity.wav" frames />
+	<AudioSignal src={asset('/audio/curiosity.wav')} frames />
 	<div class="audio-process">
 		<div>
 			<PatternIcon name="audio" /><strong>Samples</strong><span

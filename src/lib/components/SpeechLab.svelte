@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { asset } from '$app/paths';
 	import { onDestroy } from 'svelte';
 	import type { AiSession } from '$lib/ai/session.svelte';
 	import PatternIcon from './PatternIcon.svelte';
@@ -10,7 +11,7 @@
 	);
 	let voice = $state('alloy');
 	let style = $state('Warm and conversational, with a natural pace.');
-	let url = $state('/audio/curiosity.wav');
+	let url = $state(asset('/audio/curiosity.wav'));
 	let transcript = $state(
 		'A little curiosity changes everything. Listen closely: a voice is a pattern unfolding in time.'
 	);

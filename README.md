@@ -1,6 +1,6 @@
 # Pattern
 
-An interactive field guide to machine learning: nineteen visual chapters with real training, visible data splits, dark and light themes, language-model inference, and an inspectable agent loop.
+An interactive field guide to machine learning: twenty visual chapters with real training, visible data splits, dark and light themes, language-model inference, and an inspectable agent loop.
 
 ## Run
 
@@ -24,7 +24,7 @@ The TypeScript training engine uses full-batch backpropagation and Adam. Polynom
 
 ## The expanded learning path
 
-The nineteen chapters move from explicit algorithms and supervised learning to modern AI systems:
+The twenty chapters move from explicit algorithms and supervised learning to modern AI systems:
 
 1. Why machine learning? — sorting, image classification, and captioning.
 2. How learning happens — regression, gradients, and visible data splits.
@@ -43,8 +43,9 @@ The nineteen chapters move from explicit algorithms and supervised learning to m
 15. Beyond words — actual OCR, spatial questions, uploads, and image comparison.
 16. Creating something new — real OpenAI image generation, prompt experiments, variations, and downloads.
 17. Finding the right context — embeddings, semantic retrieval, editable sources, and grounded answers.
-18. From answers to actions — an actual model-directed tool loop.
-19. Good answers need evidence — run six explicit checks, compare prompts, inspect failures and export results.
+18. Give the model a calculator — compare large multiplications with and without a real exact-integer tool.
+19. From answers to actions — an actual model-directed tool loop.
+20. Good answers need evidence — run six explicit checks, compare prompts, inspect failures and export results.
 
 The adaptation model has 10,609 trainable parameters and learns a word-level softmax distribution; it is deliberately small and is not a transformer. Reinforcement learning uses a seeded Q-learning environment, not an LLM deciding moves. Both work without an API key.
 
@@ -76,6 +77,8 @@ The agent calls three allowlisted read-only functions: `read_sales`, `summarize_
 
 The conceptual transformer diagram uses explicitly illustrative vectors. The TinyStories workbench separately shows attention measured from the small transformer trained in the browser. See [learning machinery](docs/learning-machinery.md) for architecture, datasets, learning rules, and inspection details.
 
+The tool-calling chapter (`#tool-calling`) compares fresh runs of the same model and prompt, with only calculator availability changed. The app executes `multiply_integers` using `BigInt`; operands (up to 80 digits each) and products remain decimal strings. Presets include 8×9, 20×20, and 40×40 digits, and inputs are editable. Both runs start together. OpenAI uses concurrent requests; local WebGPU uses two independent workers, loading a second copy of the model from the browser cache and releasing it after the comparison. The session remains busy until both runs settle, and Stop cancels both. The exact system prompt, user message, and provider-specific tool definition are visible before running. Each lane preserves a chronological transcript of every model turn, verbatim text, function call with its call ID, and actual returned content. Full request payloads and native response outputs can be expanded; local output also retains its original tool-call markup. Authentication headers are never included in the inspector. Verification requires a single full integer and reports exact matches or the absolute error without floating-point rounding. A missing tool call, malformed answer, or incorrect final answer is never replaced by a canned result. The calculator alone works without a model. Model runs support cancellation and stop after at most four turns and eight tool calls.
+
 ## Local OpenAI connection
 
 To use your key across all demos without typing it into the interface, copy `.env.example` to `.env` and set `OPENAI_API_KEY`. `OPENAI_MODEL` optionally overrides the default model. Do not prefix either variable with `PUBLIC_`. Existing `.env` files should be edited rather than overwritten.
@@ -86,7 +89,7 @@ The local Vite server detects the key and the UI offers **This computer**. Reque
 
 ## Interface
 
-Svelte 5, TypeScript, Hugeicons, local fonts, and generated WebP artwork. Both themes use quiet tonal surfaces and restrained accents, with fewer dividers. All nineteen chapters fit the independently scrolling navigation; the mobile drawer and presentation mode keep the experiment spacious. Keyboard focus remains visible and image details support keyboard panning.
+Svelte 5, TypeScript, Hugeicons, local fonts, and generated WebP artwork. Both themes use quiet tonal surfaces and restrained accents, with fewer dividers. All twenty chapters fit the independently scrolling navigation; the mobile drawer and presentation mode keep the experiment spacious. Keyboard focus remains visible and image details support keyboard panning.
 
 ## Checks and build
 
@@ -99,5 +102,18 @@ npm run preview
 ```
 
 Production output is static in `build/`. Fonts and the image dataset are local assets. The inference worker and model weights load only when requested. Transformers.js includes Node-only transitive dependencies with upstream audit advisories; the static browser app uses its browser export, with no Node inference or image-processing service.
+
+## GitHub Pages
+
+The published app is at [neovand.github.io/pattern](https://neovand.github.io/pattern/). The [Pages workflow](.github/workflows/pages.yml) runs on pushes to `main` and can also be started manually from GitHub Actions. It installs locked dependencies with Node.js 24, runs type checks, lint, and the unit/browser suite, then builds and deploys `build/` to the `github-pages` environment. A failed check prevents deployment.
+
+The build takes its base path from GitHub Pages configuration, so images, audio, datasets, and generated bundles work under `/pattern/`. To reproduce that deployment locally:
+
+```sh
+BASE_PATH=/pattern npm run build
+BASE_PATH=/pattern npm run preview
+```
+
+Open the preview's `/pattern/` URL. Normal development and builds without `BASE_PATH` continue to use `/`. Repository Settings → Pages must use **GitHub Actions** as the build source. No OpenAI key or additional deployment secret is needed by the workflow; visitors connect their own model using the options above.
 
 Numerical tests cover convergence, temporal splits, nonlinear capacity, overfitting, and regularization. Sorting tests cover order, value preservation, and termination. Inference tests cover fragmented SSE, multimodal image payloads, actual tool-call parsing, strict tool execution, editable data, and failure handling. Browser verification includes real local generation and agent execution from the original implementation. The expansion was tested with a supplied OpenAI key: live vision, retrieval, and evaluation calls. See [verification notes](docs/verification.md) for specific observations and limits.

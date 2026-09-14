@@ -1,3 +1,4 @@
+import { asset } from '$app/paths';
 export type StoryCorpus = {
 	tokens: Uint16Array;
 	trainTokens: number;
@@ -11,8 +12,8 @@ export type StoryCorpus = {
 };
 export async function loadStories(): Promise<StoryCorpus> {
 	const [data, meta] = await Promise.all([
-		fetch('/data/tinystories/tokens.bin'),
-		fetch('/data/tinystories/corpus.json')
+		fetch(asset('/data/tinystories/tokens.bin')),
+		fetch(asset('/data/tinystories/corpus.json'))
 	]);
 	if (!data.ok || !meta.ok) throw new Error('The story dataset could not be loaded.');
 	const info = await meta.json();

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { asset } from '$app/paths';
 	import AudioFramesLab from './AudioFramesLab.svelte';
 	import { onMount } from 'svelte';
 	import PatternIcon from './PatternIcon.svelte';
@@ -16,7 +17,7 @@
 	let separated = $state(false);
 	let patchIndex = $state(5);
 	let patchPage = $state(0);
-	let photo = $state('/images/vision-board.webp');
+	let photo = $state(asset('/images/vision-board.webp'));
 	let dimensions = $state({ width: 1660, height: 948 });
 	let patches = $derived(imagePatches(dimensions.width, dimensions.height, grid));
 	let patch = $derived(patches[patchIndex]);
@@ -227,11 +228,11 @@
 				<button
 					class:chosen={photo.includes('vision-board')}
 					aria-pressed={photo.includes('vision-board')}
-					onclick={() => (photo = '/images/vision-board.webp')}>The Glasshouse</button
+					onclick={() => (photo = asset('/images/vision-board.webp'))}>The Glasshouse</button
 				><button
 					class:chosen={photo.includes('caption-garden')}
 					aria-pressed={photo.includes('caption-garden')}
-					onclick={() => (photo = '/images/caption-garden.webp')}>A garden</button
+					onclick={() => (photo = asset('/images/caption-garden.webp'))}>A garden</button
 				>
 			</div>
 			<div class="grid-options" role="group" aria-label="Patch grid">

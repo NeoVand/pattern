@@ -259,6 +259,20 @@ courseLessons.push({
 	minutes: 6
 });
 
+courseLessons.push({
+	id: 'tool-calling',
+	title: 'Give the model a calculator',
+	group: 'THE NEW FRONTIER',
+	kicker: 'Tool calling',
+	headline: 'Some answers need',
+	accent: 'more than words.',
+	description:
+		'Ask a language model to multiply two very large numbers. Then give the same model a calculator, follow the tool call, and check every digit of its answer.',
+	idea: 'A tool call is a request from the model to a function in the app. The app calculates an exact result and sends it back as context; the model’s weights stay the same.',
+	prompt: 'Compare large multiplications with and without a real calculator tool.',
+	minutes: 5
+});
+
 const order = [
 	'patterns',
 	'training',
@@ -277,6 +291,7 @@ const order = [
 	'vision',
 	'generative',
 	'retrieval',
+	'tool-calling',
 	'agents',
 	'evaluation'
 ];
@@ -298,6 +313,7 @@ const chapterIcons: Record<string, PatternIconName> = {
 	vision: 'vision',
 	generative: 'sparkles',
 	retrieval: 'retrieval',
+	'tool-calling': 'tool',
 	agents: 'agent',
 	evaluation: 'evaluation'
 };

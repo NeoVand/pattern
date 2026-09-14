@@ -11,6 +11,8 @@ export type ChatMessage = {
 export type ToolSpec = { name: string; description: string; parameters: Record<string, unknown> };
 export type Completion = {
 	text: string;
+	/** Unparsed text emitted by a local model, including tool-call markup. */
+	rawText?: string;
 	calls: ToolCall[];
 	inputTokens?: number;
 	outputTokens?: number;
@@ -23,6 +25,8 @@ export type GenerationOptions = {
 	tools?: ToolSpec[];
 	responseInput?: Record<string, unknown>[];
 	onText?: (text: string) => void;
+	/** The actual request body or local prompt; never includes authentication headers. */
+	onRequest?: (request: Record<string, unknown>) => void;
 	onToken?: (id: number, text: string) => void;
 	signal?: AbortSignal;
 };

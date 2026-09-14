@@ -3,7 +3,8 @@ import { generateImage, type ImageOptions } from './images';
 import { generateSpeech, type SpeechOptions } from './speech';
 import { LocalModel } from './local';
 import { generateOpenAI, embedOpenAI } from './openai';
-import type { GenerationOptions, ModelProgress } from './types';
+import type { Completion, GenerationOptions, ModelProgress } from './types';
+export type Generate = (options: GenerationOptions) => Promise<Completion>;
 export class AiSession {
 	provider = $state<'local' | 'openai'>('local');
 	apiKey = $state('');
@@ -250,7 +251,60 @@ export class AiSession {
 			this.busy = false;
 		}
 	}
+	private comparisonAbort: AbortController | undefined;
+	/** Reserve the session for two independent conversations, including their tool follow-ups. */
+	async withParallelGeneration<T>(
+		run: (generators: [Generate, Generate]) => Promise<T>,
+		signal?: AbortSignal
+	): Promise<T> {
+		if (this.busy) throw new Error('Another model request is still running. Stop it first.');
+		if (!this.ready) {
+			this.settingsOpen = true;
+			throw new Error('Connect a model to run this experiment.');
+		}
+		const abort = new AbortController();
+		const combined = signal ? AbortSignal.any([signal, abort.signal]) : abort.signal;
+		combined.throwIfAborted();
+		this.comparisonAbort = abort;
+		this.busy = true;
+		const pending: Promise<Completion>[] = [];
+		const provider = this.provider;
+		const model = provider === 'openai' ? this.openaiModel : this.localModel;
+		const key = this.apiKey;
+		const useDevKey = this.useDevKey && this.devKeyAvailable;
+		// Separate local workers actually overlap inference instead of queueing on one worker.
+		const peer = provider === 'local' ? new LocalModel() : undefined;
+		const stopPeer = () => peer?.dispose(new DOMException('Stopped', 'AbortError'));
+		combined.addEventListener('abort', stopPeer, { once: true });
+		try {
+			if (peer) await peer.load(model, () => {});
+			combined.throwIfAborted();
+			const generator =
+				(local: LocalModel): Generate =>
+				(options) => {
+					const requestSignal = options.signal
+						? AbortSignal.any([combined, options.signal])
+						: combined;
+					requestSignal.throwIfAborted();
+					const request =
+						provider === 'openai'
+							? generateOpenAI(key, model, { ...options, signal: requestSignal }, useDevKey)
+							: local.generate({ ...options, signal: requestSignal });
+					pending.push(request);
+					return request;
+				};
+			return await run([generator(this.local), generator(peer ?? this.local)]);
+		} finally {
+			abort.abort();
+			await Promise.allSettled(pending);
+			combined.removeEventListener('abort', stopPeer);
+			peer?.dispose();
+			this.comparisonAbort = undefined;
+			this.busy = false;
+		}
+	}
 	dispose() {
+		this.comparisonAbort?.abort();
 		this.unloadVision();
 		this.loadRevision++;
 		this.local.dispose();
