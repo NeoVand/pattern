@@ -11,6 +11,39 @@ export type ChapterArt = {
 };
 
 export const chapterArt: Record<string, ChapterArt> = {
+	'distribution-shift': {
+		asset: 'edition-5/distribution-shift',
+		title: 'The object stays. The background changes.',
+		alt: 'Matching ivory cards show a vase and a bowl on blue and lavender backgrounds, then the same objects with the background colors exchanged.',
+		caption: 'A familiar shortcut can stop working in a new setting.',
+		note: 'The cards illustrate a change in the relationship between an object and its background. The experiment below fits a classifier on two synthetic numerical features; these images are not its training data.',
+		action: 'Change the conditions',
+		tone: 'light',
+		width: 1942,
+		height: 809
+	},
+	'assistant-training': {
+		asset: 'edition-5/assistant-training',
+		title: 'Different signals teach different behavior',
+		alt: 'Three ivory workstations labeled Predict, Demonstrate, and Compare hold text cards, a worked example, and paired response cards.',
+		caption: 'Examples and preferences change what learning rewards.',
+		note: 'These stations represent different training signals. The live experiment updates a three-weight response selector using demonstrations and pairwise preferences. It is not a language model, and the preference update is neither PPO nor DPO.',
+		action: 'Train a response selector',
+		tone: 'light',
+		width: 1942,
+		height: 809
+	},
+	'system-choice': {
+		asset: 'edition-5/system-choice',
+		title: 'Choose the tools for the question',
+		alt: 'An ivory field kit holds a decision tree, a calculator, a reference book, and an evaluation checklist beside a pencil.',
+		caption: 'Choose a method. Gather evidence. Plan the next check.',
+		note: 'The field kit is an analogy for system design. The shop project computes invoices, retrieves policy text, and fits demand forecasts locally. Its constraints are explicit teaching requirements; it does not fabricate production costs or latency.',
+		action: 'Build your system',
+		tone: 'light',
+		width: 1942,
+		height: 809
+	},
 	'data-origins': {
 		asset: 'edition-5/data-origins',
 		title: 'Every dataset has a history',

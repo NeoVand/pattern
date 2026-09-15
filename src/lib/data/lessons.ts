@@ -165,7 +165,7 @@ courseLessons.push(
 	{
 		id: 'adaptation',
 		title: 'From pretraining to purpose',
-		group: 'GOING DEEPER',
+		group: 'THE NEW FRONTIER',
 		kicker: 'Pretraining and adaptation',
 		headline: 'First, learn broadly.',
 		accent: 'Then, specialize.',
@@ -303,6 +303,51 @@ courseLessons.push(
 	}
 );
 
+courseLessons.push(
+	{
+		id: 'distribution-shift',
+		title: 'When the world changes',
+		group: 'GOING DEEPER',
+		kicker: 'Distribution shift and causal questions',
+		headline: 'A pattern can work.',
+		accent: 'Until the world changes.',
+		description:
+			'A useful shortcut in one setting can become a mistake in another. Change the background, inspect hidden subgroups, and ask what a prediction can tell us about an intervention.',
+		idea: 'Performance depends on the conditions under which examples were collected. More of the same data may preserve a shortcut. Predicting an outcome does not establish what will happen if we intervene.',
+		prompt:
+			'Reverse a background shortcut, compare remedies, and separate observation from intervention.',
+		minutes: 9
+	},
+	{
+		id: 'assistant-training',
+		title: 'From predictor to assistant',
+		group: 'THE NEW FRONTIER',
+		kicker: 'Instructions, preferences, and the objective',
+		headline: 'Learning what comes next.',
+		accent: 'Then what helps.',
+		description:
+			'A next-token objective does not specify helpful behavior. Demonstrations and preferences supply new training signals—and a flawed preference can reward the wrong response.',
+		idea: 'Demonstrations teach a desired response. Preferences compare alternatives. Both change weights; the chosen objective and the quality of feedback determine what is rewarded.',
+		prompt:
+			'Train a small response selector, inspect its weight updates, and test a misleading reward.',
+		minutes: 9
+	},
+	{
+		id: 'system-choice',
+		title: 'Choose the whole system',
+		group: 'PUTTING IT TOGETHER',
+		kicker: 'A field project',
+		headline: 'A useful system starts',
+		accent: 'with the right question.',
+		description:
+			'A small shop needs exact invoices, current policy answers, and a demand forecast. Choose the tools for each job, commit your plan, and see what survives new cases and changing conditions.',
+		idea: 'Define success, compare a simple baseline, keep a final check independent, and plan what happens when evidence is missing or the world changes.',
+		prompt:
+			'Build and evaluate a shop system, explain the trade-offs, then export the evidence and monitoring plan.',
+		minutes: 12
+	}
+);
+
 const order = [
 	'patterns',
 	'data-origins',
@@ -315,21 +360,27 @@ const order = [
 	'reinforcement',
 	'deep-learning',
 	'representations',
+	'distribution-shift',
 	'self-supervised',
-	'adaptation',
 	'modern-ai',
 	'tokens',
 	'language',
+	'adaptation',
+	'assistant-training',
 	'vision',
 	'generative',
 	'retrieval',
 	'tool-calling',
 	'agents',
-	'evaluation'
+	'evaluation',
+	'system-choice'
 ];
 const chapterIcons: Record<string, PatternIconName> = {
 	'data-origins': 'database',
 	decisions: 'evaluation',
+	'distribution-shift': 'generalization',
+	'assistant-training': 'adaptation',
+	'system-choice': 'tool',
 	patterns: 'patterns',
 	training: 'training',
 	generalization: 'generalization',

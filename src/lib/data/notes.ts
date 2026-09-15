@@ -626,3 +626,97 @@ sources.push(
 		chapters: [21]
 	}
 );
+
+notes.push(
+	{
+		terms: [
+			[
+				'Distribution shift',
+				'A change in how inputs, outcomes, or their relationships are generated between learning and use.'
+			],
+			[
+				'Shortcut',
+				'A predictive association that is easy to use but may fail under changed conditions.'
+			],
+			[
+				'Intervention',
+				'A deliberate change to a variable. Its effect requires causal assumptions or a suitable experiment, beyond an observational association.'
+			]
+		],
+		question:
+			'A detector learned that blue backgrounds usually contain a vase. New photographs swap the backgrounds. Which check is most informative?',
+		answers: [
+			'Compare errors by object and background, then test on the new setting.',
+			'Collect more photographs with the original background rule and trust the original score.'
+		],
+		correct: 0,
+		explanation:
+			'More data can reinforce the same shortcut. Evaluate the conditions you need to handle, including minority combinations. A feature ablation can reveal dependence, but does not by itself establish a causal effect in the world.'
+	},
+	{
+		terms: [
+			[
+				'Demonstration',
+				'An example of the response the learner should produce for an instruction.'
+			],
+			['Preference feedback', 'A comparison of alternative responses under a stated rubric.'],
+			[
+				'Reward proxy',
+				'A measurable signal used in place of the goal; optimizing it can encourage behavior that misses the goal.'
+			]
+		],
+		question:
+			'Training increasingly rewards confident wording. Unsupported answers become more common. What has the learner optimized?',
+		answers: [
+			'The truth of every answer.',
+			'The supplied preference signal, which does not reliably measure grounded help.'
+		],
+		correct: 1,
+		explanation:
+			'The small selector updates real weights from demonstrations and pairwise preferences. Its evidence features are supplied explicitly, so this is an objective-learning demonstration, not proof that a language model learned to verify facts. Inspect held-out behavior as well as training loss.'
+	},
+	{
+		terms: [
+			['Baseline', 'A simple, explicit alternative evaluated on the same task and examples.'],
+			[
+				'System boundary',
+				'The inputs, components, human responsibilities, and allowed actions included in a solution.'
+			],
+			[
+				'Monitoring plan',
+				'What will be measured after launch, who will respond, and which conditions trigger review or a fallback.'
+			]
+		],
+		question:
+			'Your policy answers and forecasts passed the final check. What should happen when a policy changes and demand rises?',
+		answers: [
+			'Trust the old score indefinitely.',
+			'Refresh the evidence, measure recent errors, and trigger the review or fallback you planned.'
+		],
+		correct: 1,
+		explanation:
+			'A score describes a system under particular conditions. Exact arithmetic, current references, a fitted forecast, and human review solve different parts of the shop problem. Record the whole choice, assess new cases after commitment, and watch the conditions that can invalidate it.'
+	}
+);
+sources.push(
+	{
+		title: 'WILDS: A Benchmark of in-the-Wild Distribution Shifts · Koh et al.',
+		url: 'https://arxiv.org/abs/2012.07421',
+		chapters: [22]
+	},
+	{
+		title: 'Training language models to follow instructions with human feedback · Ouyang et al.',
+		url: 'https://arxiv.org/abs/2203.02155',
+		chapters: [23]
+	},
+	{
+		title: 'Direct Preference Optimization · Rafailov et al.',
+		url: 'https://arxiv.org/abs/2305.18290',
+		chapters: [23]
+	},
+	{
+		title: 'Common pitfalls and recommended practices · scikit-learn',
+		url: 'https://scikit-learn.org/stable/common_pitfalls.html',
+		chapters: [24]
+	}
+);

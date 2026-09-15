@@ -15,6 +15,9 @@
 	import GradientLab from '$lib/components/GradientLab.svelte';
 	import GeneralizationChallenge from '$lib/components/GeneralizationChallenge.svelte';
 	import RepresentationComparison from '$lib/components/RepresentationComparison.svelte';
+	import DistributionShiftLab from '$lib/components/DistributionShiftLab.svelte';
+	import AssistantTrainingLab from '$lib/components/AssistantTrainingLab.svelte';
+	import SystemChoiceLab from '$lib/components/SystemChoiceLab.svelte';
 	import DataSplitStory from '$lib/components/DataSplitStory.svelte';
 	import ForecastLab from '$lib/components/ForecastLab.svelte';
 	import TrainingLab from '$lib/components/TrainingLab.svelte';
@@ -232,6 +235,9 @@
 					{#if lesson.id === 'patterns'}<PatternLab {ai} />
 					{:else if lesson.id === 'data-origins'}<DataOriginsLab />
 					{:else if lesson.id === 'decisions'}<DecisionLab />
+					{:else if lesson.id === 'distribution-shift'}<DistributionShiftLab />
+					{:else if lesson.id === 'assistant-training'}<AssistantTrainingLab />
+					{:else if lesson.id === 'system-choice'}<SystemChoiceLab />
 					{:else if lesson.id === 'training'}<TrainingLab kind="regression" /><GradientLab
 						/><DataSplitStory />
 					{:else if lesson.id === 'generalization'}<ValidationLab /><GeneralizationChallenge />
