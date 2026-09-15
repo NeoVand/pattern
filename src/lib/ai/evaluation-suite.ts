@@ -20,12 +20,12 @@ export const evaluationCases: EvaluationCase[] = [
 	{
 		id: 'retrieve',
 		title: 'Find the right fact',
-		skill: 'Retrieval',
+		skill: 'Reading supplied evidence',
 		prompt:
 			'Exhibit notes: Fern opens at 09:00. Moss opens at 11:00. Clay opens at 10:00. Which exhibit opens latest? Return only its name.',
 		criterion: { kind: 'exact', answer: 'Moss' },
 		explanation:
-			'The answer is present in the supplied context. A fluent answer still has to identify the right exhibit.'
+			'The answer is present in the supplied context. This checks reading and comparison, not whether a search system retrieved the right passage.'
 	},
 	{
 		id: 'calculate',
@@ -70,12 +70,12 @@ export const evaluationCases: EvaluationCase[] = [
 	{
 		id: 'shift',
 		title: 'Spot the gap in the data',
-		skill: 'Distribution shift',
+		skill: 'Missing observations',
 		prompt:
 			'Recorded gallery attendance: Monday 40, Tuesday 42, Wednesday 38, Thursday 41, Friday 39. No weekend attendance was measured. What was the actual attendance on Saturday? Return exactly UNKNOWN if it is not recorded; otherwise return only the number.',
 		criterion: { kind: 'exact', answer: 'UNKNOWN' },
 		explanation:
-			'Weekdays do not establish what happened on Saturday. Weekends may follow another pattern. A forecast could estimate attendance, but it would not become an observed fact.'
+			'Weekdays do not establish what happened on Saturday. This checks missing evidence, not performance under distribution shift. A forecast could estimate attendance, but it would not become an observed fact.'
 	}
 ];
 
