@@ -5,6 +5,7 @@
 	import MnistDigit from './MnistDigit.svelte';
 	import AutoencoderNetwork from './AutoencoderNetwork.svelte';
 	import MnistLatentMap from './MnistLatentMap.svelte';
+	import TransferLab from './TransferLab.svelte';
 	import {
 		MnistAutoencoder,
 		VAE_FRAME,
@@ -569,6 +570,17 @@
 			<p>Preparing the {source.name} images and their learned coordinates.</p>
 		</div>{/if}
 </section>
+
+{#if dataset}
+	<TransferLab
+		{model}
+		{dataset}
+		{revision}
+		training={running}
+		encoderStep={step}
+		classLabels={source.labels}
+	/>
+{/if}
 
 <style>
 	.ssl-device {

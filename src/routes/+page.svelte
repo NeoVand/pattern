@@ -18,6 +18,9 @@
 	import DistributionShiftLab from '$lib/components/DistributionShiftLab.svelte';
 	import AssistantTrainingLab from '$lib/components/AssistantTrainingLab.svelte';
 	import SystemChoiceLab from '$lib/components/SystemChoiceLab.svelte';
+	import ForecastBenchmark from '$lib/components/ForecastBenchmark.svelte';
+	import SamplingLab from '$lib/components/SamplingLab.svelte';
+	import RetrievalAudit from '$lib/components/RetrievalAudit.svelte';
 	import DataSplitStory from '$lib/components/DataSplitStory.svelte';
 	import ForecastLab from '$lib/components/ForecastLab.svelte';
 	import TrainingLab from '$lib/components/TrainingLab.svelte';
@@ -242,7 +245,7 @@
 						/><DataSplitStory />
 					{:else if lesson.id === 'generalization'}<ValidationLab /><GeneralizationChallenge />
 					{:else if lesson.id === 'classification'}<FootwearPlate /><ImageClassifier />
-					{:else if lesson.id === 'forecasting'}<ForecastLab />
+					{:else if lesson.id === 'forecasting'}<ForecastLab /><ForecastBenchmark />
 					{:else if lesson.id === 'clustering'}<ClusteringLab />
 					{:else if lesson.id === 'reinforcement'}<ReinforcementLab />
 					{:else if lesson.id === 'deep-learning'}<TrainingLab
@@ -254,9 +257,9 @@
 					{:else if lesson.id === 'modern-ai'}<AiMap />
 					{:else if lesson.id === 'tokens'}<TokenLab />
 					{:else if lesson.id === 'language'}<LanguageLab {ai} />
-					{:else if lesson.id === 'generative'}<GenerativeLab {ai} />
+					{:else if lesson.id === 'generative'}<SamplingLab /><GenerativeLab {ai} />
 					{:else if lesson.id === 'vision'}<VisionLab {ai} />
-					{:else if lesson.id === 'retrieval'}<RetrievalLab {ai} />
+					{:else if lesson.id === 'retrieval'}<RetrievalLab {ai} /><RetrievalAudit {ai} />
 					{:else if lesson.id === 'tool-calling'}<ToolCallingLab {ai} />
 					{:else if lesson.id === 'agents'}<AgentLab {ai} />
 					{:else}<EvaluationLab {ai} />{/if}
