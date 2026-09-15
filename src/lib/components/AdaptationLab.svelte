@@ -2,7 +2,12 @@
 	import { onDestroy } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import PatternIcon from '$lib/components/PatternIcon.svelte';
-	import { TinyWordModel, everydayCorpus, adaptationCorpora } from '$lib/ml/word-adaptation';
+	import {
+		TinyWordModel,
+		everydayCorpus,
+		adaptationCorpora,
+		adaptationEvaluation
+	} from '$lib/ml/word-adaptation';
 	const untrained = new TinyWordModel();
 	let baseModel = $state.raw(new TinyWordModel());
 	let adaptedModel = $state.raw(new TinyWordModel());
@@ -52,10 +57,10 @@
 			otherAfter: 1 - rows.reduce((sum, row) => sum + row.after, 0)
 		};
 	});
-	const broadBefore = $derived(before.loss(everydayCorpus));
-	const broadAfter = $derived(after.loss(everydayCorpus));
-	const domainBefore = $derived(before.loss(corpus));
-	const domainAfter = $derived(after.loss(corpus));
+	const broadBefore = $derived(before.loss(adaptationEvaluation.general));
+	const broadAfter = $derived(after.loss(adaptationEvaluation.general));
+	const domainBefore = $derived(before.loss(adaptationEvaluation[domain]));
+	const domainAfter = $derived(after.loss(adaptationEvaluation[domain]));
 	const drift = $derived(after.distance(before));
 	const matrixWords = $derived(
 		domain === 'cafe'
@@ -328,24 +333,26 @@
 	</div>
 	<div class="adaptation-outcomes">
 		<div>
-			<span>GENERAL TEXT LOSS</span><strong
+			<span>UNSEEN GENERAL TEXT LOSS</span><strong
 				>{broadBefore.toFixed(2)} <i>→</i> {broadAfter.toFixed(2)}</strong
 			>
 			<p>
 				{adaptationEpochs && broadAfter > broadBefore + 0.05
 					? 'Some earlier patterns faded as the model specialized.'
-					: 'The base corpus measures how well earlier patterns are retained.'}
+					: 'Separate general sentences check whether earlier patterns transfer.'}
 			</p>
+			<p>Training corpus loss: {after.loss(everydayCorpus).toFixed(2)}</p>
 		</div>
 		<div>
-			<span>DOMAIN TEXT LOSS</span><strong
+			<span>UNSEEN DOMAIN TEXT LOSS</span><strong
 				>{domainBefore.toFixed(2)} <i>→</i> {domainAfter.toFixed(2)}</strong
 			>
 			<p>
 				{adaptationEpochs && domainAfter < domainBefore - 0.05
-					? 'Domain examples became easier for the model to predict.'
-					: 'Adaptation should make these domain examples less surprising.'}
+					? 'New domain sentences became easier for the model to predict.'
+					: 'A better training fit need not improve these new sentences.'}
 			</p>
+			<p>Training corpus loss: {after.loss(corpus).toFixed(2)}</p>
 		</div>
 		<div class="adaptation-distinction">
 			<PatternIcon name="adaptation" size={28} />
@@ -356,9 +363,22 @@
 	<p class="adaptation-footnote">
 		A real, tiny word-level softmax model: {baseModel.vocabulary.length} vocabulary entries and {baseModel.weights.length.toLocaleString()}
 		parameters, trained with gradient descent. It uses one preceding word, so it cannot represent an LLM’s
-		long context or reasoning. The losses shown are on the visible training corpora, not held-out evaluation.
-		The example makes pretraining, adaptation, and forgetting tangible.
+		long context or reasoning. The main losses use eight separate sentences per domain that never update
+		weights. Training losses appear beneath them. This tiny, related evaluation set is a teaching check;
+		tuning against it makes it validation, and a final assessment needs new examples. The example makes
+		pretraining, adaptation, and forgetting tangible.
 	</p>
+	<details>
+		<summary>Inspect the held-out sentences</summary>
+		<p>
+			These sentences supply evaluation targets only. Unknown vocabulary uses the model's existing
+			unknown token.
+		</p>
+		<h4>General text</h4>
+		{#each adaptationEvaluation.general as sentence (sentence)}<p>{sentence}.</p>{/each}
+		<h4>Domain text</h4>
+		{#each adaptationEvaluation[domain] as sentence (sentence)}<p>{sentence}.</p>{/each}
+	</details>
 </div>
 
 <style>

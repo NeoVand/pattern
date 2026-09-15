@@ -56,6 +56,40 @@ export const adaptationCorpora = {
 	]
 };
 
+/** Separate teaching evaluation sentences. These never enter train() or vocabulary construction. */
+export const adaptationEvaluation = {
+	general: [
+		'the quiet morning begins with tea',
+		'a bird rests in the green garden',
+		'the evening sky is clear',
+		'we enjoy fresh bread with friends',
+		'the river is cool and the sun is warm',
+		'the old book tells a good story',
+		'a journey begins at the station',
+		'the market is a place to share food'
+	],
+	cafe: [
+		'a warm latte tastes creamy',
+		'the rich espresso has chocolate notes',
+		'the coffee tastes bold and smooth',
+		'a latte is served with water',
+		'the milk is warm',
+		'the espresso is made with coffee',
+		'the rich coffee tastes balanced',
+		'a drink is served with steamed milk'
+	],
+	space: [
+		'the distant planet has many stars',
+		'a telescope sees the bright moon',
+		'the rocky moon is a distant world',
+		'the star is observed with a telescope',
+		'the galaxy is filled with bright stars',
+		'a distant sun is a star',
+		'the quiet planet orbits a distant star',
+		'the moon is seen by the telescope'
+	]
+};
+
 export function wordTokens(text: string): string[] {
 	return text.toLowerCase().match(/[a-z]+/g) ?? [];
 }
