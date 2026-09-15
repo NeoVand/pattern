@@ -13,6 +13,8 @@
 	import DataOriginsLab from '$lib/components/DataOriginsLab.svelte';
 	import DecisionLab from '$lib/components/DecisionLab.svelte';
 	import GradientLab from '$lib/components/GradientLab.svelte';
+	import GeneralizationChallenge from '$lib/components/GeneralizationChallenge.svelte';
+	import RepresentationComparison from '$lib/components/RepresentationComparison.svelte';
 	import DataSplitStory from '$lib/components/DataSplitStory.svelte';
 	import ForecastLab from '$lib/components/ForecastLab.svelte';
 	import TrainingLab from '$lib/components/TrainingLab.svelte';
@@ -232,12 +234,14 @@
 					{:else if lesson.id === 'decisions'}<DecisionLab />
 					{:else if lesson.id === 'training'}<TrainingLab kind="regression" /><GradientLab
 						/><DataSplitStory />
-					{:else if lesson.id === 'generalization'}<ValidationLab />
+					{:else if lesson.id === 'generalization'}<ValidationLab /><GeneralizationChallenge />
 					{:else if lesson.id === 'classification'}<FootwearPlate /><ImageClassifier />
 					{:else if lesson.id === 'forecasting'}<ForecastLab />
 					{:else if lesson.id === 'clustering'}<ClusteringLab />
 					{:else if lesson.id === 'reinforcement'}<ReinforcementLab />
-					{:else if lesson.id === 'deep-learning'}<TrainingLab kind="neural-classifier" />
+					{:else if lesson.id === 'deep-learning'}<TrainingLab
+							kind="neural-classifier"
+						/><RepresentationComparison />
 					{:else if lesson.id === 'representations'}<ConvnetLab />
 					{:else if lesson.id === 'self-supervised'}<SelfSupervisedLab /><PretrainingStory />
 					{:else if lesson.id === 'adaptation'}<AdaptationLab />

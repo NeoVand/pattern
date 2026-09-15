@@ -1,4 +1,5 @@
 <script lang="ts">
+	const uid = $props.id();
 	import {
 		INITIAL_TINY_WEIGHTS,
 		TINY_EXAMPLES,
@@ -131,8 +132,9 @@
 				<span>● Training targets</span><span>— Current prediction</span><span>⋮ Selected error</span
 				>
 			</p>
-			<label
+			<label for={`${uid}-control-1`}
 				>Inspect example <output>{selected + 1} of 7</output><input
+					id={`${uid}-control-1`}
 					type="range"
 					min="0"
 					max="6"
@@ -142,8 +144,9 @@
 			>
 		</div>
 		<div class="controls">
-			<label
+			<label for={`${uid}-control-2`}
 				>Learning rate <output>{rate.toFixed(2)}</output><input
+					id={`${uid}-control-2`}
 					type="range"
 					min="0.01"
 					max="0.8"
@@ -223,8 +226,9 @@
 				</p>
 			</div>
 		</div>
-		<label
+		<label for={`${uid}-control-3`}
 			>Nudge size <output>{nudge.toFixed(2)}</output><input
+				id={`${uid}-control-3`}
 				type="range"
 				min="0.01"
 				max="0.5"
@@ -244,7 +248,7 @@
 				onclick={() => applyNudge(1)}>Increase {inspected}</button
 			>
 		</div>
-		<p class="status" role="status">{lastAction}</p>
+		<p class="status" role="status" aria-label="Gradient result">{lastAction}</p>
 	</div>
 </section>
 
