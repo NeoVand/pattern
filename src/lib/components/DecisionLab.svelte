@@ -102,13 +102,19 @@
 						bind:value={falseNegativeCost}
 					/></label
 				>
-				<button class="cost-button" onclick={() => (threshold = recommended)}
-					>Use cost-based threshold · {percent(recommended)}</button
+				<button
+					class="cost-button"
+					onclick={() => {
+						confidence = 1;
+						threshold = recommended;
+					}}>Use cost-based threshold · {percent(recommended)}</button
 				>
 				<p class="control-note">
 					If probabilities are calibrated and correct decisions cost zero, flag when p ≥ {falsePositiveCost}
 					/ ({falsePositiveCost} + {falseNegativeCost}). This minimizes expected cost under those
-					assumptions, not necessarily this sample's cost.
+					assumptions, not necessarily this sample's cost. This button restores the known
+					probability scale before applying the threshold; distorted confidence scores need
+					calibration first.
 				</p>
 			</div>
 		</aside>

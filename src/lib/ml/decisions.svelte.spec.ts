@@ -27,6 +27,8 @@ test('decision lab starts with the real rare-event failure and responds to thres
 	await expect
 		.poll(() => screen.getByTestId('calibration-gap').element().textContent)
 		.not.toBe(before);
+	await screen.getByRole('button', { name: /Use cost-based threshold/ }).click();
+	await expect.element(screen.getByRole('combobox', { name: 'Score confidence' })).toHaveValue('1');
 	await screen.getByRole('button', { name: 'The 99% example' }).click();
 	await expect.element(screen.getByTestId('decision-fn')).toHaveTextContent('10');
 	await page.viewport(390, 844);
