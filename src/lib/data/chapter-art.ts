@@ -11,6 +11,28 @@ export type ChapterArt = {
 };
 
 export const chapterArt: Record<string, ChapterArt> = {
+	'data-origins': {
+		asset: 'edition-5/data-origins',
+		title: 'Every dataset has a history',
+		alt: 'Botanical specimen cards include duplicate oak photographs kept together in a Learn tray. A distinct specimen sits in a Check tray, beside a catalog with a Source tag.',
+		caption: 'Keep track of the source. Keep related examples together.',
+		note: 'The archive is a conceptual analogy for provenance and grouping related records. The café experiment below computes predictions on synthetic customer records; it does not classify these botanical illustrations.',
+		action: 'Investigate the dataset',
+		tone: 'light',
+		width: 1942,
+		height: 809
+	},
+	decisions: {
+		asset: 'edition-5/uncertainty',
+		title: 'A probability meets many outcomes',
+		alt: 'An ivory panel marked 80% holds eight blue and two lavender counters. A second panel arranges counters on a tray under a magnifier.',
+		caption: 'A probability earns its meaning across many outcomes.',
+		note: 'The counters illustrate a frequency interpretation. A group of ten outcomes need not exactly match a probability; the live calibration chart below measures observed frequencies and uncertainty over generated examples.',
+		action: 'Examine the decisions',
+		tone: 'light',
+		width: 1942,
+		height: 809
+	},
 	'self-supervised': {
 		asset: 'edition-3/self-supervised',
 		title: 'The next word is already in the book',

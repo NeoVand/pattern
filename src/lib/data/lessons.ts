@@ -273,11 +273,43 @@ courseLessons.push({
 	minutes: 5
 });
 
+courseLessons.push(
+	{
+		id: 'data-origins',
+		title: 'Before the model',
+		group: 'THE FOUNDATIONS',
+		kicker: 'Data and the question we ask',
+		headline: 'Every dataset has',
+		accent: 'a history.',
+		description:
+			'Choose what to predict, examine where records came from, and discover how duplicate customers or future information can create a misleading score.',
+		idea: 'Define the target and the moment of prediction. Keep related examples together, check who is represented, and use only information available when the prediction is made.',
+		prompt: 'Build a café dataset, expose leakage, and test on genuinely new customers.',
+		minutes: 8
+	},
+	{
+		id: 'decisions',
+		title: 'What does 90% mean?',
+		group: 'LEARNING BY DOING',
+		kicker: 'Uncertainty and decisions',
+		headline: 'A probability.',
+		accent: 'Then a decision.',
+		description:
+			'An impressive accuracy can hide every missed rare event. Explore probabilities, changing prevalence, and the cost of different mistakes.',
+		idea: 'Check probabilities across many outcomes. A decision threshold depends on the task, the costs of mistakes, and how reliable the scores are.',
+		prompt:
+			'Inspect a confusion matrix and calibration, then choose a threshold using mistake costs.',
+		minutes: 9
+	}
+);
+
 const order = [
 	'patterns',
+	'data-origins',
 	'training',
 	'generalization',
 	'classification',
+	'decisions',
 	'forecasting',
 	'clustering',
 	'reinforcement',
@@ -296,6 +328,8 @@ const order = [
 	'evaluation'
 ];
 const chapterIcons: Record<string, PatternIconName> = {
+	'data-origins': 'database',
+	decisions: 'evaluation',
 	patterns: 'patterns',
 	training: 'training',
 	generalization: 'generalization',

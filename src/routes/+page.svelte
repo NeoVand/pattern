@@ -10,6 +10,9 @@
 	import GenerativeLab from '$lib/components/GenerativeLab.svelte';
 	import TokenLab from '$lib/components/TokenLab.svelte';
 	import PatternLab from '$lib/components/PatternLab.svelte';
+	import DataOriginsLab from '$lib/components/DataOriginsLab.svelte';
+	import DecisionLab from '$lib/components/DecisionLab.svelte';
+	import GradientLab from '$lib/components/GradientLab.svelte';
 	import DataSplitStory from '$lib/components/DataSplitStory.svelte';
 	import ForecastLab from '$lib/components/ForecastLab.svelte';
 	import TrainingLab from '$lib/components/TrainingLab.svelte';
@@ -225,7 +228,10 @@
 					aria-label={lesson.prompt}
 				>
 					{#if lesson.id === 'patterns'}<PatternLab {ai} />
-					{:else if lesson.id === 'training'}<TrainingLab kind="regression" /><DataSplitStory />
+					{:else if lesson.id === 'data-origins'}<DataOriginsLab />
+					{:else if lesson.id === 'decisions'}<DecisionLab />
+					{:else if lesson.id === 'training'}<TrainingLab kind="regression" /><GradientLab
+						/><DataSplitStory />
 					{:else if lesson.id === 'generalization'}<ValidationLab />
 					{:else if lesson.id === 'classification'}<FootwearPlate /><ImageClassifier />
 					{:else if lesson.id === 'forecasting'}<ForecastLab />

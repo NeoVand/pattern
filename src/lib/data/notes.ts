@@ -568,3 +568,61 @@ sources.push(
 		chapters: [19]
 	}
 );
+
+notes.push(
+	{
+		terms: [
+			[
+				'Provenance',
+				'Where measurements and labels came from, why they were collected, and who is represented.'
+			],
+			[
+				'Prediction time',
+				'The moment a decision is needed; only information available by then is a legitimate input.'
+			],
+			[
+				'Group split',
+				'Related records, such as visits from one person, stay on the same side of the split.'
+			]
+		],
+		question:
+			'A customer appears in training and validation under different visit records. What should you investigate?',
+		answers: [
+			'Whether the model recognizes that person rather than generalizing to new customers.',
+			'Whether the validation file has a different filename.'
+		],
+		correct: 0,
+		explanation:
+			'A different row is not necessarily an independent example. Split by the unit you need to generalize to, and compare with genuinely new customers.'
+	},
+	{
+		terms: [
+			[
+				'Calibration',
+				'Among predictions near a probability p, the event occurs about p of the time, when measured over enough comparable examples.'
+			],
+			['Prevalence', 'How common the positive outcome is in the population being evaluated.'],
+			['Expected cost', 'The probability-weighted consequences of a decision.']
+		],
+		question: 'A detector is 99% accurate but misses all damaged parcels. What could explain this?',
+		answers: [
+			'Accuracy proves that its decisions are useful.',
+			'Only 1% of parcels are damaged, and it always predicts undamaged.'
+		],
+		correct: 1,
+		explanation:
+			'Counts, class-specific errors, probability quality, and consequences reveal what an overall accuracy conceals. Choose settings on validation data and assess the fixed choice independently.'
+	}
+);
+sources.push(
+	{
+		title: 'Data leakage · scikit-learn',
+		url: 'https://scikit-learn.org/stable/common_pitfalls.html#data-leakage',
+		chapters: [20]
+	},
+	{
+		title: 'On Calibration of Modern Neural Networks',
+		url: 'https://arxiv.org/abs/1706.04599',
+		chapters: [21]
+	}
+);
