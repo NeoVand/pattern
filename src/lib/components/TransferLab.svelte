@@ -9,6 +9,7 @@
 		dataset,
 		revision,
 		training,
+		ready = true,
 		encoderStep = 0,
 		classLabels = []
 	}: {
@@ -16,6 +17,7 @@
 		dataset: AutoencoderData;
 		revision: number;
 		training: boolean;
+		ready?: boolean;
 		encoderStep?: number;
 		classLabels?: readonly string[];
 	} = $props();
@@ -49,6 +51,7 @@
 	);
 	const labelName = (label: number) => recordedLabels[label] ?? `Class ${label}`;
 	async function compare() {
+		if (!ready || busy) return;
 		controller?.abort();
 		const attempt = new AbortController();
 		controller = attempt;
@@ -117,7 +120,7 @@
 			/></label
 		>
 		<div class="actions">
-			<button class="primary-button" onclick={compare} disabled={busy}
+			<button class="primary-button" onclick={compare} disabled={busy || !ready}
 				>Freeze current encoder & compare</button
 			><button class="secondary" onclick={() => (seed += 997)} disabled={busy}
 				>Choose new sample · seed {seed}</button
@@ -126,6 +129,7 @@
 				>{/if}
 		</div>
 	</div>
+	{#if !ready}<p class="notice">Waiting for the active encoder snapshot before comparing.</p>{/if}
 	{#if training}<p class="notice">
 			Encoder training is running. This comparison copies the current weights once, so later updates
 			cannot change its result.

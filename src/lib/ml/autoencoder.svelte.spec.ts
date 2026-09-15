@@ -139,3 +139,29 @@ test('JaxJS compiled variational update and held-out coordinates agree with the 
 			expect(measured.codes[i * 2 + axis]).toBeCloseTo(reference.encode(testRows[i])[axis], 4);
 	backend.dispose();
 }, 20000);
+
+test('downstream transfer captures the ready random encoder and then the explicitly selected saved model', async () => {
+	const screen = await render(SelfSupervisedLab);
+	const compare = screen.getByRole('button', {
+		name: 'Freeze current encoder & compare',
+		exact: true
+	});
+	await expect.element(compare).toBeEnabled();
+	await compare.click();
+	await expect
+		.element(screen.getByRole('status', { name: 'Transfer result' }))
+		.toHaveTextContent('0.0 percentage points different');
+	await expect
+		.element(screen.getByText(/Recorded encoder · revision/))
+		.toHaveTextContent('live update 0');
+	await screen.getByRole('button', { name: 'Saved example', exact: true }).click();
+	await expect.element(compare).toBeEnabled();
+	await expect.element(screen.getByText(/The encoder or dataset above has changed/)).toBeVisible();
+	await compare.click();
+	await expect
+		.element(screen.getByRole('status', { name: 'Transfer result' }))
+		.toHaveTextContent('percentage points higher');
+	await expect
+		.element(screen.getByText(/The encoder or dataset above has changed/))
+		.not.toBeInTheDocument();
+}, 30000);

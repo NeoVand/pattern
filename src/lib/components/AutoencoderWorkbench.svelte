@@ -179,7 +179,8 @@
 				if (!response.ok) throw new Error('Saved weights unavailable.');
 				const candidate = new Float32Array(await response.arrayBuffer());
 				if (!current()) return;
-				model.load(candidate);
+				// Validate the optional checkpoint without exposing it as the active model.
+				new MnistAutoencoder(model.sizes).load(candidate);
 				checkpoint = candidate;
 			} catch {
 				loadNotice =
@@ -579,6 +580,7 @@
 		{dataset}
 		{revision}
 		training={running}
+		ready={phase === 'ready'}
 		encoderStep={step}
 		classLabels={source.labels}
 	/>

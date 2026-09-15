@@ -27,6 +27,8 @@ export default defineConfig({
 	],
 	test: {
 		expect: { requireAssertions: true },
+		// Keep simultaneous browser workbenches and model compilation bounded.
+		maxWorkers: 4,
 		projects: [
 			{
 				extends: './vite.config.ts',

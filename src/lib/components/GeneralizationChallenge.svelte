@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fitChallenge, repeatChallenge } from '$lib/ml/generalization-challenge';
 	import PatternIcon from './PatternIcon.svelte';
+	const uid = $props.id();
 	let count = $state(12),
 		degree = $state(10),
 		penalty = $state(0),
@@ -12,7 +13,7 @@
 	let repetitions = $state<{ test: number; training: number }[]>([]);
 	const result = $derived(fitChallenge({ count, degree, penalty, seed }));
 	const px = (x: number) => 30 + (x + 1) * 260;
-	const py = (y: number) => 150 - Math.max(-1.5, Math.min(1.5, y)) * 75;
+	const py = (y: number) => 150 - y * 75;
 	const path = $derived(
 		Array.from({ length: 241 }, (_, i) => {
 			const x = -1 + i / 120;
@@ -47,8 +48,19 @@
 				role="img"
 				aria-label="Fitted curve with training circles and validation squares. Vertical range minus 1.5 to 1.5; extreme predictions are clipped visually but errors use full values."
 			>
+				<defs
+					><clipPath id={`${uid}-plot`}><rect x="30" y="37.5" width="520" height="225" /></clipPath
+					></defs
+				>
 				<line x1="30" x2="550" y1="150" y2="150" stroke="var(--plot-line)" />
-				<path d={path} fill="none" stroke="var(--chart-lavender)" stroke-width="2.5" />
+				<path
+					d={path}
+					fill="none"
+					stroke="var(--chart-lavender)"
+					stroke-width="2.5"
+					clip-path={`url(#${uid}-plot)`}
+				/>
+				<text x="2" y="40">1.5</text><text x="0" y="260">−1.5</text>
 				{#each result.data.validation as p, i (i)}<rect
 						x={px(p.x) - 2}
 						y={py(p.y) - 2}
@@ -67,6 +79,7 @@
 				>
 			</svg>
 			<p>● Training · ■ Validation · same input range and noise process</p>
+			<p>Vertical view: −1.5 to 1.5. Off-chart predictions still count in the full errors below.</p>
 			<div class="metrics">
 				<div><span>Training MSE</span><strong>{result.training.toFixed(3)}</strong></div>
 				<div><span>Validation MSE</span><strong>{result.validation.toFixed(3)}</strong></div>
