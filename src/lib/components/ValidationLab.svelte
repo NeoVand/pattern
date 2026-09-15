@@ -106,6 +106,10 @@
 	<header class="fit-header">
 		<h3>Learning, or just remembering?</h3>
 		<p>{descriptions[selected]}</p>
+		<p>
+			This worked example exposes all three splits to explain the fit. Use the sealed-test challenge
+			below to make an independent final choice.
+		</p>
 	</header>
 
 	<div class="fit-toolbar">

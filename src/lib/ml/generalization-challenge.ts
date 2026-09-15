@@ -31,6 +31,6 @@ export function fitChallenge(settings: CurveSettings) {
 
 export function repeatChallenge(settings: CurveSettings, repeats = 20) {
 	return Array.from({ length: repeats }, (_, i) =>
-		fitChallenge({ ...settings, seed: settings.seed + 37 * i })
+		fitChallenge({ ...settings, seed: settings.seed + 37 * (i + 1) })
 	);
 }

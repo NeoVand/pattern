@@ -11,6 +11,50 @@ export type ChapterArt = {
 };
 
 export const chapterArt: Record<string, ChapterArt> = {
+	generalization: {
+		asset: 'edition-5/generalization-remedies',
+		title: 'Choose a model before the final check',
+		alt: 'Botanical example cards, a flexible curve and straight ruler, and a sealed envelope labeled Final check.',
+		caption: 'More examples. Different models. One independent final check.',
+		note: 'The cards and rulers represent data and model choices. The sealed envelope represents a final set kept separate from those choices. Start with the fully visible worked example, then commit a model in the sealed-test challenge.',
+		action: 'Explore generalization',
+		tone: 'light',
+		width: 1942,
+		height: 809
+	},
+	generative: {
+		asset: 'edition-5/sampling-process',
+		title: 'Learning to recover a signal',
+		alt: 'Three matching blue-vase cards labeled Original, Noisy copy, and Learn to recover.',
+		caption: 'A recovery task can teach a direction for generation.',
+		note: 'The vase cards illustrate denoising. Below, a small model learns to recover one-dimensional values, then uses its learned score for sampling at a fixed noise level. This is not a full image diffusion model. The separate image studio calls a connected image model.',
+		action: 'Inspect the sampler',
+		tone: 'light',
+		width: 1942,
+		height: 809
+	},
+	'modern-ai': {
+		asset: 'edition-5/ai-family',
+		title: 'A family of methods and tasks',
+		alt: 'Nested ivory frames labeled AI, Machine learning, and Deep learning, with a separate overlapping Generate card showing a bird.',
+		caption: 'The method describes how. The task describes what.',
+		note: 'The nested frames sketch one relationship: deep learning is within machine learning, within the broad field of AI. The overlapping Generate card represents a task, not another nested level. Generative methods need not all use deep learning.',
+		action: 'Explore the map',
+		tone: 'light',
+		width: 1942,
+		height: 809
+	},
+	'tool-calling': {
+		asset: 'edition-5/calculator-tool',
+		title: 'A calculation comes back as context',
+		alt: 'The expression 123 × 45 travels through a Call arrow to a calculator showing 5535. A Result arrow leads to a 5535 card, which returns along a Context arrow.',
+		caption: 'Request a calculation. Return its result. Check the answer.',
+		note: 'The arithmetic is exact: 123 × 45 = 5535. The arrows illustrate the application executing a model-requested function and returning its output as context. The live lab inspects actual calls and verifies larger integer products.',
+		action: 'Inspect a tool call',
+		tone: 'light',
+		width: 1942,
+		height: 809
+	},
 	'distribution-shift': {
 		asset: 'edition-5/distribution-shift',
 		title: 'The object stays. The background changes.',

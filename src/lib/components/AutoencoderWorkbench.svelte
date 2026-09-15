@@ -6,6 +6,7 @@
 	import AutoencoderNetwork from './AutoencoderNetwork.svelte';
 	import MnistLatentMap from './MnistLatentMap.svelte';
 	import TransferLab from './TransferLab.svelte';
+	import WidgetPlate from './WidgetPlate.svelte';
 	import {
 		MnistAutoencoder,
 		VAE_FRAME,
@@ -572,6 +573,7 @@
 </section>
 
 {#if dataset}
+	<WidgetPlate kind="transfer-features" />
 	<TransferLab
 		{model}
 		{dataset}

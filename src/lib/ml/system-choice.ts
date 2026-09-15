@@ -211,14 +211,12 @@ export function evaluateShop(system: ShopSystem, stage: CapstoneStage, data: Sho
 	);
 	const forecast = shopForecast(data, system.forecast);
 	const start = stage === 'validation' ? 28 : stage === 'final' ? 35 : 42;
-	const days = data.demand
-		.slice(start, start + 7)
-		.map((actual, index) => ({
-			day: start + index + 1,
-			actual,
-			prediction: forecast.predictions[start + index],
-			error: Math.abs(actual - forecast.predictions[start + index])
-		}));
+	const days = data.demand.slice(start, start + 7).map((actual, index) => ({
+		day: start + index + 1,
+		actual,
+		prediction: forecast.predictions[start + index],
+		error: Math.abs(actual - forecast.predictions[start + index])
+	}));
 	const mae = days.reduce((sum, day) => sum + day.error, 0) / days.length;
 	const alert =
 		days

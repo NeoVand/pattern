@@ -6,6 +6,8 @@
 	import { lessons } from '$lib/data/lessons';
 	import { chapterArt } from '$lib/data/chapter-art';
 	import ConceptPlate from '$lib/components/ConceptPlate.svelte';
+	import WidgetPlate from '$lib/components/WidgetPlate.svelte';
+	import LessonChallenge from '$lib/components/LessonChallenge.svelte';
 	import FootwearPlate from '$lib/components/FootwearPlate.svelte';
 	import GenerativeLab from '$lib/components/GenerativeLab.svelte';
 	import TokenLab from '$lib/components/TokenLab.svelte';
@@ -229,6 +231,7 @@
 				{#if chapterArt[lesson.id]}
 					<ConceptPlate art={chapterArt[lesson.id]} target={`lab-${lesson.id}`} />
 				{/if}
+				<LessonChallenge lessonId={lesson.id} />
 				<section
 					id={`lab-${lesson.id}`}
 					class="chapter-lab"
@@ -241,16 +244,19 @@
 					{:else if lesson.id === 'distribution-shift'}<DistributionShiftLab />
 					{:else if lesson.id === 'assistant-training'}<AssistantTrainingLab />
 					{:else if lesson.id === 'system-choice'}<SystemChoiceLab />
-					{:else if lesson.id === 'training'}<TrainingLab kind="regression" /><GradientLab
-						/><DataSplitStory />
+					{:else if lesson.id === 'training'}<TrainingLab kind="regression" /><WidgetPlate
+							kind="gradient-update"
+						/><GradientLab /><DataSplitStory />
 					{:else if lesson.id === 'generalization'}<ValidationLab /><GeneralizationChallenge />
 					{:else if lesson.id === 'classification'}<FootwearPlate /><ImageClassifier />
-					{:else if lesson.id === 'forecasting'}<ForecastLab /><ForecastBenchmark />
+					{:else if lesson.id === 'forecasting'}<ForecastLab /><WidgetPlate
+							kind="forecast-benchmark"
+						/><ForecastBenchmark />
 					{:else if lesson.id === 'clustering'}<ClusteringLab />
 					{:else if lesson.id === 'reinforcement'}<ReinforcementLab />
 					{:else if lesson.id === 'deep-learning'}<TrainingLab
 							kind="neural-classifier"
-						/><RepresentationComparison />
+						/><WidgetPlate kind="representation-choice" /><RepresentationComparison />
 					{:else if lesson.id === 'representations'}<ConvnetLab />
 					{:else if lesson.id === 'self-supervised'}<SelfSupervisedLab /><PretrainingStory />
 					{:else if lesson.id === 'adaptation'}<AdaptationLab />
@@ -259,7 +265,9 @@
 					{:else if lesson.id === 'language'}<LanguageLab {ai} />
 					{:else if lesson.id === 'generative'}<SamplingLab /><GenerativeLab {ai} />
 					{:else if lesson.id === 'vision'}<VisionLab {ai} />
-					{:else if lesson.id === 'retrieval'}<RetrievalLab {ai} /><RetrievalAudit {ai} />
+					{:else if lesson.id === 'retrieval'}<RetrievalLab {ai} /><WidgetPlate
+							kind="retrieval-check"
+						/><RetrievalAudit {ai} />
 					{:else if lesson.id === 'tool-calling'}<ToolCallingLab {ai} />
 					{:else if lesson.id === 'agents'}<AgentLab {ai} />
 					{:else}<EvaluationLab {ai} />{/if}

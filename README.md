@@ -1,6 +1,6 @@
 # Pattern
 
-An interactive field guide to machine learning: twenty visual chapters with real training, visible data splits, dark and light themes, language-model inference, and an inspectable agent loop.
+An interactive field guide to machine learning: twenty-five visual chapters with real training, visible data splits, dark and light themes, language-model inference, and an inspectable agent loop.
 
 ## Run
 
@@ -9,51 +9,56 @@ npm install
 npm run dev -- --host 127.0.0.1 --port 5174
 ```
 
-Use the chapters or arrow keys outside form controls. The expand button hides the chapter rail. Lessons have URL fragments such as `#generalization`, `#classification`, and `#language`. Theme choice is saved locally; experiment state lasts until leaving a lesson. No API key is needed for the numerical training labs.
+Use the chapters or arrow keys outside form controls. The expand button hides the chapter rail. Lessons have URL fragments such as `#generalization`, `#classification`, and `#language`. Theme choice and optional chapter notebook entries are saved locally; numerical experiment state lasts until leaving a lesson. No API key is needed for the numerical training labs.
 
 ## Learning experiments
 
 - **Why ML:** step through or run bubble sort, then train an actual image classifier, then use a vision-language model to caption a scene or generate speech. Original generated illustrations anchor the learning path, with full-size views for inspecting the details.
 - **Training:** fit a regression line with live prediction errors and three loss curves. A visual explanation distinguishes practice, model selection, and final evaluation, including why reusing test scores invalidates an independent evaluation.
-- **Generalization:** compare three polynomial capacities on training and held-out plots simultaneously. Add training data or regularize weights. Training, validation, and test errors remain visible. Only training examples affect fitting.
+- **Generalization:** study a fully visible worked example, then choose data size, polynomial degree, and weight penalty using training and validation. Commit the configuration to reveal an independent test; compare its behavior over twenty fresh samples.
 - **Classification:** actually train logistic regression on Fashion-MNIST sneakers and boots. Browse every split, filter mistakes, inspect images and learned pixel weights, and adjust the decision threshold. The gallery uses 320 training, 80 validation, and 120 official test images. Dataset source and license are in `static/data/`.
-- **Forecasting:** choose café, electricity, or museum data; edit training observations, vary noise and seasonality, and inspect learned coefficients and prediction terms. Chronological train/validation/test splits remain visible.
+- **Forecasting:** fit revenue, asset-decay, or seasonal-sales data and inspect learned coefficients. The benchmark adds mean, last-value, seasonal-naive, trend, and seasonal-regression forecasts, repeated time origins, different horizons, a changed regime, and measured interval coverage.
 - **Two neural networks:** train a nonlinear classifier on rings and a regressor on a curved target. The neural observatory displays every actual node and connection (27 nodes, 180 weights, and 25 biases at the default 2→12→12→1 architecture). Change inputs, step through a forward pass, select any neuron, inspect its weighted sum and activation, and view its response across the input space. All values come from the current trained network.
 
-The TypeScript training engine uses full-batch backpropagation and Adam. Polynomial models use a regularized least-squares fit. Fashion-MNIST, MNIST, and TinyStories use real datasets; the other numerical labs use seeded synthetic teaching examples. Test visibility is for instruction: choosing models repeatedly against the test score would invalidate it as an independent final evaluation.
+The TypeScript training engine uses full-batch backpropagation and Adam. Polynomial models use a regularized least-squares fit. Fashion-MNIST, MNIST, and TinyStories use real datasets; the other numerical labs use seeded synthetic teaching examples. Worked examples expose test scores for instruction. The generalization challenge, representation comparison, and capstone instead freeze choices before revealing final evidence. Reusing revealed cases for tuning makes them validation evidence; the next final check needs fresh cases.
 
 ## The expanded learning path
 
-The twenty chapters move from explicit algorithms and supervised learning to modern AI systems:
+The twenty-five chapters move from explicit algorithms and supervised learning to modern AI systems:
 
 1. Why machine learning? — sorting, image classification, and captioning.
-2. How learning happens — regression, gradients, and visible data splits.
-3. Learning, not memorizing — overfitting, capacity, and regularization.
-4. Telling things apart — a real Fashion-MNIST image classifier.
-5. Looking ahead — compounding growth, exponential decay, and seasonal sales; editable data and chronological evaluation.
-6. Discovering groups — run k-means on café preferences, inspect assignments and centers.
-7. Learning from rewards — train a Q-learning delivery policy, change the map, and replay its route.
-8. A network of small ideas — train two nonlinear neural networks.
-9. Why go deeper? — representations and learned features.
-10. Learning without labels — choose MNIST digits or Fashion-MNIST clothing, train a real variational autoencoder, and explore its two-dimensional learned map.
-11. From pretraining to purpose — pretrain and adapt a small next-word model; observe forgetting and the difference between training and context.
-12. The bigger picture — machine learning, deep learning, and generative AI.
-13. The pieces a model sees — genuine text token IDs, Unicode bytes, image patches, and audio windows.
-14. The next token — transformers, live language generation, and a trainable TinyStories transformer with continuing training and saved samples.
-15. Beyond words — actual OCR, spatial questions, uploads, and image comparison.
-16. Creating something new — real OpenAI image generation, prompt experiments, variations, and downloads.
-17. Finding the right context — embeddings, semantic retrieval, editable sources, and grounded answers.
-18. Give the model a calculator — compare large multiplications with and without a real exact-integer tool.
-19. From answers to actions — an actual model-directed tool loop.
-20. Good answers need evidence — run six explicit checks, compare prompts, inspect failures and export results.
+2. Before the model — target choice, provenance, coverage, and data leakage.
+3. How learning happens — regression, a visible gradient update, and data splits.
+4. Learning, not memorizing — capacity, regularization, more data, and a sealed final check.
+5. Telling things apart — a real Fashion-MNIST image classifier.
+6. What does 90% mean? — rare events, confusion matrices, calibration, and decision costs.
+7. Looking ahead — forecast families, simple baselines, rolling origins, and uncertainty.
+8. Discovering groups — k-means, assignments, centers, and nearest neighbors.
+9. Learning from rewards — Q-learning, rewards, and delivery policies.
+10. A network of small ideas — train networks; compare raw/engineered features, a tree, and a network.
+11. Why go deeper? — inspect actual convolutional features and their effect on a prediction.
+12. When the world changes — shortcuts, subgroups, distribution shift, and causal interventions.
+13. Learning without labels — train a variational autoencoder and measure downstream transfer.
+14. The bigger picture — AI, machine learning, deep learning, and generative tasks.
+15. The pieces a model sees — token IDs, Unicode bytes, image patches, and audio windows.
+16. The next token — transformers, live generation, and a trainable TinyStories transformer.
+17. From pretraining to purpose — specialize a word model and measure unseen-text loss and forgetting.
+18. From predictor to assistant — demonstrations, preference updates, and a flawed reward proxy.
+19. Beyond words — actual OCR, spatial questions, uploads, and image comparison.
+20. Creating something new — a learned one-dimensional denoiser and sampler, plus a real image studio.
+21. Finding the right context — embeddings, retrieval, source recall, and grounded-answer audits.
+22. Give the model a calculator — exact-integer tool calls and verified arithmetic.
+23. From answers to actions — an actual model-directed tool loop.
+24. Good answers need evidence — explicit checks, repeated trials, variability, and inspectable exports.
+25. Choose the whole system — compare methods, commit a plan, reveal final cases, and monitor changes.
 
 The adaptation model has 10,609 trainable parameters and learns a word-level softmax distribution; it is deliberately small and is not a transformer. Reinforcement learning uses a seeded Q-learning environment, not an LLM deciding moves. Both work without an API key.
 
-The autoencoder offers MNIST (8,000 training digits) and Fashion-MNIST (12,000 training clothing images across all ten categories), with 2,000 official test images per dataset. Both use the same variational architecture and start from random weights. Switching datasets stops the current worker and resets the model, optimizer, history, and explorer. Each dataset also has its own optional saved example, trained for 10,000 updates without labels. Clothing names and digit labels are used only for inspection and map colors. Reconstruction, coordinate probing, morphing, and continued training work with either dataset.
+The autoencoder offers MNIST (8,000 training digits) and Fashion-MNIST (12,000 training clothing images across all ten categories), with 2,000 official test images per dataset. Both use the same variational architecture and start from random weights. Switching datasets stops the current worker and resets the model, optimizer, history, and explorer. Each dataset also has its own optional saved example, trained for 10,000 updates without labels. Labels never train the encoder. The separate transfer experiment uses a small labeled training subset for nearest-neighbor classification, then scores separate official test images. Reconstruction, coordinate probing, morphing, and continued training work with either dataset.
 
 Retrieval uses real `text-embedding-3-small` vectors with 256 dimensions, cosine ranking, and a two-dimensional PCA projection. The map is approximate; ranking uses the full vectors. The optional keyword baseline needs no API. Editing a source invalidates its embeddings and the previous answer. Grounded generation sends only the selected passages and asks for citations and abstention when evidence is missing. Citations still need human inspection.
 
-Evaluation uses six deterministic checks, including arithmetic, exact JSON, missing evidence, quoted instruction attacks, and coverage gaps. These are teaching examples, not a broad safety or quality benchmark. Both prompt styles can pass; results are never adjusted to force an improvement. Retained runs last only for the current chapter visit.
+Evaluation uses six explicit grading rules, including arithmetic, exact JSON, missing evidence, quoted instruction attacks, and missing observations. Run one or three actual trials, inspect each output, and compare pass counts and score ranges only across matching model and prompt settings. The separate retrieval audit measures whether search found the required documents before checking narrow answer facts and citations. These are teaching examples, not a broad safety or quality benchmark. Both prompt styles can pass; results are never adjusted to force an improvement. Retained runs last only for the current chapter visit.
 
 The token chapter uses the actual `o200k_base` encoding through `gpt-tokenizer`, dynamically loaded on first use. It displays IDs, byte sequences, spaces, punctuation, and partial Unicode characters safely. The image explorer partitions every source pixel into a 4×4, 8×8, or 12×12 grid without cropping. The patch-to-embedding illustration is explicitly conceptual, not a trace from an OpenAI vision encoder or an estimate of API billing.
 
@@ -66,7 +71,7 @@ The opening’s third example passes actual image pixels and the user’s questi
 
 The model is pretrained; this demo performs inference, not training. Captions can miss or invent details, especially with the small local model. The patch overlay is a conceptual illustration, not model attention or exact preprocessing.
 
-Generated artwork lives in `static/images/`, optimized as WebP. See [art direction and exact prompts](docs/art-direction.md) and [the expansion artwork](docs/expansion-art.md) for generation mode, provenance, and original files. [Neuron and token infographics](docs/neurons-tokens-art.md) show the exact generation and refinement prompts for the two new scientific illustrations. Seven new images include sculptural explanations of clustering, rewards, adaptation, retrieval, vision, and evaluation, plus an original invitation for OCR. The vision chapter supports up to two images, 8 MB each; multi-image comparison uses OpenAI. Fashion-MNIST remains the actual classification dataset; the high-resolution shoe photograph only illustrates the categories.
+Generated artwork lives in `static/images/`, optimized as WebP. Edition 5 adds fifteen original illustrations for the five new chapters, previously unillustrated chapters, and the new widgets. Its exact prompts and source files are recorded in [the generation manifest](docs/art-assets-v5.json); [the placement inventory](docs/course-revision-art.md) covers every chapter. Existing approved artwork is retained. See [art direction and exact prompts](docs/art-direction.md) and [the expansion artwork](docs/expansion-art.md) for generation mode, provenance, and original files. [Neuron and token infographics](docs/neurons-tokens-art.md) show the exact generation and refinement prompts for the two new scientific illustrations. Seven new images include sculptural explanations of clustering, rewards, adaptation, retrieval, vision, and evaluation, plus an original invitation for OCR. The vision chapter supports up to two images, 8 MB each; multi-image comparison uses OpenAI. Fashion-MNIST remains the actual classification dataset; the high-resolution shoe photograph only illustrates the categories.
 
 ## Real language models and agents
 
@@ -91,7 +96,7 @@ The local Vite server detects the key and the UI offers **This computer**. Reque
 
 ## Interface
 
-Svelte 5, TypeScript, Hugeicons, local fonts, and generated WebP artwork. Both themes use quiet tonal surfaces and restrained accents, with fewer dividers. All twenty chapters fit the independently scrolling navigation; the mobile drawer and presentation mode keep the experiment spacious. Keyboard focus remains visible and image details support keyboard panning.
+Svelte 5, TypeScript, Hugeicons, local fonts, and generated WebP artwork. Both themes use quiet tonal surfaces and restrained accents, with fewer dividers. All twenty-five chapters fit the independently scrolling navigation; the mobile drawer and presentation mode keep the experiment spacious. Keyboard focus remains visible and image details support keyboard panning.
 
 ## Checks and build
 
